@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BarcodeXML" targetNamespace="http://tempuri.org/BarcodeXML.xsd" xmlns:mstns="http://tempuri.org/BarcodeXML.xsd" xmlns="http://tempuri.org/BarcodeXML.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BarcodeXML" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BarcodeXML" msprop:Generator_UserDSName="BarcodeXML">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Barcode" msprop:Generator_TableClassName="BarcodeDataTable" msprop:Generator_TableVarName="tableBarcode" msprop:Generator_TablePropName="Barcode" msprop:Generator_RowDeletingName="BarcodeRowDeleting" msprop:Generator_UserTableName="Barcode" msprop:Generator_RowChangingName="BarcodeRowChanging" msprop:Generator_RowEvHandlerName="BarcodeRowChangeEventHandler" msprop:Generator_RowDeletedName="BarcodeRowDeleted" msprop:Generator_RowEvArgName="BarcodeRowChangeEvent" msprop:Generator_RowChangedName="BarcodeRowChanged" msprop:Generator_RowClassName="BarcodeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type" type="xs:string" minOccurs="0" />
+              <xs:element name="RawData" msprop:Generator_ColumnVarNameInTable="columnRawData" msprop:Generator_ColumnPropNameInRow="RawData" msprop:Generator_ColumnPropNameInTable="RawDataColumn" msprop:Generator_UserColumnName="RawData" type="xs:string" minOccurs="0" />
+              <xs:element name="EncodedValue" msprop:Generator_ColumnVarNameInTable="columnEncodedValue" msprop:Generator_ColumnPropNameInRow="EncodedValue" msprop:Generator_ColumnPropNameInTable="EncodedValueColumn" msprop:Generator_UserColumnName="EncodedValue" type="xs:string" minOccurs="0" />
+              <xs:element name="EncodingTime" msprop:Generator_ColumnVarNameInTable="columnEncodingTime" msprop:Generator_ColumnPropNameInRow="EncodingTime" msprop:Generator_ColumnPropNameInTable="EncodingTimeColumn" msprop:Generator_UserColumnName="EncodingTime" type="xs:double" minOccurs="0" />
+              <xs:element name="IncludeLabel" msprop:Generator_ColumnVarNameInTable="columnIncludeLabel" msprop:Generator_ColumnPropNameInRow="IncludeLabel" msprop:Generator_ColumnPropNameInTable="IncludeLabelColumn" msprop:Generator_UserColumnName="IncludeLabel" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Forecolor" msprop:Generator_ColumnVarNameInTable="columnForecolor" msprop:Generator_ColumnPropNameInRow="Forecolor" msprop:Generator_ColumnPropNameInTable="ForecolorColumn" msprop:Generator_UserColumnName="Forecolor" type="xs:string" minOccurs="0" />
+              <xs:element name="Backcolor" msprop:Generator_ColumnVarNameInTable="columnBackcolor" msprop:Generator_ColumnPropNameInRow="Backcolor" msprop:Generator_ColumnPropNameInTable="BackcolorColumn" msprop:Generator_UserColumnName="Backcolor" type="xs:string" minOccurs="0" />
+              <xs:element name="CountryAssigningManufacturingCode" msprop:Generator_ColumnVarNameInTable="columnCountryAssigningManufacturingCode" msprop:Generator_ColumnPropNameInRow="CountryAssigningManufacturingCode" msprop:Generator_ColumnPropNameInTable="CountryAssigningManufacturingCodeColumn" msprop:Generator_UserColumnName="CountryAssigningManufacturingCode" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageWidth" msprop:Generator_ColumnVarNameInTable="columnImageWidth" msprop:Generator_ColumnPropNameInRow="ImageWidth" msprop:Generator_ColumnPropNameInTable="ImageWidthColumn" msprop:Generator_UserColumnName="ImageWidth" type="xs:int" minOccurs="0" />
+              <xs:element name="ImageHeight" msprop:Generator_ColumnVarNameInTable="columnImageHeight" msprop:Generator_ColumnPropNameInRow="ImageHeight" msprop:Generator_ColumnPropNameInTable="ImageHeightColumn" msprop:Generator_UserColumnName="ImageHeight" type="xs:int" minOccurs="0" />
+              <xs:element name="Image" msprop:Generator_ColumnVarNameInTable="columnImage" msprop:Generator_ColumnPropNameInRow="Image" msprop:Generator_ColumnPropNameInTable="ImageColumn" msprop:Generator_UserColumnName="Image" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10000000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RotateFlipType" msdata:DataType="System.Drawing.RotateFlipType, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" msprop:Generator_ColumnVarNameInTable="columnRotateFlipType" msprop:Generator_ColumnPropNameInRow="RotateFlipType" msprop:Generator_ColumnPropNameInTable="RotateFlipTypeColumn" msprop:Generator_UserColumnName="RotateFlipType" type="xs:anyType" minOccurs="0" />
+              <xs:element name="LabelPosition" msprop:Generator_ColumnVarNameInTable="columnLabelPosition" msprop:Generator_ColumnPropNameInRow="LabelPosition" msprop:Generator_ColumnPropNameInTable="LabelPositionColumn" msprop:Generator_UserColumnName="LabelPosition" type="xs:int" minOccurs="0" />
+              <xs:element name="Alignment" msprop:Generator_ColumnVarNameInTable="columnAlignment" msprop:Generator_ColumnPropNameInRow="Alignment" msprop:Generator_ColumnPropNameInTable="AlignmentColumn" msprop:Generator_UserColumnName="Alignment" type="xs:int" minOccurs="0" />
+              <xs:element name="LabelFont" msprop:Generator_ColumnVarNameInTable="columnLabelFont" msprop:Generator_ColumnPropNameInRow="LabelFont" msprop:Generator_ColumnPropNameInTable="LabelFontColumn" msprop:Generator_UserColumnName="LabelFont" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageFormat" msprop:Generator_ColumnVarNameInTable="columnImageFormat" msprop:Generator_ColumnPropNameInRow="ImageFormat" msprop:Generator_ColumnPropNameInTable="ImageFormatColumn" msprop:Generator_UserColumnName="ImageFormat" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
