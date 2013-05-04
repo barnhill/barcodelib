@@ -1,0 +1,208 @@
+﻿/* General */
+body 
+{ 
+	background-image: url("../images/body_bg_light.gif");
+}
+
+div { text-align:left; }
+
+.ContentHolder
+{
+	z-index: 1; 
+	left: 5px; 
+	top: 50px; 
+    /*min-height: 500px; */
+    margin-top: 0; 
+    background-color:#FFFFFF; 
+    /*border:solid 1px #000000;*/ 
+    visibility: visible; 
+    color: #DEDEDE;
+}
+
+.ContentBorderLeft
+{
+	z-index: 1;  
+    margin-top: 0; 
+    background-color:#FFFFFF; 
+    border-left: solid 1px black;
+    visibility: visible; 
+    color: #DEDEDE;
+}
+
+.ContentBorderRight
+{
+	z-index: 1;  
+    margin-top: 0; 
+    background-color:#FFFFFF; 
+    border-right: solid 1px black;
+    visibility: visible; 
+    color: #DEDEDE;
+}
+
+.ContentBorderBottom
+{
+	z-index: 1;  
+    margin-top: 0; 
+    background-color:#FFFFFF; 
+    border-bottom: solid 1px black;
+    visibility: visible; 
+    color: #DEDEDE;
+}
+
+.ContentBorderTop
+{
+	z-index: 1;  
+    margin-top: 0; 
+    background-color:#FFFFFF; 
+    border-top: solid 1px black;
+    visibility: visible; 
+    color: #DEDEDE;
+}
+
+.ContentBorderTopLeft
+{
+	border-collapse: collapse;
+	background: url(../images/topleftcorner-white.gif);
+    background-repeat:no-repeat;
+    background-position:bottom;
+    height: 6px;
+}
+.ContentBorderTopRight
+{
+	border-collapse: collapse;
+	background: url(../images/toprightcorner-white.gif);
+    background-repeat:no-repeat;
+    background-position:bottom;
+    height: 6px;
+}
+.ContentBorderBottomLeft
+{
+	background: url(../images/bottomleftcorner-white.gif);
+    background-repeat:no-repeat;
+    background-position:bottom;
+    height: 6px;
+}
+.ContentBorderBottomRight
+{
+	background: url(../images/bottomrightcorner-white.gif);
+    background-repeat:no-repeat;
+    background-position:bottom;
+    height: 6px;
+}
+
+.tableHeaderFooter
+{
+	border-collapse: collapse;
+	margin-right: auto; 
+	margin-left: auto;
+	padding: 0 0 0 0;
+}
+
+.copyRight
+{
+	color: #ABABAB;
+	text-decoration: none;
+}
+
+.copyRight:hover
+{
+	color: yellow;
+	text-decoration: none;
+}
+
+table
+{
+	border-collapse: collapse; 
+}
+
+/* Picture Album */
+.PictureAlbumPageButtons
+{
+	text-decoration: none;
+	color: black;
+}
+.PictureAlbumPageButtons:hover
+{
+	text-decoration: none;
+	color: yellow;
+}
+
+/* Popup Images */
+.noBorderImage
+{
+	border: none 0 black;
+}
+
+.noBorderImage:hover
+{
+	filter: alpha(opacity=70);
+	-moz-opacity: 0.7;
+}
+
+.modalBackground {
+	background-color:Gray;
+	filter:alpha(opacity=80);
+	/*opacity:0.80;*/
+}
+
+/* Menu */
+.toolbar
+{
+	font-size: 13px;
+    font-family: Verdana;
+    font-style: normal;
+    color: #FFFFFF;
+    margin: 0px;
+    background: url(../images/menu-background.png);
+    background-repeat: repeat-x;
+    width: 688px;
+    height: 28px;
+    background-position:bottom;
+}
+.menuleftend
+{
+	width: 6px;
+    background: url(../images/menu-leftend.png);
+    background-repeat: no-repeat;
+	background-position:bottom;
+}
+.menurightend
+{
+	width: 6px;
+    background: url(../images/menu-rightend.png);
+    background-repeat: no-repeat;
+    background-position:bottom;
+}
+
+.MenuItemStatic
+{
+    font-size: 13px;
+    font-family: Verdana;
+    font-style: normal;
+    color: #CECECE;
+    padding: 3px;
+    margin: 0px;
+    CURSOR: default;
+}
+.MenuItemStatic:hover
+{
+    color: Yellow;
+    cursor: pointer;
+}
+
+.MenuItemDynamicItem
+{
+	font-size: 13px;
+    font-family: Verdana;
+    font-style: normal;
+    color: #CECECE;
+    padding: 0px;
+    CURSOR: default;
+    margin: 4px;
+}
+.MenuItemDynamicItem:hover
+{
+    /*color: #94A8CD;*/ 
+    color: Yellow;
+    cursor: pointer;
+}
