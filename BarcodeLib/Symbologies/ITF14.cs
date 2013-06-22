@@ -76,22 +76,14 @@ namespace BarcodeLib.Symbologies
             //calculate and include checksum if it is necessary
             if (Raw_Data.Length == 13)
             {
-                int even = 0;
-                int odd = 0;
+                int total = 0;
 
-                //odd
-                for (int i = 0; i <= 10; i += 2)
+                for (int i = 0; i <= Raw_Data.Length-1; i++)
                 {
-                    odd += Int32.Parse(Raw_Data.Substring(i, 1));
+                    int temp = Int32.Parse(Raw_Data.Substring(i, 1));
+                    total += temp * ((i == 0 || i % 2 == 0) ? 3 : 1);
                 }//for
 
-                //even
-                for (int i = 1; i <= 11; i += 2)
-                {
-                    even += Int32.Parse(Raw_Data.Substring(i, 1)) * 3;
-                }//for
-
-                int total = even + odd;
                 int cs = total % 10;
                 cs = 10 - cs;
                 if (cs == 10)

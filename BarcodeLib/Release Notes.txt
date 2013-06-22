@@ -3,6 +3,7 @@ Release Notes for BarcodeLib.dll
 1.0.0.15
 - Fixed a bug in the Codabar symbology that would not allow valid non-numeric characters from being encoded.
 - Fixed a bug that would not encode C128-C codes with FNC1 in the starting characters.
+- Fixed a bug in the ITF-14 check digit calculation where it would calculate the wrong check digit most of the time.
 1.0.0.14
 - Added a byte array representation of the encoded image (Encoded_Image_Bytes) which can be used in Crystal Reports. See (http://www.codeproject.com/Messages/4300245/Re-Problem-in-Reports-RDLC.aspx)
 - Updated the XML schema to use integers instead of Enums due to versioning conflicts.
