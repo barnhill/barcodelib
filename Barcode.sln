@@ -22,7 +22,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BarcodeDemo", "BarcodeDemo\
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "65356"
+		VWDPort = "59259"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
