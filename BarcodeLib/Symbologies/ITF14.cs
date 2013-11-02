@@ -27,7 +27,7 @@ namespace BarcodeLib.Symbologies
             if (Raw_Data.Length > 14 || Raw_Data.Length < 13)
                 Error("EITF14-1: Data length invalid. (Length must be 13 or 14)");
 
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(Raw_Data))
                 Error("EITF14-2: Numeric data only.");
 
             string result = "1010";

@@ -54,14 +54,14 @@ namespace BarcodeLib.Symbologies
 
             foreach (char c in Codabar_Code.Keys)
             {
-                if (!IsNumeric(c.ToString()))
+                if (!CheckNumericOnly(c.ToString()))
                 {
                     temp = temp.Replace(c, '1');
                 }//if
             }//if
 
             //now that all the valid non-numeric chars have been replaced with a number check if all numeric exist
-            if (!IsNumeric(temp))
+            if (!CheckNumericOnly(temp))
                 Error("ECODABAR-4: Data contains invalid  characters.");
 
             string result = "";

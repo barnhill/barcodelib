@@ -32,7 +32,7 @@ namespace BarcodeLib.Symbologies
             if (Raw_Data.Length < 12 || Raw_Data.Length > 13)
                 Error("EEAN13-1: Data length invalid. (Length must be 12 or 13)");
 
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(Raw_Data))
                 Error("EEAN13-2: Numeric Data Only");
 
             string patterncode = EAN_Pattern[Int32.Parse(Raw_Data[0].ToString())];
@@ -213,6 +213,9 @@ namespace BarcodeLib.Symbologies
             CountryCodes.Add("609", "MAURITIUS");
             CountryCodes.Add("611", "MOROCCO");
             CountryCodes.Add("613", "ALGERIA");
+            CountryCodes.Add("615", "NIGERIA");
+            CountryCodes.Add("616", "KENYA");
+            CountryCodes.Add("618", "IVORY COAST");
             CountryCodes.Add("619", "TUNISIA");
             CountryCodes.Add("622", "EGYPT");
             CountryCodes.Add("625", "JORDAN");

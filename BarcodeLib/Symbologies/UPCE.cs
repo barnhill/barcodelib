@@ -32,7 +32,7 @@ namespace BarcodeLib.Symbologies
         {
             if (Raw_Data.Length != 6 && Raw_Data.Length != 8 && Raw_Data.Length != 12) Error("EUPCE-1: Invalid data length. (8 or 12 numbers only)");
 
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data)) Error("EUPCE-2: Numeric only.");
+            if (!CheckNumericOnly(Raw_Data)) Error("EUPCE-2: Numeric only.");
 
             int CheckDigit = Int32.Parse(Raw_Data[Raw_Data.Length - 1].ToString());
             int NumberSystem = Int32.Parse(Raw_Data[0].ToString());

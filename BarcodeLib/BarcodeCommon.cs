@@ -25,26 +25,49 @@ namespace BarcodeLib
             throw new Exception(ErrorMessage);
         }
 
-        public bool IsNumeric(string input)
+        internal static bool CheckNumericOnly(string Data)
         {
-            try
+            //This function takes a string of data and breaks it into parts and trys to do Int64.TryParse
+            //This will verify that only numeric data is contained in the string passed in.  The complexity below
+            //was done to ensure that the minimum number of interations and checks could be performed.
+
+            //early check to see if the whole number can be parsed to improve efficency of this method
+            long value = 0;
+            if (Data != null)
             {
-                Int32 i32temp = new Int32();
-                if (!Int32.TryParse(input, out i32temp))
-                {
-                    //parse didnt work so check each char because it may just be too long.
-                    foreach (char c in input)
-                    {
-                        if (!char.IsDigit(c))
-                            return false;
-                    }//foreach
-                }//if
-                return true;
-            }//try
-            catch
+                if (Int64.TryParse(Data, out value))
+                    return true;
+            }
+            else
             {
                 return false;
-            }//catch
-        }//IsNumeric
+            }
+
+            //9223372036854775808 is the largest number a 64bit number(signed) can hold so ... make sure its less than that by one place
+            int STRING_LENGTHS = 18;
+
+            string temp = Data;
+            string[] strings = new string[(Data.Length / STRING_LENGTHS) + ((Data.Length % STRING_LENGTHS == 0) ? 0 : 1)];
+
+            int i = 0;
+            while (i < strings.Length)
+            {
+                if (temp.Length >= STRING_LENGTHS)
+                {
+                    strings[i++] = temp.Substring(0, STRING_LENGTHS);
+                    temp = temp.Substring(STRING_LENGTHS);
+                }//if
+                else
+                    strings[i++] = temp.Substring(0);
+            }
+
+            foreach (string s in strings)
+            {
+                if (!Int64.TryParse(s, out value))
+                    return false;
+            }//foreach
+
+            return true;
+        }//CheckNumericOnly
     }//BarcodeVariables abstract class
 }//namespace

@@ -279,7 +279,7 @@ namespace BarcodeLib.Symbologies
             }//if
             if (this.type == TYPES.C)
             {
-                if (!IsNumeric(Raw_Data))
+                if (!CheckNumericOnly(Raw_Data))
                     Error("EC128-6: Only numeric values can be encoded with C128-C.");
 
                 //CODE C: adds a 0 to the front of the Raw_Data if the length is not divisible by 2

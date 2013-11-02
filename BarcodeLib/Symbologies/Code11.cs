@@ -21,7 +21,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Code11()
         {
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data.Replace("-", "")))
+            if (!CheckNumericOnly(Raw_Data.Replace("-", "")))
                 Error("EC11-1: Numeric data and '-' Only");
 
             //calculate the checksums

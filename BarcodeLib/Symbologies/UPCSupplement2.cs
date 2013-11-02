@@ -26,7 +26,7 @@ namespace BarcodeLib.Symbologies
         {
             if (Raw_Data.Length != 2) Error("EUPC-SUP2-1: Invalid data length. (Length = 2 required)");
 
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(Raw_Data))
                 Error("EUPC-SUP2-2: Numeric Data Only");
 
             string pattern = "";

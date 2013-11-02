@@ -19,7 +19,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_ISBN_Bookland()
         {
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(Raw_Data))
                 Error("EBOOKLANDISBN-1: Numeric Data Only");
 
             string type = "UNKNOWN";

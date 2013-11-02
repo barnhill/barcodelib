@@ -16,7 +16,7 @@ namespace BarcodeLib.Symbologies
 
         public Pharmacode(string input)
         {
-            if (!IsNumeric(input))
+            if (!CheckNumericOnly(input))
             {
                 Error("EPHARM-1: Data contains invalid  characters (non-numeric).");
             }//if

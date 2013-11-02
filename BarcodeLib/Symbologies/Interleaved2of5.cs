@@ -25,7 +25,7 @@ namespace BarcodeLib.Symbologies
             if (Raw_Data.Length % 2 != 0)
                 Error("EI25-1: Data length invalid.");
 
-            if (!BarcodeLib.Barcode.CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(Raw_Data))
                 Error("EI25-2: Numeric Data Only");
 
             string result = "1010";
