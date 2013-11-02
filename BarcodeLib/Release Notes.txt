@@ -1,7 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
 1.0.0.16
-
+- removed duplicate IsNumeric check method, moved CheckNumericOnly method to the BarcodeCommon class
 1.0.0.15
 - Fixed a bug in the Codabar symbology that would not allow valid non-numeric characters from being encoded.
 - Fixed a bug that would not encode C128-C codes with FNC1 in the starting characters.

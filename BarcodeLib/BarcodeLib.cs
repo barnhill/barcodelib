@@ -15,7 +15,7 @@ using BarcodeLib.Symbologies;
  *                                                   *
  *             Written by: Brad Barnhill             *
  *                   Date: 09-21-2007                *
- *          Last Modified: 12-01-2011                *
+ *          Last Modified: 11-02-2013                *
  *                                                   *
  *  This library was designed to give developers an  *
  *  easy class to use when they need to generate     *
