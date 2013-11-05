@@ -431,7 +431,8 @@ namespace BarcodeLibTest
             "LOGMARS",
             "MSI",
             "Telepen",
-            "FIM"});
+            "FIM",
+            "Pharmacode"});
             this.cbEncodeType.Location = new System.Drawing.Point(4, 76);
             this.cbEncodeType.Name = "cbEncodeType";
             this.cbEncodeType.Size = new System.Drawing.Size(108, 21);

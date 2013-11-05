@@ -92,6 +92,7 @@ namespace BarcodeLibTest
                 case "Code 128-C": type = BarcodeLib.TYPE.CODE128C; break;
                 case "Telepen": type = BarcodeLib.TYPE.TELEPEN; break;
                 case "FIM": type = BarcodeLib.TYPE.FIM; break;
+                case "Pharmacode": type = BarcodeLib.TYPE.PHARMACODE; break;
                 default: MessageBox.Show("Please specify the encoding type."); break;
             }//switch
 
@@ -311,6 +312,10 @@ namespace BarcodeLibTest
                             case "FIM":
                                 this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("FIM");
                                 break;
+                            case "Pharmacode":
+                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Pharmacode");
+                                break;
+
                             default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");
                         }//switch
 
