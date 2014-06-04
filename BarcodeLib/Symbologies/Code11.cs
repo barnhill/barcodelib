@@ -45,7 +45,7 @@ namespace BarcodeLib.Symbologies
             Data_To_Encode_with_Checksums += checksumC.ToString();
 
             //K checksums are recommended on any message length greater than or equal to 10
-            if (Raw_Data.Length >= 1)
+            if (Raw_Data.Length >= 10)
             {
                 weight = 1;
                 int KTotal = 0;

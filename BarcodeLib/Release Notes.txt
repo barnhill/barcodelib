@@ -1,5 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
+1.0.0.17
+- Fixed a bug in Code 11 where K checksums were being calculated for messages shorter than 10 characters in length.
 1.0.0.16
 - Pharmacode symbology added.
 - Removed duplicate IsNumeric check method, moved CheckNumericOnly method to the BarcodeCommon class
