@@ -530,6 +530,7 @@ namespace BarcodeLib
 
                         //draw image
                         int pos = 0;
+                        int halfBarWidth = (int)(iBarWidth * 0.5);
 
                         using (Graphics g = Graphics.FromImage(b))
                         {
@@ -546,16 +547,16 @@ namespace BarcodeLib
                                         if (this.Encoded_Type == TYPE.PostNet)
                                         {
                                             //draw half bars in postnet
-                                            if (Encoded_Value[pos] != '1')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + 1, Height), new Point(pos * iBarWidth + shiftAdjustment + 1, Height / 2));
-                                            
-                                            //draw spaces between bars in postnet
-                                            g.DrawLine(backpen, new Point(pos * (iBarWidth * iBarWidthModifier) + shiftAdjustment + iBarWidth + 1, 0), new Point(pos * (iBarWidth * iBarWidthModifier) + shiftAdjustment + iBarWidth + 1, Height));
+                                            if (Encoded_Value[pos] == '0')
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height / 2));
+                                            else
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0));
                                         }//if
-
-                                        if (Encoded_Value[pos] == '1')
-                                            g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + (int)(iBarWidth * 0.5), 0), new Point(pos * iBarWidth + shiftAdjustment + (int)(iBarWidth * 0.5), Height));
-
+                                        else
+                                        {
+                                            if (Encoded_Value[pos] == '1')
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height));
+                                        }
                                         pos++;
                                     }//while
                                 }//using
