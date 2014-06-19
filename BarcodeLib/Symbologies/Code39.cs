@@ -13,6 +13,7 @@ namespace BarcodeLib.Symbologies
         private System.Collections.Hashtable C39_Code = new System.Collections.Hashtable(); //is initialized by init_Code39()
         private System.Collections.Hashtable ExtC39_Translation = new System.Collections.Hashtable();
         private bool _AllowExtended = false;
+        private bool _EnableChecksum = false;
 
         /// <summary>
         /// Encodes with Code39.
@@ -35,6 +36,19 @@ namespace BarcodeLib.Symbologies
         }
 
         /// <summary>
+        /// Encodes with Code39.
+        /// </summary>
+        /// <param name="input">Data to encode.</param>
+        /// <param name="AllowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
+        /// <param name="EnableChecksum">Whether to calculate the Mod 43 checksum and encode it into the barcode</param>
+        public Code39(string input, bool AllowExtended, bool EnableChecksum)
+        {
+            Raw_Data = input;
+            _AllowExtended = AllowExtended;
+            _EnableChecksum = EnableChecksum;
+        }
+
+        /// <summary>
         /// Encode the raw data using the Code 39 algorithm.
         /// </summary>
         private string Encode_Code39()
@@ -42,7 +56,8 @@ namespace BarcodeLib.Symbologies
             this.init_Code39();
             this.init_ExtendedCode39();
 
-            string strFormattedData = "*" + Raw_Data.Replace("*", "") + "*";
+            string strNoAstr = Raw_Data.Replace("*", "");
+            string strFormattedData = "*" + strNoAstr + (_EnableChecksum ? getChecksumChar(strNoAstr).ToString() : String.Empty) + "*";
 
             if (_AllowExtended)
                 InsertExtendedCharsIfNeeded(ref strFormattedData);
@@ -66,7 +81,7 @@ namespace BarcodeLib.Symbologies
             }//foreach
 
             result = result.Substring(0, result.Length-1);
-
+            
             //clear the hashtable so it no longer takes up memory
             this.C39_Code.Clear();
 
@@ -233,7 +248,22 @@ namespace BarcodeLib.Symbologies
 
             FormattedData = output;
         }
+        private char getChecksumChar(string strNoAstr) 
+        {
+            //checksum
+            string Code39_Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
+            InsertExtendedCharsIfNeeded(ref strNoAstr);
+            int TotalWeight = 0;
 
+            //Calculate the checksum
+            for (int i = 1; i < strNoAstr.Length; i++)
+            {
+                TotalWeight = TotalWeight + Code39_Charset.IndexOf(strNoAstr[i].ToString());
+            }
+
+            //return the checksum char
+            return Code39_Charset[(TotalWeight % 43) + 1];
+        }
         #region IBarcode Members
 
         public string Encoded_Value

@@ -423,6 +423,7 @@ namespace BarcodeLibTest
             "Code 11",
             "Code 39",
             "Code 39 Extended",
+            "Code 39 Mod 43",
             "Code 93",
             "Code 128",
             "Code 128-A",

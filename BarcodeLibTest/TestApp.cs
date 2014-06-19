@@ -81,6 +81,7 @@ namespace BarcodeLibTest
                 case "Code 11": type = BarcodeLib.TYPE.CODE11; break;
                 case "Code 39": type = BarcodeLib.TYPE.CODE39; break;
                 case "Code 39 Extended": type = BarcodeLib.TYPE.CODE39Extended; break;
+                case "Code 39 Mod 43": type = BarcodeLib.TYPE.CODE39_Mod43; break;
                 case "Code 93": type = BarcodeLib.TYPE.CODE93; break;
                 case "LOGMARS": type = BarcodeLib.TYPE.LOGMARS; break;
                 case "MSI": type = BarcodeLib.TYPE.MSI_Mod10; break;
@@ -254,6 +255,9 @@ namespace BarcodeLibTest
                                 break;
                             case "CODE39Extended":
                                 this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39 Extended");
+                                break;
+                            case "CODE39_Mod43": 
+                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39 Mod 43");
                                 break;
                             case "Codabar":
                                 this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Codabar");
