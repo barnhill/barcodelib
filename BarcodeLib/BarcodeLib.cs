@@ -247,6 +247,23 @@ namespace BarcodeLib
         }
         #endregion
 
+        /// <summary>
+        /// Represents the size of an image in real world coordinates (millimeters or inches).
+        /// </summary>
+        public class ImageSize 
+        {
+            public ImageSize(double width, double height, bool metric)
+            {
+                Width = width;
+                Height = height;
+                Metric = metric;
+            }
+
+            public double Width { get; set; }
+            public double Height { get; set; }
+            public bool Metric { get; set; }
+        }
+
         #region Functions
         #region General Encode
         /// <summary>
@@ -670,17 +687,16 @@ namespace BarcodeLib
                 throw new Exception("ESAVEIMAGE-2: Could not save image.\n\n=======================\n\n" + ex.Message);
             }//catch
         }//SaveImage(Stream, SaveTypes)
+        
         /// <summary>
         /// Returns the size of the EncodedImage in real world coordinates (millimeters or inches).
         /// </summary>
-        /// <param name="Width">Width of the image in the specified coordinates.</param>
-        /// <param name="Height">Height of the image in the specified coordinates.</param>
         /// <param name="Metric">Millimeters if true, otherwise Inches.</param>
         /// <returns></returns>
-        public void GetSizeOfImage(ref double Width, ref double Height, bool Metric)
+        public ImageSize GetSizeOfImage(bool Metric)
         {
-            Width = 0;
-            Height = 0;
+            double Width = 0;
+            double Height = 0;
             if (this.EncodedImage != null && this.EncodedImage.Width > 0 && this.EncodedImage.Height > 0)
             {
                 double MillimetersPerInch = 25.4;
@@ -696,6 +712,8 @@ namespace BarcodeLib
                     }//if
                 }//using
             }//if
+
+            return new ImageSize(Width, Height, Metric);
         }
         #endregion
         

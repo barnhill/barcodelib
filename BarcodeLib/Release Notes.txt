@@ -4,6 +4,7 @@ Release Notes for BarcodeLib.dll
 - Fixed a bug in Code 11 where K checksums were being calculated for messages shorter than 10 characters in length.
 - Fixed a bug in PostNet that drew incorrectly for all PostNet barcodes (thanks jonney3099)
 - Added Code 39 Mod 43 support
+- Updated the GetImageSize method to return an ImageSize object containing the real world size of the image generated.
 1.0.0.16
 - Pharmacode symbology added.
 - Removed duplicate IsNumeric check method, moved CheckNumericOnly method to the BarcodeCommon class
