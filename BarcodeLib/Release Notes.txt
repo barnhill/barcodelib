@@ -1,5 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
+1.0.0.18
+- 
 1.0.0.17
 - Fixed a bug in Code 11 where K checksums were being calculated for messages shorter than 10 characters in length.
 - Fixed a bug in PostNet that drew incorrectly for all PostNet barcodes (thanks jonney3099)
