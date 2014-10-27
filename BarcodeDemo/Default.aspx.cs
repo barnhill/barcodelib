@@ -19,6 +19,7 @@ public partial class _Default : System.Web.UI.Page
 
         lblLibraryVersion.Text = BarcodeLib.Barcode.Version.ToString();
     }
+
     protected void btnEncode_Click(object sender, EventArgs e)
     {
         string strImageURL = "GenerateBarcodeImage.aspx?d=" + this.txtData.Text.Trim() + "&h=" + this.txtHeight.Text.Trim() + "&w=" + this.txtWidth.Text.Trim() + "&bc=" + this.txtBackColor.Text.Trim() + "&fc=" + this.txtForeColor.Text.Trim() + "&t=" + this.cbEncodeType.SelectedValue + "&il=" + this.chkGenerateLabel.Checked.ToString() + "&if=" + this.ddlImageFormat.SelectedValue + "&align=" + GetAlignmentValue();
@@ -27,6 +28,7 @@ public partial class _Default : System.Web.UI.Page
         this.BarcodeImage.Height = Convert.ToInt32(this.txtHeight.Text);
         this.BarcodeImage.Visible = true;
     }
+
     protected string GetAlignmentValue()
     {
         if (this.rbAlignCenter.Checked)

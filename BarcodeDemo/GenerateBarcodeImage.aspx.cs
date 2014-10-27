@@ -56,6 +56,7 @@ public partial class GenerateBarcodeImage : System.Web.UI.Page
                 case "Code 128-C": type = BarcodeLib.TYPE.CODE128C; break;
                 case "Telepen": type = BarcodeLib.TYPE.TELEPEN; break;
                 case "FIM (Facing Identification Mark)": type = BarcodeLib.TYPE.FIM; break;
+                case "Pharmacode": type = BarcodeLib.TYPE.PHARMACODE; break;
                 default: break;
             }//switch
 
@@ -110,11 +111,15 @@ public partial class GenerateBarcodeImage : System.Web.UI.Page
             }//try
             catch (Exception ex)
             {
+                //TODO: find a way to return this to display the encoding error message
             }//catch
             finally
             {
-                //Clean up / Dispose...
-                barcodeImage.Dispose();
+                if (barcodeImage != null)
+                {
+                    //Clean up / Dispose...
+                    barcodeImage.Dispose();
+                }
             }//finally
         }//if
     }

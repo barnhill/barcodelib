@@ -93,6 +93,7 @@
                                             <asp:ListItem>MSI</asp:ListItem>
                                             <asp:ListItem>Telepen</asp:ListItem>
                                             <asp:ListItem>FIM (Facing Identification Mark)</asp:ListItem>
+                                            <asp:ListItem>Pharmacode</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
                                     <td align="center">

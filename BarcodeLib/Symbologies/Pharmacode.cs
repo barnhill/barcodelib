@@ -26,7 +26,6 @@ namespace BarcodeLib.Symbologies
             {
                 Error("EPHARM-1: Data contains invalid  characters (non-numeric).");
             }//if
-
             else if (Raw_Data.Length > 6)
             {
                 Error("EPHARM-2: Data too long (invalid data input length).");
