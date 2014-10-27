@@ -183,6 +183,16 @@ namespace BarcodeLib
             get;
             set;
         }
+        
+        /// <summary>
+        /// Alternate label to be displayed.  (IncludeLabel must be set to true as well)
+        /// </summary>
+        public String AlternateLabel 
+        { 
+            get; 
+            set; 
+        }
+
         /// <summary>
         /// Gets or sets the amount of time in milliseconds that it took to encode and draw the barcode.
         /// </summary>
@@ -739,7 +749,7 @@ namespace BarcodeLib
                     //draw datastring under the barcode image
                     StringFormat f = new StringFormat();
                     f.Alignment = StringAlignment.Center;
-                    g.DrawString(this.RawData, font, new SolidBrush(this.ForeColor), (float)(img.Width / 2), img.Height - font.Height + 1, f);
+                    g.DrawString(AlternateLabel == null ? RawData : AlternateLabel, font, new SolidBrush(ForeColor), (float)(img.Width / 2), img.Height - font.Height + 1, f);
 
                     Pen pen = new Pen(ForeColor, (float)img.Height / 16);
                     pen.Alignment = PenAlignment.Inset;
@@ -810,10 +820,10 @@ namespace BarcodeLib
                     }//switch
                     
                     //color a background color box at the bottom of the barcode to hold the string of data
-                    g.FillRectangle(new SolidBrush(this.BackColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height));
+                    g.FillRectangle(new SolidBrush(BackColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height));
 
                     //draw datastring under the barcode image
-                    g.DrawString(this.RawData, font, new SolidBrush(this.ForeColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height), f);
+                    g.DrawString(AlternateLabel == null ? RawData : AlternateLabel, font, new SolidBrush(ForeColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height), f);
 
                     g.Save();
                 }//using

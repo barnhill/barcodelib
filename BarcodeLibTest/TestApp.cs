@@ -24,9 +24,6 @@ namespace BarcodeLibTest
 
         private void TestApp_Load(object sender, EventArgs e)
         {
-            Bitmap temp = new Bitmap(1, 1);
-            temp.SetPixel(0, 0, this.BackColor);
-            barcode.Image = (Image)temp;
             this.cbEncodeType.SelectedIndex = 0;
             this.cbBarcodeAlign.SelectedIndex = 0;
             this.cbLabelLocation.SelectedIndex = 0;
@@ -117,7 +114,7 @@ namespace BarcodeLibTest
                     }//switch
 
                     //===== Encoding performed here =====
-                    barcode.Image = b.Encode(type, this.txtData.Text.Trim(), this.btnForeColor.BackColor, this.btnBackColor.BackColor, W, H);
+                    barcode.BackgroundImage = b.Encode(type, this.txtData.Text.Trim(), this.btnForeColor.BackColor, this.btnBackColor.BackColor, W, H);
                     //===================================
                     
                     //show the encoding time
@@ -128,11 +125,8 @@ namespace BarcodeLibTest
                     tsslEncodedType.Text = "Encoding Type: " + b.EncodedType.ToString();
                 }//if
 
-                barcode.Width = barcode.Image.Width;
-                barcode.Height = barcode.Image.Height;
-                
                 //reposition the barcode image to the middle
-                barcode.Location = new Point((this.groupBox2.Location.X + this.groupBox2.Width / 2) - barcode.Width / 2, (this.groupBox2.Location.Y + this.groupBox2.Height / 2) - barcode.Height / 2);
+                barcode.Location = new Point((this.barcode.Location.X + this.barcode.Width / 2) - barcode.Width / 2, (this.barcode.Location.Y + this.barcode.Height / 2) - barcode.Height / 2);
             }//try
             catch (Exception ex)
             {
@@ -164,7 +158,7 @@ namespace BarcodeLibTest
 
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            barcode.Location = new Point((this.groupBox2.Location.X + this.groupBox2.Width / 2) - barcode.Width / 2, (this.groupBox2.Location.Y + this.groupBox2.Height / 2) - barcode.Height / 2);
+            barcode.Location = new Point((this.barcode.Location.X + this.barcode.Width / 2) - barcode.Width / 2, (this.barcode.Location.Y + this.barcode.Height / 2) - barcode.Height / 2);
         }//splitContainer1_SplitterMoved
 
         private void btnForeColor_Click(object sender, EventArgs e)
@@ -224,7 +218,7 @@ namespace BarcodeLibTest
                         //load image from xml
                         this.barcode.Width = XML.Barcode[0].ImageWidth;
                         this.barcode.Height = XML.Barcode[0].ImageHeight;
-                        this.barcode.Image = BarcodeLib.Barcode.GetImageFromXML(XML);
+                        this.barcode.BackgroundImage = BarcodeLib.Barcode.GetImageFromXML(XML);
 
                         //populate the screen
                         this.txtData.Text = XML.Barcode[0].RawData;
@@ -333,11 +327,10 @@ namespace BarcodeLibTest
                         btnEncode_Click(sender, e);
 
                         //reposition the barcode image to the middle
-                        barcode.Location = new Point((this.groupBox2.Location.X + this.groupBox2.Width / 2) - barcode.Width / 2, (this.groupBox2.Location.Y + this.groupBox2.Height / 2) - barcode.Height / 2);
+                        barcode.Location = new Point((this.barcode.Location.X + this.barcode.Width / 2) - barcode.Width / 2, (this.barcode.Location.Y + this.barcode.Height / 2) - barcode.Height / 2);
                     }//using
                 }//if
             }//using
         }
-
     }//class
 }//namespace
