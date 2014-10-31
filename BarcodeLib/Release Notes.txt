@@ -1,5 +1,9 @@
 Release Notes for BarcodeLib.dll
 ================================
+1.0.0.20
+- 
+1.0.0.19
+- Fixed bug in Code 39 Mod 43 check digit calculation
 1.0.0.18
 - cleaned up layout of test application
 - added alternate label text property

@@ -253,16 +253,16 @@ namespace BarcodeLib.Symbologies
             //checksum
             string Code39_Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
             InsertExtendedCharsIfNeeded(ref strNoAstr);
-            int TotalWeight = 0;
+            int sum = 0;
 
             //Calculate the checksum
-            for (int i = 1; i < strNoAstr.Length; i++)
+            for (int i = 0; i < strNoAstr.Length; ++i)
             {
-                TotalWeight = TotalWeight + Code39_Charset.IndexOf(strNoAstr[i].ToString());
+                sum = sum + Code39_Charset.IndexOf(strNoAstr[i].ToString());
             }
 
             //return the checksum char
-            return Code39_Charset[(TotalWeight % 43) + 1];
+            return Code39_Charset[sum % 43];
         }
         #region IBarcode Members
 
