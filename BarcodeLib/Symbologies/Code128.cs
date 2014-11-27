@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
@@ -265,6 +266,83 @@ namespace BarcodeLib.Symbologies
             DataRow[] RetRows = this.C128_Code.Select("Value = '" + Remainder.ToString() + "'");
             return RetRows[0]["Encoding"].ToString();
         }
+
+        private void BreakUpAndInsertCodeCharacters()
+        {
+            string temp = "";
+            string tempRawData = Raw_Data;
+            var currentType = Code128.TYPES.DYNAMIC;
+            var starting = true;
+
+            if (tempRawData[0] != Convert.ToChar(140))
+                Error("EC128-7: Custom CODE 128 string does not start with a specified code.");
+
+            var codeBlocks = tempRawData.Split(Convert.ToChar(140));
+            foreach (var codeBlock in codeBlocks)
+            {
+                var startCodeVal = codeBlock[0];
+                switch (startCodeVal)
+                {
+                    case 'A':
+                        if (starting)
+                        {
+                            _FormattedData.Add("START_A");
+                            starting = false;
+                        }
+                        else
+                        {
+                            _FormattedData.Add("CODE_A");
+                        }
+                        currentType = TYPES.A;
+                        break;
+                    case 'B':
+                        if (starting)
+                        {
+                            _FormattedData.Add("START_B");
+                            starting = false;
+                        }
+                        else
+                        {
+                            _FormattedData.Add("CODE_B");
+                        }
+                        currentType = TYPES.B;
+                        break;
+                    case 'C':
+                        if (starting)
+                        {
+                            _FormattedData.Add("START_C");
+                            starting = false;
+                        }
+                        else
+                        {
+                            _FormattedData.Add("CODE_C");
+                        }
+                        currentType = TYPES.C;
+                        break;
+                    default:
+                        Error("EC128-8: Attempting to use unsuported code in custom CODE 128 barcode.");
+                        break;
+                }
+                var dataToAdd = codeBlock.Substring(1);
+                if (currentType == TYPES.A || currentType == TYPES.B)
+                {
+                    foreach (var c in dataToAdd)
+                    {
+                        _FormattedData.Add(c.ToString());
+                    }
+                }
+                else
+                {
+                    if (dataToAdd.Length % 2 != 0)
+                        Error("EC128-9: Attempting to encode a CODE 128 C block with odd number of digits");
+                    for (int i = 0; i < dataToAdd.Length; i += 2)
+                    {
+                        var toAdd = string.Format("{0}{1}", dataToAdd[i], dataToAdd[i + 1]);
+                        _FormattedData.Add(toAdd);
+                    }
+                }
+            }
+        }
         private void BreakUpDataForEncoding()
         {
             string temp = "";
@@ -396,15 +474,26 @@ namespace BarcodeLib.Symbologies
         }
         private string GetEncoding()
         {
-            //break up data for encoding
-            BreakUpDataForEncoding();
+            if (type == TYPES.CUSTOM)
+            {
+                BreakUpAndInsertCodeCharacters();
+            }
+            else
+            {
 
-            //insert the start characters
-            InsertStartandCodeCharacters();
+                //break up data for encoding
+                BreakUpDataForEncoding();
+
+                //insert the start characters
+                InsertStartandCodeCharacters();
+            }
 
             string CheckDigit = CalculateCheckDigit();
 
             string Encoded_Data = "";
+
+            var encodingType = TYPES.A; //Always start with code A
+
             foreach (string s in _FormattedData)
             {
                 //handle exception with apostrophes in select statements
@@ -414,27 +503,44 @@ namespace BarcodeLib.Symbologies
                 //select encoding only for type selected
                 switch (this.type)
                 {
-                    case TYPES.A: E_Row = this.C128_Code.Select("A = '" + s1 + "'");
+                    case TYPES.A:
+                        E_Row = this.C128_Code.Select("A = '" + s1 + "'");
                         break;
-                    case TYPES.B: E_Row = this.C128_Code.Select("B = '" + s1 + "'");
+                    case TYPES.B:
+                        E_Row = this.C128_Code.Select("B = '" + s1 + "'");
                         break;
-                    case TYPES.C: E_Row = this.C128_Code.Select("C = '" + s1 + "'");
+                    case TYPES.C:
+                        E_Row = this.C128_Code.Select("C = '" + s1 + "'");
                         break;
-                    case TYPES.DYNAMIC: E_Row = this.C128_Code.Select("A = '" + s1 + "'");
-
-                                        if (E_Row.Length <= 0)
-                                        {
-                                            E_Row = this.C128_Code.Select("B = '" + s1 + "'");
-
-                                            if (E_Row.Length <= 0)
-                                            {
-                                                E_Row = this.C128_Code.Select("C = '" + s1 + "'");
-                                            }//if
-                                        }//if
+                    case TYPES.DYNAMIC:
+                    case TYPES.CUSTOM:
+                        //Always use value from current encoding
+                        E_Row = this.C128_Code.Select(encodingType.ToString() + " = '" + s1 + "'");
+                        //If we have a START or CODE element then determine which encoding to switch to.
+                        if (s1.StartsWith("START") || s1.StartsWith("CODE"))
+                        {
+                            var typeSplit = s1.Split('_');
+                            switch (typeSplit[1])
+                            {
+                                case "A":
+                                    encodingType = TYPES.A;
+                                    break;
+                                case "B":
+                                    encodingType = TYPES.B;
+                                    break;
+                                case "C":
+                                    encodingType = TYPES.C;
+                                    break;
+                                default:
+                                    Error("EC128-8: Attempting to use unsuported code in custom CODE 128 barcode.");
+                                    break;
+                            }
+                        }
                         break;
-                    default: E_Row = null;
+                    default:
+                        E_Row = null;
                         break;
-                }//switch              
+                } //switch              
 
                 if (E_Row == null || E_Row.Length <= 0)
                     Error("EC128-5: Could not find encoding of a value( " + s1 + " ) in C128 type " + this.type.ToString());
