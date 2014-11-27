@@ -58,11 +58,11 @@ Using the library it is possible to generate a Code 128 barcode in a number of w
  - Letting the generator decide which codeset to use for each character (or character pair) (using type CODE128)
  - Specifiying the codesets required for each portion of the barcode (using type CODE128CUSTOM)
 
- To specify the codesets required for each portion of the barcode there is a Code128CustomBuilder class with the below methods.
+To specify the codesets required for each portion of the barcode there is a Code128CustomBuilder class with the below methods.
 ```
-Code128CustomBuilder.Start(Code128Type, string); //Static constructor, takes the starting codeset required and the string to encode
-AddPart(Code128Type, string); //Adds a new section to the barcode with the codeset specified
-GetBarcodeString(); //Gives you a correctly formatted string to pass into a Barcode object of type CODE128CUSTOM
+Code128CustomBuilder.Start(Code128Type, string); //Static constructor
+AddPart(Code128Type, string);
+GetBarcodeString();
 ```
 #### Example ####
 ```
