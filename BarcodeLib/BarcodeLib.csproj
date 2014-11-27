@@ -89,6 +89,7 @@
     <Compile Include="Symbologies\Codabar.cs" />
     <Compile Include="Symbologies\Code11.cs" />
     <Compile Include="Symbologies\Code128.cs" />
+    <Compile Include="Symbologies\Code128CustomBuilder.cs" />
     <Compile Include="Symbologies\Code39.cs" />
     <Compile Include="Symbologies\Code93.cs" />
     <Compile Include="Symbologies\Pharmacode.cs" />
