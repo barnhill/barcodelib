@@ -66,9 +66,10 @@ GetBarcodeString();
 ```
 #### Example ####
 ```
-var barcodeString =
+BarCodeLib.Barcode b = new BarCodeLib.Barcode();
+string barcodeString =
     Code128Builder.Start(Code128Builder.Code128Type.B, "%0S23413S")
         .AddPart(Code128Builder.Code128Type.C, "15976911000231151826")
         .GetBarcodeString();
-var barcode = b.Encode(TYPE.CODE128, barcodeString);
+Image barcodeImage = b.Encode(TYPE.CODE128CUSTOM, barcodeString);
 ```
