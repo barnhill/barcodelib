@@ -11,7 +11,7 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Code128 : BarcodeCommon, IBarcode
     {
-        public enum TYPES:int { DYNAMIC, A, B, C };
+        public enum TYPES : int {DYNAMIC , A , B , C , CUSTOM };
         private DataTable C128_Code = new DataTable("C128");
         private List<string> _FormattedData = new List<string>();
         private List<string> _EncodedData = new List<string>();

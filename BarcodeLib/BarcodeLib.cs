@@ -434,6 +434,9 @@ namespace BarcodeLib
                 case TYPE.CODE128C:
                     ibarcode = new Code128(Raw_Data, Code128.TYPES.C);
                     break;
+                case TYPE.CODE128CUSTOM:
+                    ibarcode = new Code128(Raw_Data,Code128.TYPES.CUSTOM);
+                    break;
                 case TYPE.ITF14:
                     ibarcode = new ITF14(Raw_Data);
                     break;
