@@ -280,6 +280,9 @@ namespace BarcodeLib.Symbologies
             var codeBlocks = tempRawData.Split(Convert.ToChar(140));
             foreach (var codeBlock in codeBlocks)
             {
+                if (String.IsNullOrEmpty(codeBlock))
+                    continue;
+
                 var startCodeVal = codeBlock[0];
                 switch (startCodeVal)
                 {
