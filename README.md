@@ -47,3 +47,7 @@ BarCodeLib.Barcode b = new BarCodeLib.Barcode(BarCodeLib.TYPE.UPCA,
           "038000356216", Color.Black, Color.White, 300, 150);
 Image img = b.Encode();
 ```
+
+### Copyright and license ###
+
+Copyright 2007-2014 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
