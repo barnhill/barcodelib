@@ -5,26 +5,15 @@ barcodelib
 
 This library was designed to give an easy class for developers to use when they need to generate barcode images from a string of data.
 
-### Supported Encoding Types ###
-Code 128	
-Code11	
-Code 39 (Extended / Full ASCII)
-Code 93	
-EAN-8	
-EAN-13
-UPC-A	
-UPC-E	
-JAN-13
-MSI	ISBN	
-Standard 2 of 5
-Interleaved 2 of 5	
-PostNet	UPC Supplemental 2
-UPC Supplemental 5	
-Codabar	
-ITF-14
-Telepen	
-Pharmacode	
-FIM (Facing Identification Mark)
+|   Supported   |  Symbology    | List  |
+| :------------- | :------------- | :-----|
+| Code 128      | Code 93       | Code 39 (Extended / Full ASCII) |
+| Code11        | EAN-8         | FIM (Facing Identification Mark) |
+| UPC-A         | UPC-E         | Pharmacode   |
+| MSI           | PostNet       | Standard 2 of 5 |
+| ISBN          | Codabar       | Interleaved 2 of 5 |
+| ITF-14        | Telepen       | UPC Supplemental 2 |
+| JAN-13        | EAN-13        | UPC Supplemental 5 |
 
 ### Usage ###
 
