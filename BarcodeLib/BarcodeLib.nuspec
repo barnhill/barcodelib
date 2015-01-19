@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/bbarnhill/barcodelib/blob/$version$/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/bbarnhill/barcodelib</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/bbarnhill/barcodelib/$version$/BarcodeLibTest/Barcode.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright © Brad Barnhill 2007-present</copyright>
+    <tags>barcode</tags>
+  </metadata>
+  <files>
+    <!--
+        Explicitly list files to distribute—and where. We want to
+        include the license in the binary distribution without copying
+        it into the source tree of the consuming project.
+    -->
+    <file src="..\LICENSE" target="lib\LICENSE"/>
+    <file src="Release Notes.txt" target="lib"/>
+  </files>
+</package>
+
+<!-- Please use nugetpack.cmd instead of invoking nuget pack directly.  -->
+$DoNotInvokeNugetPackDirectly$
