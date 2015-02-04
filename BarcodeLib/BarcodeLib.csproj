@@ -110,7 +110,9 @@
     <Compile Include="Symbologies\UPCSupplement5.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Release Notes.txt" />
+    <None Include="Release Notes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
