@@ -6,9 +6,9 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://github.com/bbarnhill/barcodelib/blob/$version$/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/bbarnhill/barcodelib/blob/master/LICENSE?raw=true</licenseUrl>
     <projectUrl>https://github.com/bbarnhill/barcodelib</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/bbarnhill/barcodelib/$version$/BarcodeLibTest/Barcode.ico</iconUrl>
+    <iconUrl>https://github.com/bbarnhill/barcodelib/blob/master/BarcodeLibTest/Barcode.ico?raw=true</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes></releaseNotes>

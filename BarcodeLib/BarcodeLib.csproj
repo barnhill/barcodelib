@@ -110,6 +110,10 @@
     <Compile Include="Symbologies\UPCSupplement5.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BarcodeLib.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="nugetpack.cmd" />
     <None Include="Release Notes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
