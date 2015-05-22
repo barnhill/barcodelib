@@ -98,6 +98,23 @@ namespace BarcodeLibTest
             {
                 if (type != BarcodeLib.TYPE.UNSPECIFIED)
                 {
+                    try
+                    {
+                        b.BarWidth = textBoxBarWidth.Text.Trim().Length < 1 ? null : (int?)Convert.ToInt32(textBoxBarWidth.Text.Trim());
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Unable to parse BarWidth: " + ex.Message, ex);
+                    }
+                    try
+                    {
+                        b.AspectRatio = textBoxAspectRatio.Text.Trim().Length < 1 ? null : (double?)Convert.ToDouble(textBoxAspectRatio.Text.Trim());
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Unable to parse AspectRatio: " + ex.Message, ex);
+                    }
+
                     b.IncludeLabel = this.chkGenerateLabel.Checked;
 
                     b.RotateFlipType = (RotateFlipType)Enum.Parse(typeof(RotateFlipType), this.cbRotateFlip.SelectedItem.ToString(), true);
@@ -123,6 +140,12 @@ namespace BarcodeLibTest
                     txtEncoded.Text = b.EncodedValue;
 
                     tsslEncodedType.Text = "Encoding Type: " + b.EncodedType.ToString();
+
+                    // Read dynamically calculated Width/Height because the user is interested.
+                    if (b.BarWidth.HasValue)
+                        txtWidth.Text = b.Width.ToString();
+                    if (b.AspectRatio.HasValue)
+                        txtHeight.Text = b.Height.ToString();
                 }//if
 
                 //reposition the barcode image to the middle
