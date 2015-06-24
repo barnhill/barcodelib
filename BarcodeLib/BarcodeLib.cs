@@ -176,6 +176,22 @@ namespace BarcodeLib
             set { _Height = value; }
         }
         /// <summary>
+        ///   If non-null, sets the width of a bar. <see cref="Width"/> is ignored and calculated automatically.
+        /// </summary>
+        public int? BarWidth { get; set; }
+        /// <summary>
+        ///   If non-null, <see cref="Height"/> is ignored and set to <see cref="Width"/> divided by this value rounded down.
+        /// </summary>
+        /// <remarks><para>
+        ///   As longer barcodes may be more difficult to align a scanner gun with,
+        ///   growing the height based on the width automatically allows the gun to be rotated the
+        ///   same amount regardless of how wide the barcode is. A recommended value is 2.
+        ///   </para><para>
+        ///   This value is applied to <see cref="Height"/> after after <see cref="Width"/> has been
+        ///   calculated. So it is safe to use in conjunction with <see cref="BarWidth"/>.
+        /// </para></remarks>
+        public double? AspectRatio { get; set; }
+        /// <summary>
         /// Gets or sets whether a label should be drawn below the image. (Default is false)
         /// </summary>
         public bool IncludeLabel
@@ -484,6 +500,22 @@ namespace BarcodeLib
             {
                 case TYPE.ITF14:
                     {
+                        // Automatically calculate the Width if applicable. Quite confusing with this
+                        // barcode type, and it seems this method overestimates the minimum width. But
+                        // at least it’s deterministic and doesn’t produce too small of a value.
+                        if (BarWidth.HasValue)
+                        {
+                            // Width = (BarWidth * EncodedValue.Length) + bearerwidth + iquietzone
+                            // Width = (BarWidth * EncodedValue.Length) + 2*Width/12.05 + 2*Width/20
+                            // Width - 2*Width/12.05 - 2*Width/20 = BarWidth * EncodedValue.Length
+                            // Width = (BarWidth * EncodedValue.Length)/(1 - 2/12.05 - 2/20)
+                            // Width = (BarWidth * EncodedValue.Length)/((241 - 40 - 24.1)/241)
+                            // Width = BarWidth * EncodedValue.Length / 176.9 * 241
+                            // Rounding error? + 1
+                            Width = (int)(241 / 176.9 * Encoded_Value.Length * BarWidth.Value + 1);
+                        }
+                        Height = (int?)(Width / AspectRatio) ?? Height;
+
                         b = new Bitmap(Width, Height);
 
                         int bearerwidth = (int)((b.Width) / 12.05);
@@ -534,6 +566,12 @@ namespace BarcodeLib
                     }//case
                 default:
                     {
+                        // Automatically calculate Width if applicable.
+                        Width = BarWidth * Encoded_Value.Length ?? Width;
+
+                        // Automatically calculate Height if applicable.
+                        Height = (int?)(Width / AspectRatio) ?? Height;
+
                         b = new Bitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
                         int shiftAdjustment = 0;
