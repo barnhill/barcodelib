@@ -30,13 +30,19 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_UPCE()
         {
-            if (Raw_Data.Length != 6 && Raw_Data.Length != 8 && Raw_Data.Length != 12) Error("EUPCE-1: Invalid data length. (8 or 12 numbers only)");
+            if (Raw_Data.Length != 6 && Raw_Data.Length != 8 && Raw_Data.Length != 12) 
+                Error("EUPCE-1: Invalid data length. (8 or 12 numbers only)");
 
-            if (!CheckNumericOnly(Raw_Data)) Error("EUPCE-2: Numeric only.");
+            if (!CheckNumericOnly(Raw_Data)) 
+                Error("EUPCE-2: Numeric only.");
+
+            //check for a valid number system
+            int NumberSystem = Int32.Parse(Raw_Data[0].ToString());
+            if (NumberSystem != 0 && NumberSystem != 1) 
+                Error("EUPCE-3: Invalid Number System (only 0 & 1 are valid)");
 
             int CheckDigit = Int32.Parse(Raw_Data[Raw_Data.Length - 1].ToString());
-            int NumberSystem = Int32.Parse(Raw_Data[0].ToString());
-
+            
             //Convert to UPC-E from UPC-A if necessary
             if (Raw_Data.Length == 12)
             {
@@ -45,11 +51,7 @@ namespace BarcodeLib.Symbologies
                 //break apart into components
                 string Manufacturer = Raw_Data.Substring(1, 5);
                 string ProductCode = Raw_Data.Substring(6, 5);
-
-                //check for a valid number system
-                if (NumberSystem != 0 && NumberSystem != 1)
-                    Error("EUPCE-3: Invalid Number System (only 0 & 1 are valid)");
-
+                
                 if (Manufacturer.EndsWith("000") || Manufacturer.EndsWith("100") || Manufacturer.EndsWith("200") && Int32.Parse(ProductCode) <= 999)
                 {
                     //rule 1
@@ -92,7 +94,7 @@ namespace BarcodeLib.Symbologies
             //encode the data
             string result = "101";
 
-            int pos = 0;
+            int pos = 1;
             foreach (char c in pattern)
             {
                 int i = Int32.Parse(Raw_Data[pos++].ToString());
