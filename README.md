@@ -1,6 +1,9 @@
 barcodelib
 ==========
 [![Build Status](http://server.bradbarnhill.com:5000/job/BarcodeLib/badge/icon)](http://server.bradbarnhill.com:5000/job/BarcodeLib/)
+
+[Download Latest DLL](http://server.bradbarnhill.com:5000/job/BarcodeLib/ws/BarcodeLib/bin/Debug/BarcodeLib.dll)
+
 ### Overview ###
 
 This library was designed to give an easy class for developers to use when they need to generate barcode images from a string of data.
