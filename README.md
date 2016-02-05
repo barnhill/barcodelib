@@ -1,8 +1,8 @@
 barcodelib
 ==========
-[![Build Status](http://server.bradbarnhill.com:5000/job/BarcodeLib/badge/icon)](http://server.bradbarnhill.com:5000/job/BarcodeLib/)
+![Build Status](http://server.bradbarnhill.com:9500/job/Barcode%20Library/badge/icon)
 
-[Download Latest DLL](http://server.bradbarnhill.com:5000/job/BarcodeLib/ws/BarcodeLib/bin/Debug/BarcodeLib.dll)
+[Download Latest DLL](http://server.bradbarnhill.com:9500/job/Barcode%20Libraryb/ws/BarcodeLib/bin/Debug/BarcodeLib.dll)
 
 ### Overview ###
  
