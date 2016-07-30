@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Data;
 using System.IO;
 using System.Drawing.Imaging;
@@ -493,7 +494,7 @@ namespace BarcodeLib
         {
             if (Encoded_Value == "") throw new Exception("EGENERATE_IMAGE-1: Must be encoded first.");
             Bitmap b = null;
-
+            
             DateTime dtStartTime = DateTime.Now;
 
             switch (this.Encoded_Type)
@@ -515,6 +516,12 @@ namespace BarcodeLib
                             Width = (int)(241 / 176.9 * Encoded_Value.Length * BarWidth.Value + 1);
                         }
                         Height = (int?)(Width / AspectRatio) ?? Height;
+
+                        int ILHeight = Height;
+                        if (IncludeLabel)
+                        {
+                            ILHeight -= this.LabelFont.Height;
+                        }
 
                         b = new Bitmap(Width, Height);
 
@@ -549,13 +556,13 @@ namespace BarcodeLib
                                 }//while
 
                                 //bearer bars
-                                pen.Width = (float)b.Height / 8;
+                                pen.Width = (float)ILHeight / 8;
                                 pen.Color = ForeColor;
                                 pen.Alignment = PenAlignment.Center;
                                 g.DrawLine(pen, new Point(0, 0), new Point(b.Width, 0));//top
-                                g.DrawLine(pen, new Point(0, b.Height), new Point(b.Width, b.Height));//bottom
-                                g.DrawLine(pen, new Point(0, 0), new Point(0, b.Height));//left
-                                g.DrawLine(pen, new Point(b.Width, 0), new Point(b.Width, b.Height));//right
+                                g.DrawLine(pen, new Point(0, ILHeight), new Point(b.Width, ILHeight));//bottom
+                                g.DrawLine(pen, new Point(0, 0), new Point(0, ILHeight));//left
+                                g.DrawLine(pen, new Point(b.Width, 0), new Point(b.Width, ILHeight));//right
                             }//using
                         }//using
 
@@ -571,6 +578,12 @@ namespace BarcodeLib
 
                         // Automatically calculate Height if applicable.
                         Height = (int?)(Width / AspectRatio) ?? Height;
+
+                        int ILHeight = Height;
+                        if (IncludeLabel)
+                        {
+                            ILHeight -= this.LabelFont.Height;
+                        }
 
                         b = new Bitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
@@ -616,14 +629,14 @@ namespace BarcodeLib
                                         {
                                             //draw half bars in postnet
                                             if (Encoded_Value[pos] == '0')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height / 2));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight / 2));
                                             else
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0));
                                         }//if
                                         else
                                         {
                                             if (Encoded_Value[pos] == '1')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, Height));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight));
                                         }
                                         pos++;
                                     }//while
@@ -816,6 +829,7 @@ namespace BarcodeLib
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
                     StringFormat f = new StringFormat();
                     f.Alignment = StringAlignment.Near;

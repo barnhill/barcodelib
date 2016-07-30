@@ -1,7 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
-1.0.0.20
-- 
+1.0.0.21
+- Fixed bug in UPC-E encoding
 1.0.0.19
 - Fixed bug in Code 39 Mod 43 check digit calculation
 1.0.0.18
