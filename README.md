@@ -42,4 +42,4 @@ Image img = b.Encode();
 
 ### Copyright and license ###
 
-Copyright 2007-2014 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
+Copyright 2007-2016 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
