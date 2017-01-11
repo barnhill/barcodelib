@@ -169,7 +169,6 @@ namespace BarcodeLib.Symbologies
 
             //100-139 United States
             CountryCodes.Add("100", "UNITED STATES");
-            CountryCodes.Add("100", "UNITED STATES");
             CountryCodes.Add("101", "UNITED STATES");
             CountryCodes.Add("102", "UNITED STATES");
             CountryCodes.Add("103", "UNITED STATES");
