@@ -199,6 +199,7 @@ namespace BarcodeLib.Symbologies
             CountryCodes.Add("520", "GREECE");
             CountryCodes.Add("528", "LEBANON");
             CountryCodes.Add("529", "CYPRUS");
+            CountryCodes.Add("530", "ALBANIA");
             CountryCodes.Add("531", "MACEDONIA");
             CountryCodes.Add("535", "MALTA");
             CountryCodes.Add("539", "IRELAND");
