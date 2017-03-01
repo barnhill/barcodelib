@@ -50,7 +50,6 @@ namespace BarcodeLib
         private string _XML = "";
         private ImageFormat _ImageFormat = ImageFormat.Jpeg;
         private Font _LabelFont = new Font("Microsoft Sans Serif", 10, FontStyle.Bold);
-        private AlignmentPositions _Alignment = AlignmentPositions.CENTER;
         private LabelPositions _LabelPosition = LabelPositions.BOTTOMCENTER;
         private RotateFlipType _RotateFlipType = RotateFlipType.RotateNoneFlipNone;
         #endregion
