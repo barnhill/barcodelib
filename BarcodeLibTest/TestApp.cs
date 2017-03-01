@@ -116,8 +116,12 @@ namespace BarcodeLibTest
                     }
 
                     b.IncludeLabel = this.chkGenerateLabel.Checked;
-
                     b.RotateFlipType = (RotateFlipType)Enum.Parse(typeof(RotateFlipType), this.cbRotateFlip.SelectedItem.ToString(), true);
+
+                    if (!String.IsNullOrEmpty(this.textBox1.Text.Trim()))
+                        b.AlternateLabel = this.textBox1.Text;
+                    else
+                        b.AlternateLabel = this.txtData.Text;
 
                     //label alignment and position
                     switch (this.cbLabelLocation.SelectedItem.ToString().Trim().ToUpper())
