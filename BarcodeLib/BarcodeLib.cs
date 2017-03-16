@@ -579,8 +579,14 @@ namespace BarcodeLib
                         Height = (int?)(Width / AspectRatio) ?? Height;
 
                         int ILHeight = Height;
+                        int topLableAdjustment = 0;
+
                         if (IncludeLabel)
                         {
+                            // Shift drawing down if top label.
+                            if ((LabelPosition & (LabelPositions.TOPCENTER | LabelPositions.TOPLEFT | LabelPositions.TOPRIGHT)) > 0)
+                                topLableAdjustment = this.LabelFont.Height;
+
                             ILHeight -= this.LabelFont.Height;
                         }
 
@@ -628,14 +634,14 @@ namespace BarcodeLib
                                         {
                                             //draw half bars in postnet
                                             if (Encoded_Value[pos] == '0')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight / 2));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, (ILHeight / 2) + topLableAdjustment));
                                             else
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLableAdjustment));
                                         }//if
                                         else
                                         {
                                             if (Encoded_Value[pos] == '1')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment));
                                         }
                                         pos++;
                                     }//while
