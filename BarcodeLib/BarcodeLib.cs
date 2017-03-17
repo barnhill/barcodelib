@@ -16,7 +16,7 @@ using BarcodeLib.Symbologies;
  *                                                   *
  *             Written by: Brad Barnhill             *
  *                   Date: 09-21-2007                *
- *          Last Modified: 11-02-2013                *
+ *          Last Modified: 03-16-2017                *
  *                                                   *
  *  This library was designed to give developers an  *
  *  easy class to use when they need to generate     *
@@ -502,7 +502,7 @@ namespace BarcodeLib
                     {
                         // Automatically calculate the Width if applicable. Quite confusing with this
                         // barcode type, and it seems this method overestimates the minimum width. But
-                        // at least it’s deterministic and doesn’t produce too small of a value.
+                        // at least itï¿½s deterministic and doesnï¿½t produce too small of a value.
                         if (BarWidth.HasValue)
                         {
                             // Width = (BarWidth * EncodedValue.Length) + bearerwidth + iquietzone
