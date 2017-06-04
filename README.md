@@ -36,7 +36,6 @@ BarcodeLib.Barcode b = new BarcodeLib.Barcode(BarcodeLib.TYPE.UPCA,
 ### Example ###
 ```
 BarcodeLib.Barcode b = new BarcodeLib.Barcode();
-b.Alignment = BarcodeLib.AlignmentPositions.CENTER;
 Image img = b.Encode(BarcodeLib.TYPE.UPCA, "038000356216", Color.Black, Color.White, 100, 25);
 ```
 
