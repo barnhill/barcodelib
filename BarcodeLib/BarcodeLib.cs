@@ -74,6 +74,18 @@ namespace BarcodeLib
             this.Raw_Data = data;
             this.Encoded_Type = iType;
         }
+        public Barcode(string data, TYPE iType, int labelFontSize)
+        {
+            this.Raw_Data = data;
+            this.Encoded_Type = iType;
+            this._LabelFont = new Font("Microsoft Sans Serif", labelFontSize, FontStyle.Bold);
+        }
+        public Barcode(string data, TYPE iType, Font labelFont)
+        {
+            this.Raw_Data = data;
+            this.Encoded_Type = iType;
+            this._LabelFont = labelFont;
+        }
         #endregion
 
         #region Properties
