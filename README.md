@@ -1,6 +1,6 @@
 barcodelib
 ==========
-![Build Status](http://server.bradbarnhill.com:9500/job/Barcode%20Library/badge/icon)
+![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)
 
 [Download Latest DLL](http://server.bradbarnhill.com:9500/job/Barcode%20Libraryb/ws/BarcodeLib/bin/Debug/BarcodeLib.dll)
 
