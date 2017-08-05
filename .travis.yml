@@ -1,0 +1,4 @@
+language: csharp
+solution: Barcode.sln
+script:
+  - xbuild /p:Configuration=Debug Barcode.sln
