@@ -96,632 +96,150 @@ namespace BarcodeLib.Symbologies
 
             return result;
         }//Encode_EAN13
-        private void init_CountryCodes()
+
+		private void create_CountryCodeRange(int startingNumber, int endingNumber, string countryDescription)
+		{
+			for (int i = startingNumber; i <= endingNumber; i++)
+			{
+				CountryCodes.Add(i.ToString("00"), countryDescription);
+			}	// for
+		}   // create_CountryCodeRange
+
+		private void init_CountryCodes()
         {
             CountryCodes.Clear();
-            CountryCodes.Add("00", "US / CANADA");
-            CountryCodes.Add("01", "US / CANADA");
-            CountryCodes.Add("02", "US / CANADA");
-            CountryCodes.Add("03", "US / CANADA");
-            CountryCodes.Add("04", "US / CANADA");
-            CountryCodes.Add("05", "US / CANADA");
-            CountryCodes.Add("06", "US / CANADA");
-            CountryCodes.Add("07", "US / CANADA");
-            CountryCodes.Add("08", "US / CANADA");
-            CountryCodes.Add("09", "US / CANADA");
-            CountryCodes.Add("10", "US / CANADA");
-            CountryCodes.Add("11", "US / CANADA");
-            CountryCodes.Add("12", "US / CANADA");
-            CountryCodes.Add("13", "US / CANADA");
 
-            CountryCodes.Add("20", "IN STORE");
-            CountryCodes.Add("21", "IN STORE");
-            CountryCodes.Add("22", "IN STORE");
-            CountryCodes.Add("23", "IN STORE");
-            CountryCodes.Add("24", "IN STORE");
-            CountryCodes.Add("25", "IN STORE");
-            CountryCodes.Add("26", "IN STORE");
-            CountryCodes.Add("27", "IN STORE");
-            CountryCodes.Add("28", "IN STORE");
-            CountryCodes.Add("29", "IN STORE");
+			// Source: https://en.wikipedia.org/wiki/List_of_GS1_country_codes
+			create_CountryCodeRange(0, 19, "US / CANADA");
+			create_CountryCodeRange(20, 29, "IN STORE");
+			create_CountryCodeRange(30, 39, "US DRUGS");
+			create_CountryCodeRange(40, 49, "Used to issue restricted circulation numbers within a geographic region (MO defined)");
+			create_CountryCodeRange(50, 59, "GS1 US reserved for future use");
+			create_CountryCodeRange(60, 99, "US / CANADA");
+			create_CountryCodeRange(100, 139, "UNITED STATES");
+			create_CountryCodeRange(200, 299, "Used to issue GS1 restricted circulation number within a geographic region (MO defined)");
+			create_CountryCodeRange(300, 379, "FRANCE AND MONACO");
 
-            CountryCodes.Add("30", "FRANCE");
-            CountryCodes.Add("31", "FRANCE");
-            CountryCodes.Add("32", "FRANCE");
-            CountryCodes.Add("33", "FRANCE");
-            CountryCodes.Add("34", "FRANCE");
-            CountryCodes.Add("35", "FRANCE");
-            CountryCodes.Add("36", "FRANCE");
-            CountryCodes.Add("37", "FRANCE");
-
-            CountryCodes.Add("40", "GERMANY");
-            CountryCodes.Add("41", "GERMANY");
-            CountryCodes.Add("42", "GERMANY");
-            CountryCodes.Add("43", "GERMANY");
-            CountryCodes.Add("44", "GERMANY");
-
-            CountryCodes.Add("45", "JAPAN");
-            CountryCodes.Add("46", "RUSSIAN FEDERATION");
-            CountryCodes.Add("49", "JAPAN (JAN-13)");
-
-            CountryCodes.Add("50", "UNITED KINGDOM");
-            CountryCodes.Add("54", "BELGIUM / LUXEMBOURG");
-            CountryCodes.Add("57", "DENMARK");
-
-            CountryCodes.Add("64", "FINLAND");
-
-            CountryCodes.Add("70", "NORWAY");
-            CountryCodes.Add("73", "SWEDEN");
-            CountryCodes.Add("76", "SWITZERLAND");
-
-            CountryCodes.Add("80", "ITALY");
-            CountryCodes.Add("81", "ITALY");
-            CountryCodes.Add("82", "ITALY");
-            CountryCodes.Add("83", "ITALY");
-            CountryCodes.Add("84", "SPAIN");
-            CountryCodes.Add("87", "NETHERLANDS");
-
-            CountryCodes.Add("90", "AUSTRIA");
-            CountryCodes.Add("91", "AUSTRIA");
-            CountryCodes.Add("93", "AUSTRALIA");
-            CountryCodes.Add("94", "NEW ZEALAND");
-            CountryCodes.Add("99", "COUPONS");
-
-            //100-139 United States
-            CountryCodes.Add("100", "UNITED STATES");
-            CountryCodes.Add("101", "UNITED STATES");
-            CountryCodes.Add("102", "UNITED STATES");
-            CountryCodes.Add("103", "UNITED STATES");
-            CountryCodes.Add("104", "UNITED STATES");
-            CountryCodes.Add("105", "UNITED STATES");
-            CountryCodes.Add("106", "UNITED STATES");
-            CountryCodes.Add("107", "UNITED STATES");
-            CountryCodes.Add("108", "UNITED STATES");
-            CountryCodes.Add("109", "UNITED STATES");
-            CountryCodes.Add("110", "UNITED STATES");
-            CountryCodes.Add("111", "UNITED STATES");
-            CountryCodes.Add("112", "UNITED STATES");
-            CountryCodes.Add("113", "UNITED STATES");
-            CountryCodes.Add("114", "UNITED STATES");
-            CountryCodes.Add("115", "UNITED STATES");
-            CountryCodes.Add("116", "UNITED STATES");
-            CountryCodes.Add("117", "UNITED STATES");
-            CountryCodes.Add("118", "UNITED STATES");
-            CountryCodes.Add("119", "UNITED STATES");
-            CountryCodes.Add("120", "UNITED STATES");
-            CountryCodes.Add("121", "UNITED STATES");
-            CountryCodes.Add("122", "UNITED STATES");
-            CountryCodes.Add("123", "UNITED STATES");
-            CountryCodes.Add("124", "UNITED STATES");
-            CountryCodes.Add("125", "UNITED STATES");
-            CountryCodes.Add("126", "UNITED STATES");
-            CountryCodes.Add("127", "UNITED STATES");
-            CountryCodes.Add("128", "UNITED STATES");
-            CountryCodes.Add("129", "UNITED STATES");
-            CountryCodes.Add("130", "UNITED STATES");
-            CountryCodes.Add("131", "UNITED STATES");
-            CountryCodes.Add("132", "UNITED STATES");
-            CountryCodes.Add("133", "UNITED STATES");
-            CountryCodes.Add("134", "UNITED STATES");
-            CountryCodes.Add("135", "UNITED STATES");
-            CountryCodes.Add("136", "UNITED STATES");
-            CountryCodes.Add("137", "UNITED STATES");
-            CountryCodes.Add("138", "UNITED STATES");
-            CountryCodes.Add("139", "UNITED STATES");
-
-            //300-379	France and Monaco
-            CountryCodes.Add("300", "FRANCE AND MONACO");
-            CountryCodes.Add("301", "FRANCE AND MONACO");
-            CountryCodes.Add("302", "FRANCE AND MONACO");
-            CountryCodes.Add("303", "FRANCE AND MONACO");
-            CountryCodes.Add("304", "FRANCE AND MONACO");
-            CountryCodes.Add("305", "FRANCE AND MONACO");
-            CountryCodes.Add("306", "FRANCE AND MONACO");
-            CountryCodes.Add("307", "FRANCE AND MONACO");
-            CountryCodes.Add("308", "FRANCE AND MONACO");
-            CountryCodes.Add("309", "FRANCE AND MONACO");
-            CountryCodes.Add("310", "FRANCE AND MONACO");
-            CountryCodes.Add("311", "FRANCE AND MONACO");
-            CountryCodes.Add("312", "FRANCE AND MONACO");
-            CountryCodes.Add("313", "FRANCE AND MONACO");
-            CountryCodes.Add("314", "FRANCE AND MONACO");
-            CountryCodes.Add("315", "FRANCE AND MONACO");
-            CountryCodes.Add("316", "FRANCE AND MONACO");
-            CountryCodes.Add("317", "FRANCE AND MONACO");
-            CountryCodes.Add("318", "FRANCE AND MONACO");
-            CountryCodes.Add("319", "FRANCE AND MONACO");
-            CountryCodes.Add("320", "FRANCE AND MONACO");
-            CountryCodes.Add("321", "FRANCE AND MONACO");
-            CountryCodes.Add("322", "FRANCE AND MONACO");
-            CountryCodes.Add("323", "FRANCE AND MONACO");
-            CountryCodes.Add("324", "FRANCE AND MONACO");
-            CountryCodes.Add("325", "FRANCE AND MONACO");
-            CountryCodes.Add("326", "FRANCE AND MONACO");
-            CountryCodes.Add("327", "FRANCE AND MONACO");
-            CountryCodes.Add("328", "FRANCE AND MONACO");
-            CountryCodes.Add("329", "FRANCE AND MONACO");
-            CountryCodes.Add("330", "FRANCE AND MONACO");
-            CountryCodes.Add("331", "FRANCE AND MONACO");
-            CountryCodes.Add("332", "FRANCE AND MONACO");
-            CountryCodes.Add("333", "FRANCE AND MONACO");
-            CountryCodes.Add("334", "FRANCE AND MONACO");
-            CountryCodes.Add("335", "FRANCE AND MONACO");
-            CountryCodes.Add("336", "FRANCE AND MONACO");
-            CountryCodes.Add("337", "FRANCE AND MONACO");
-            CountryCodes.Add("338", "FRANCE AND MONACO");
-            CountryCodes.Add("339", "FRANCE AND MONACO");
-            CountryCodes.Add("340", "FRANCE AND MONACO");
-            CountryCodes.Add("341", "FRANCE AND MONACO");
-            CountryCodes.Add("342", "FRANCE AND MONACO");
-            CountryCodes.Add("343", "FRANCE AND MONACO");
-            CountryCodes.Add("344", "FRANCE AND MONACO");
-            CountryCodes.Add("345", "FRANCE AND MONACO");
-            CountryCodes.Add("346", "FRANCE AND MONACO");
-            CountryCodes.Add("347", "FRANCE AND MONACO");
-            CountryCodes.Add("348", "FRANCE AND MONACO");
-            CountryCodes.Add("349", "FRANCE AND MONACO");
-            CountryCodes.Add("350", "FRANCE AND MONACO");
-            CountryCodes.Add("351", "FRANCE AND MONACO");
-            CountryCodes.Add("352", "FRANCE AND MONACO");
-            CountryCodes.Add("353", "FRANCE AND MONACO");
-            CountryCodes.Add("354", "FRANCE AND MONACO");
-            CountryCodes.Add("355", "FRANCE AND MONACO");
-            CountryCodes.Add("356", "FRANCE AND MONACO");
-            CountryCodes.Add("357", "FRANCE AND MONACO");
-            CountryCodes.Add("358", "FRANCE AND MONACO");
-            CountryCodes.Add("359", "FRANCE AND MONACO");
-            CountryCodes.Add("360", "FRANCE AND MONACO");
-            CountryCodes.Add("361", "FRANCE AND MONACO");
-            CountryCodes.Add("362", "FRANCE AND MONACO");
-            CountryCodes.Add("363", "FRANCE AND MONACO");
-            CountryCodes.Add("364", "FRANCE AND MONACO");
-            CountryCodes.Add("365", "FRANCE AND MONACO");
-            CountryCodes.Add("366", "FRANCE AND MONACO");
-            CountryCodes.Add("367", "FRANCE AND MONACO");
-            CountryCodes.Add("368", "FRANCE AND MONACO");
-            CountryCodes.Add("369", "FRANCE AND MONACO");
-            CountryCodes.Add("370", "FRANCE AND MONACO");
-            CountryCodes.Add("371", "FRANCE AND MONACO");
-            CountryCodes.Add("372", "FRANCE AND MONACO");
-            CountryCodes.Add("373", "FRANCE AND MONACO");
-            CountryCodes.Add("374", "FRANCE AND MONACO");
-            CountryCodes.Add("375", "FRANCE AND MONACO");
-            CountryCodes.Add("376", "FRANCE AND MONACO");
-            CountryCodes.Add("377", "FRANCE AND MONACO");
-            CountryCodes.Add("378", "FRANCE AND MONACO");
-            CountryCodes.Add("379", "FRANCE AND MONACO");
-
-            CountryCodes.Add("380", "BULGARIA");
-            CountryCodes.Add("383", "SLOVENIJA");
-            CountryCodes.Add("385", "CROATIA");
-            CountryCodes.Add("387", "BOSNIA-HERZEGOVINA");
-            CountryCodes.Add("389", "MONTENEGRO");
-
-            //400-440	Germany (440 code inherited from old East Germany on reunification, 1990)
-            CountryCodes.Add("400", "GERMANY");
-            CountryCodes.Add("401", "GERMANY");
-            CountryCodes.Add("402", "GERMANY");
-            CountryCodes.Add("403", "GERMANY");
-            CountryCodes.Add("404", "GERMANY");
-            CountryCodes.Add("405", "GERMANY");
-            CountryCodes.Add("406", "GERMANY");
-            CountryCodes.Add("407", "GERMANY");
-            CountryCodes.Add("408", "GERMANY");
-            CountryCodes.Add("409", "GERMANY");
-
-            CountryCodes.Add("410", "GERMANY");
-            CountryCodes.Add("411", "GERMANY");
-            CountryCodes.Add("412", "GERMANY");
-            CountryCodes.Add("413", "GERMANY");
-            CountryCodes.Add("414", "GERMANY");
-            CountryCodes.Add("415", "GERMANY");
-            CountryCodes.Add("416", "GERMANY");
-            CountryCodes.Add("417", "GERMANY");
-            CountryCodes.Add("418", "GERMANY");
-            CountryCodes.Add("419", "GERMANY");
-
-            CountryCodes.Add("420", "GERMANY");
-            CountryCodes.Add("421", "GERMANY");
-            CountryCodes.Add("422", "GERMANY");
-            CountryCodes.Add("423", "GERMANY");
-            CountryCodes.Add("424", "GERMANY");
-            CountryCodes.Add("425", "GERMANY");
-            CountryCodes.Add("426", "GERMANY");
-            CountryCodes.Add("427", "GERMANY");
-            CountryCodes.Add("428", "GERMANY");
-            CountryCodes.Add("429", "GERMANY");
-
-            CountryCodes.Add("430", "GERMANY");
-            CountryCodes.Add("431", "GERMANY");
-            CountryCodes.Add("432", "GERMANY");
-            CountryCodes.Add("433", "GERMANY");
-            CountryCodes.Add("434", "GERMANY");
-            CountryCodes.Add("435", "GERMANY");
-            CountryCodes.Add("436", "GERMANY");
-            CountryCodes.Add("437", "GERMANY");
-            CountryCodes.Add("438", "GERMANY");
-            CountryCodes.Add("439", "GERMANY");
-
-            CountryCodes.Add("440", "GERMANY");
-
-            CountryCodes.Add("450", "JAPAN");
-            CountryCodes.Add("451", "JAPAN");
-            CountryCodes.Add("452", "JAPAN");
-            CountryCodes.Add("453", "JAPAN");
-            CountryCodes.Add("454", "JAPAN");
-            CountryCodes.Add("455", "JAPAN");
-            CountryCodes.Add("456", "JAPAN");
-            CountryCodes.Add("457", "JAPAN");
-            CountryCodes.Add("458", "JAPAN");
-            CountryCodes.Add("459", "JAPAN");
-
-            CountryCodes.Add("460", "RUSSIA");
-            CountryCodes.Add("461", "RUSSIA");
-            CountryCodes.Add("462", "RUSSIA");
-            CountryCodes.Add("463", "RUSSIA");
-            CountryCodes.Add("464", "RUSSIA");
-            CountryCodes.Add("465", "RUSSIA");
-            CountryCodes.Add("466", "RUSSIA");
-            CountryCodes.Add("467", "RUSSIA");
-            CountryCodes.Add("468", "RUSSIA");
-            CountryCodes.Add("469", "RUSSIA");
-
-            CountryCodes.Add("470", "KYRGYZSTAN");
-            CountryCodes.Add("471", "TAIWAN");
-            CountryCodes.Add("474", "ESTONIA");
-            CountryCodes.Add("475", "LATVIA");
-            CountryCodes.Add("476", "AZERBAIJAN");
-            CountryCodes.Add("477", "LITHUANIA");
-            CountryCodes.Add("478", "UZBEKISTAN");
-            CountryCodes.Add("479", "SRI LANKA");
-
-            CountryCodes.Add("480", "PHILIPPINES");
-            CountryCodes.Add("481", "BELARUS");
-            CountryCodes.Add("482", "UKRAINE");
-            CountryCodes.Add("483", "TURKMENISTAN");
-            CountryCodes.Add("484", "MOLDOVA");
-            CountryCodes.Add("485", "ARMENIA");
-            CountryCodes.Add("486", "GEORGIA");
-            CountryCodes.Add("487", "KAZAKHSTAN");
-            CountryCodes.Add("488", "TAJIKISTAN");
-            CountryCodes.Add("489", "HONG KONG");
-
-            CountryCodes.Add("490", "JAPAN");
-            CountryCodes.Add("491", "JAPAN");
-            CountryCodes.Add("492", "JAPAN");
-            CountryCodes.Add("493", "JAPAN");
-            CountryCodes.Add("494", "JAPAN");
-            CountryCodes.Add("495", "JAPAN");
-            CountryCodes.Add("496", "JAPAN");
-            CountryCodes.Add("497", "JAPAN");
-            CountryCodes.Add("498", "JAPAN");
-            CountryCodes.Add("499", "JAPAN");
-
-            CountryCodes.Add("500", "UNITED KINGDOM");
-            CountryCodes.Add("501", "UNITED KINGDOM");
-            CountryCodes.Add("502", "UNITED KINGDOM");
-            CountryCodes.Add("503", "UNITED KINGDOM");
-            CountryCodes.Add("504", "UNITED KINGDOM");
-            CountryCodes.Add("505", "UNITED KINGDOM");
-            CountryCodes.Add("506", "UNITED KINGDOM");
-            CountryCodes.Add("507", "UNITED KINGDOM");
-            CountryCodes.Add("508", "UNITED KINGDOM");
-            CountryCodes.Add("509", "UNITED KINGDOM");
-
-            CountryCodes.Add("520", "GREECE");
-            CountryCodes.Add("521", "GREECE");
-            CountryCodes.Add("528", "LEBANON");
-            CountryCodes.Add("529", "CYPRUS");
-            CountryCodes.Add("530", "ALBANIA");
-            CountryCodes.Add("531", "MACEDONIA");
-            CountryCodes.Add("535", "MALTA");
-            CountryCodes.Add("539", "IRELAND");
-
-            CountryCodes.Add("540", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("541", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("542", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("543", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("544", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("545", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("546", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("547", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("548", "BELGIUM AND LUXEMBOURG");
-            CountryCodes.Add("549", "BELGIUM AND LUXEMBOURG");
-
-            CountryCodes.Add("560", "PORTUGAL");
-            CountryCodes.Add("569", "ICELAND");
-
-            CountryCodes.Add("570", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("571", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("572", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("573", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("574", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("575", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("576", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("577", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("578", " DENMARK, FAROE ISLANDS AND GREENLAND");
-            CountryCodes.Add("579", " DENMARK, FAROE ISLANDS AND GREENLAND");
-
-            CountryCodes.Add("590", "POLAND");
-            CountryCodes.Add("594", "ROMANIA");
-            CountryCodes.Add("599", "HUNGARY");
-
-            CountryCodes.Add("600", "SOUTH AFRICA");
-            CountryCodes.Add("601", "SOUTH AFRICA");
-            CountryCodes.Add("603", "GHANA");
-            CountryCodes.Add("604", "SENEGAL");
-            CountryCodes.Add("608", "BAHRAIN");
-            CountryCodes.Add("609", "MAURITIUS");
-
-            CountryCodes.Add("611", "MOROCCO");
-            CountryCodes.Add("613", "ALGERIA");
-            CountryCodes.Add("615", "NIGERIA");
-            CountryCodes.Add("616", "KENYA");
-            CountryCodes.Add("618", "IVORY COAST");
-            CountryCodes.Add("619", "TUNISIA");
-
-            CountryCodes.Add("620", "TANZANIA");
-            CountryCodes.Add("621", "SYRIA");
-            CountryCodes.Add("622", "EGYPT");
-            CountryCodes.Add("623", "BRUNEI");
-            CountryCodes.Add("624", "LIBYA");
-            CountryCodes.Add("625", "JORDAN");
-            CountryCodes.Add("626", "IRAN");
-            CountryCodes.Add("627", "KUWAIT");
-            CountryCodes.Add("628", "SAUDI ARABIA");
-            CountryCodes.Add("629", "EMIRATES");
-
-            CountryCodes.Add("640", "FINLAND");
-            CountryCodes.Add("641", "FINLAND");
-            CountryCodes.Add("642", "FINLAND");
-            CountryCodes.Add("643", "FINLAND");
-            CountryCodes.Add("644", "FINLAND");
-            CountryCodes.Add("645", "FINLAND");
-            CountryCodes.Add("646", "FINLAND");
-            CountryCodes.Add("647", "FINLAND");
-            CountryCodes.Add("648", "FINLAND");
-            CountryCodes.Add("649", "FINLAND");
-
-            CountryCodes.Add("690", "CHINA");
-            CountryCodes.Add("691", "CHINA");
-            CountryCodes.Add("692", "CHINA");
-            CountryCodes.Add("693", "CHINA");
-            CountryCodes.Add("694", "CHINA");
-            CountryCodes.Add("695", "CHINA");
-            CountryCodes.Add("696", "CHINA");
-            CountryCodes.Add("697", "CHINA");
-            CountryCodes.Add("698", "CHINA");
-            CountryCodes.Add("699", "CHINA");
-
-            CountryCodes.Add("700", "NORWAY");
-            CountryCodes.Add("701", "NORWAY");
-            CountryCodes.Add("702", "NORWAY");
-            CountryCodes.Add("703", "NORWAY");
-            CountryCodes.Add("704", "NORWAY");
-            CountryCodes.Add("705", "NORWAY");
-            CountryCodes.Add("706", "NORWAY");
-            CountryCodes.Add("707", "NORWAY");
-            CountryCodes.Add("708", "NORWAY");
-            CountryCodes.Add("709", "NORWAY");
-
-            CountryCodes.Add("729", "ISRAEL");
-
-            //730-739    Sweden: EAN / GS1 Sweden
-            CountryCodes.Add("730", "SWEDEN");
-            CountryCodes.Add("731", "SWEDEN");
-            CountryCodes.Add("732", "SWEDEN");
-            CountryCodes.Add("733", "SWEDEN");
-            CountryCodes.Add("734", "SWEDEN");
-            CountryCodes.Add("735", "SWEDEN");
-            CountryCodes.Add("736", "SWEDEN");
-            CountryCodes.Add("737", "SWEDEN");
-            CountryCodes.Add("738", "SWEDEN");
-            CountryCodes.Add("739", "SWEDEN");
-
-            CountryCodes.Add("740", "GUATEMALA");
-            CountryCodes.Add("741", "EL SALVADOR");
-            CountryCodes.Add("742", "HONDURAS");
-            CountryCodes.Add("743", "NICARAGUA");
-            CountryCodes.Add("744", "COSTA RICA");
-            CountryCodes.Add("745", "PANAMA");
-            CountryCodes.Add("746", "DOMINICAN REPUBLIC");
-
-            CountryCodes.Add("750", "MEXICO");
-            CountryCodes.Add("754", "CANADA");
-            CountryCodes.Add("755", "CANADA");
-            CountryCodes.Add("759", "VENEZUELA");
-
-            //760-769 Switzerland and Liechtenstein
-            CountryCodes.Add("760", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("761", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("762", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("763", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("764", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("765", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("766", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("767", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("768", "SWITZERLAND AND LIECHTENSTEIN");
-            CountryCodes.Add("769", "SWITZERLAND AND LIECHTENSTEIN");
-
-            CountryCodes.Add("770", "COLOMBIA");
-            CountryCodes.Add("773", "URUGUAY");
-            CountryCodes.Add("775", "PERU");
-            CountryCodes.Add("777", "BOLIVIA");
-            CountryCodes.Add("778", "ARGENTINA");
-            CountryCodes.Add("779", "ARGENTINA");
-
-            CountryCodes.Add("780", "CHILE");
-            CountryCodes.Add("784", "PARAGUAY");
-            CountryCodes.Add("785", "PERU");
-            CountryCodes.Add("786", "ECUADOR");
-            CountryCodes.Add("789", "BRAZIL");
-            CountryCodes.Add("790", "BRAZIL");
-
-            //800-839 Italy, San Marino and Vatican City
-            CountryCodes.Add("800", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("801", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("802", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("803", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("804", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("805", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("806", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("807", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("808", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("809", "ITALY, SAN MARINO AND VATICAN CITY");
-
-            CountryCodes.Add("810", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("811", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("812", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("813", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("814", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("815", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("816", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("817", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("818", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("819", "ITALY, SAN MARINO AND VATICAN CITY");
-
-            CountryCodes.Add("820", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("821", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("822", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("823", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("824", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("825", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("826", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("827", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("828", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("829", "ITALY, SAN MARINO AND VATICAN CITY");
-
-            CountryCodes.Add("830", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("831", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("832", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("833", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("834", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("835", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("836", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("837", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("838", "ITALY, SAN MARINO AND VATICAN CITY");
-            CountryCodes.Add("839", "ITALY, SAN MARINO AND VATICAN CITY");
-
-            //840-849 Spain and Andorra
-            CountryCodes.Add("840", "SPAIN AND ANDORRA");
-            CountryCodes.Add("841", "SPAIN AND ANDORRA");
-            CountryCodes.Add("842", "SPAIN AND ANDORRA");
-            CountryCodes.Add("843", "SPAIN AND ANDORRA");
-            CountryCodes.Add("844", "SPAIN AND ANDORRA");
-            CountryCodes.Add("845", "SPAIN AND ANDORRA");
-            CountryCodes.Add("846", "SPAIN AND ANDORRA");
-            CountryCodes.Add("847", "SPAIN AND ANDORRA");
-            CountryCodes.Add("848", "SPAIN AND ANDORRA");
-            CountryCodes.Add("849", "SPAIN AND ANDORRA");
-
-            CountryCodes.Add("850", "CUBA");
-            CountryCodes.Add("858", "SLOVAKIA");
-            CountryCodes.Add("859", "CZECH REPUBLIC");
-
-            CountryCodes.Add("860", "SERBIA");
-            CountryCodes.Add("865", "MONGOLIA");
-            CountryCodes.Add("867", "NORTH KOREA");
-            CountryCodes.Add("868", "TURKEY");
-            CountryCodes.Add("869", "TURKEY");
-
-            //870-879 Netherlands
-            CountryCodes.Add("870", "NETHERLANDS");
-            CountryCodes.Add("871", "NETHERLANDS");
-            CountryCodes.Add("872", "NETHERLANDS");
-            CountryCodes.Add("873", "NETHERLANDS");
-            CountryCodes.Add("874", "NETHERLANDS");
-            CountryCodes.Add("875", "NETHERLANDS");
-            CountryCodes.Add("876", "NETHERLANDS");
-            CountryCodes.Add("877", "NETHERLANDS");
-            CountryCodes.Add("878", "NETHERLANDS");
-            CountryCodes.Add("879", "NETHERLANDS");
-
-            CountryCodes.Add("880", "SOUTH KOREA");
-            CountryCodes.Add("884", "CAMBODIA");
-            CountryCodes.Add("885", "THAILAND");
-            CountryCodes.Add("888", "SINGAPORE");
-
-            CountryCodes.Add("890", "INDIA");
-            CountryCodes.Add("893", "VIETNAM");
-            CountryCodes.Add("896", "PAKISTAN");
-            CountryCodes.Add("899", "INDONESIA");
-
-            //900-919 Austria
-            CountryCodes.Add("900", "AUSTRIA");
-            CountryCodes.Add("901", "AUSTRIA");
-            CountryCodes.Add("902", "AUSTRIA");
-            CountryCodes.Add("903", "AUSTRIA");
-            CountryCodes.Add("904", "AUSTRIA");
-            CountryCodes.Add("905", "AUSTRIA");
-            CountryCodes.Add("906", "AUSTRIA");
-            CountryCodes.Add("907", "AUSTRIA");
-            CountryCodes.Add("908", "AUSTRIA");
-            CountryCodes.Add("909", "AUSTRIA");
-
-            //930-939	Australia
-            CountryCodes.Add("930", "AUSTRALIA");
-            CountryCodes.Add("931", "AUSTRALIA");
-            CountryCodes.Add("932", "AUSTRALIA");
-            CountryCodes.Add("933", "AUSTRALIA");
-            CountryCodes.Add("934", "AUSTRALIA");
-            CountryCodes.Add("935", "AUSTRALIA");
-            CountryCodes.Add("936", "AUSTRALIA");
-            CountryCodes.Add("937", "AUSTRALIA");
-            CountryCodes.Add("938", "AUSTRALIA");
-            CountryCodes.Add("939", "AUSTRALIA");
-
-            //940-949 New Zealand
-            CountryCodes.Add("940", "NEW ZEALAND");
-            CountryCodes.Add("941", "NEW ZEALAND");
-            CountryCodes.Add("942", "NEW ZEALAND");
-            CountryCodes.Add("943", "NEW ZEALAND");
-            CountryCodes.Add("944", "NEW ZEALAND");
-            CountryCodes.Add("945", "NEW ZEALAND");
-            CountryCodes.Add("946", "NEW ZEALAND");
-            CountryCodes.Add("947", "NEW ZEALAND");
-            CountryCodes.Add("948", "NEW ZEALAND");
-            CountryCodes.Add("949", "NEW ZEALAND");
-
-            CountryCodes.Add("950", "GS1 GLOBAL OFFICE SPECIAL APPLICATIONS");
-            CountryCodes.Add("951", "EPC GLOBAL SPECIAL APPLICATIONS");
-
-            CountryCodes.Add("955", "MALAYSIA");
-            CountryCodes.Add("958", "MACAU");
-
-            CountryCodes.Add("960", "GS1 UK: GTIN-8 ALLOCATIONS");
-
-            //961-969   GS1 Global Office: GTIN-8 allocations
-            CountryCodes.Add("961", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("962", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("963", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("964", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("965", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("966", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("967", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("968", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-            CountryCodes.Add("969", "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
-
-            CountryCodes.Add("977", "INTERNATIONAL STANDARD SERIAL NUMBER FOR PERIODICALS (ISSN)");
-            CountryCodes.Add("978", "INTERNATIONAL STANDARD BOOK NUMBERING (ISBN)");
-            CountryCodes.Add("979", "INTERNATIONAL STANDARD MUSIC NUMBER (ISMN)");
-
-            CountryCodes.Add("980", "REFUND RECEIPTS");
-            CountryCodes.Add("981", "COMMON CURRENCY COUPONS");
-            CountryCodes.Add("982", "COMMON CURRENCY COUPONS");
-            CountryCodes.Add("983", "COMMON CURRENCY COUPONS");
-            CountryCodes.Add("984", "COMMON CURRENCY COUPONS");
-
-            CountryCodes.Add("990", "COUPONS");
-            CountryCodes.Add("991", "COUPONS");
-            CountryCodes.Add("992", "COUPONS");
-            CountryCodes.Add("993", "COUPONS");
-            CountryCodes.Add("994", "COUPONS");
-            CountryCodes.Add("995", "COUPONS");
-            CountryCodes.Add("996", "COUPONS");
-            CountryCodes.Add("997", "COUPONS");
-            CountryCodes.Add("998", "COUPONS");
-            CountryCodes.Add("999", "COUPONS");
-
+			create_CountryCodeRange(380, 380, "BULGARIA");
+			create_CountryCodeRange(383, 383, "SLOVENIA");
+			create_CountryCodeRange(385, 385, "CROATIA");
+			create_CountryCodeRange(387, 387, "BOSNIA AND HERZEGOVINA");
+			create_CountryCodeRange(389, 389, "MONTENEGRO");
+			create_CountryCodeRange(400, 440, "GERMANY");
+			create_CountryCodeRange(450, 459, "JAPAN");
+			create_CountryCodeRange(460, 469, "RUSSIA");
+			create_CountryCodeRange(470, 470, "KYRGYZSTAN");
+			create_CountryCodeRange(471, 471, "TAIWAN");
+			create_CountryCodeRange(474, 474, "ESTONIA");
+			create_CountryCodeRange(475, 475, "LATVIA");
+			create_CountryCodeRange(476, 476, "AZERBAIJAN");
+			create_CountryCodeRange(477, 477, "LITHUANIA");
+			create_CountryCodeRange(478, 478, "UZBEKISTAN");
+			create_CountryCodeRange(479, 479, "SRI LANKA");
+			create_CountryCodeRange(480, 480, "PHILIPPINES");
+			create_CountryCodeRange(481, 481, "BELARUS");
+			create_CountryCodeRange(482, 482, "UKRAINE");
+			create_CountryCodeRange(483, 483, "TURKMENISTAN");
+			create_CountryCodeRange(484, 484, "MOLDOVA");
+			create_CountryCodeRange(485, 485, "ARMENIA");
+			create_CountryCodeRange(486, 486, "GEORGIA");
+			create_CountryCodeRange(487, 487, "KAZAKHSTAN");
+			create_CountryCodeRange(488, 488, "TAJIKISTAN");
+			create_CountryCodeRange(489, 489, "HONG KONG");
+			create_CountryCodeRange(490, 499, "JAPAN");
+			create_CountryCodeRange(500, 509, "UNITED KINGDOM");
+			create_CountryCodeRange(520, 521, "GREECE");
+			create_CountryCodeRange(528, 528, "LEBANON");
+			create_CountryCodeRange(529, 529, "CYPRUS");
+			create_CountryCodeRange(530, 530, "ALBANIA");
+			create_CountryCodeRange(531, 531, "MACEDONIA");
+			create_CountryCodeRange(535, 535, "MALTA");
+			create_CountryCodeRange(539, 539, "REPUBLIC OF IRELAND");
+			create_CountryCodeRange(540, 549, "BELGIUM AND LUXEMBOURG");
+			create_CountryCodeRange(560, 560, "PORTUGAL");
+			create_CountryCodeRange(569, 569, "ICELAND");
+			create_CountryCodeRange(570, 579, "DENMARK, FAROE ISLANDS AND GREENLAND");
+			create_CountryCodeRange(590, 590, "POLAND");
+			create_CountryCodeRange(594, 594, "ROMANIA");
+			create_CountryCodeRange(599, 599, "HUNGARY");
+			create_CountryCodeRange(600, 601, "SOUTH AFRICA");
+			create_CountryCodeRange(603, 603, "GHANA");
+			create_CountryCodeRange(604, 604, "SENEGAL");
+			create_CountryCodeRange(608, 608, "BAHRAIN");
+			create_CountryCodeRange(609, 609, "MAURITIUS");
+			create_CountryCodeRange(611, 611, "MOROCCO");
+			create_CountryCodeRange(613, 613, "ALGERIA");
+			create_CountryCodeRange(615, 615, "NIGERIA");
+			create_CountryCodeRange(616, 616, "KENYA");
+			create_CountryCodeRange(618, 618, "IVORY COAST");
+			create_CountryCodeRange(619, 619, "TUNISIA");
+			create_CountryCodeRange(620, 620, "TANZANIA");
+			create_CountryCodeRange(621, 621, "SYRIA");
+			create_CountryCodeRange(622, 622, "EGYPT");
+			create_CountryCodeRange(623, 623, "BRUNEI");
+			create_CountryCodeRange(624, 624, "LIBYA");
+			create_CountryCodeRange(625, 625, "JORDAN");
+			create_CountryCodeRange(626, 626, "IRAN");
+			create_CountryCodeRange(627, 627, "KUWAIT");
+			create_CountryCodeRange(628, 628, "SAUDI ARABIA");
+			create_CountryCodeRange(629, 629, "UNITED ARAB EMIRATES");
+			create_CountryCodeRange(640, 649, "FINLAND");
+			create_CountryCodeRange(690, 699, "CHINA");
+			create_CountryCodeRange(700, 709, "NORWAY");
+			create_CountryCodeRange(729, 729, "ISRAEL");
+			create_CountryCodeRange(730, 739, "SWEDEN");
+			create_CountryCodeRange(740, 740, "GUATEMALA");
+			create_CountryCodeRange(741, 741, "EL SALVADOR");
+			create_CountryCodeRange(742, 742, "HONDURAS");
+			create_CountryCodeRange(743, 743, "NICARAGUA");
+			create_CountryCodeRange(744, 744, "COSTA RICA");
+			create_CountryCodeRange(745, 745, "PANAMA");
+			create_CountryCodeRange(746, 746, "DOMINICAN REPUBLIC");
+			create_CountryCodeRange(750, 750, "MEXICO");
+			create_CountryCodeRange(754, 755, "CANADA");
+			create_CountryCodeRange(759, 759, "VENEZUELA");
+			create_CountryCodeRange(760, 769, "SWITZERLAND AND LIECHTENSTEIN");
+			create_CountryCodeRange(770, 771, "COLOMBIA");
+			create_CountryCodeRange(773, 773, "URUGUAY");
+			create_CountryCodeRange(775, 775, "PERU");
+			create_CountryCodeRange(777, 777, "BOLIVIA");
+			create_CountryCodeRange(778, 779, "ARGENTINA");
+			create_CountryCodeRange(780, 780, "CHILE");
+			create_CountryCodeRange(784, 784, "PARAGUAY");
+			create_CountryCodeRange(786, 786, "ECUADOR");
+			create_CountryCodeRange(789, 790, "BRAZIL");
+			create_CountryCodeRange(800, 839, "ITALY, SAN MARINO AND VATICAN CITY");
+			create_CountryCodeRange(840, 849, "SPAIN AND ANDORRA");
+			create_CountryCodeRange(850, 850, "CUBA");
+			create_CountryCodeRange(858, 858, "SLOVAKIA");
+			create_CountryCodeRange(859, 859, "CZECH REPUBLIC");
+			create_CountryCodeRange(860, 860, "SERBIA");
+			create_CountryCodeRange(865, 865, "MONGOLIA");
+			create_CountryCodeRange(867, 867, "NORTH KOREA");
+			create_CountryCodeRange(868, 869, "TURKEY");
+			create_CountryCodeRange(870, 879, "NETHERLANDS");
+			create_CountryCodeRange(880, 880, "SOUTH KOREA");
+			create_CountryCodeRange(884, 884, "CAMBODIA");
+			create_CountryCodeRange(885, 885, "THAILAND");
+			create_CountryCodeRange(888, 888, "SINGAPORE");
+			create_CountryCodeRange(890, 890, "INDIA");
+			create_CountryCodeRange(893, 893, "VIETNAM");
+			create_CountryCodeRange(896, 896, "PAKISTAN");
+			create_CountryCodeRange(899, 899, "INDONESIA");
+			create_CountryCodeRange(900, 919, "AUSTRIA");
+			create_CountryCodeRange(930, 939, "AUSTRALIA");
+			create_CountryCodeRange(940, 949, "NEW ZEALAND");
+			create_CountryCodeRange(950, 950, "GS1 GLOBAL OFFICE SPECIAL APPLICATIONS");
+			create_CountryCodeRange(951, 951, "EPC GLOBAL SPECIAL APPLICATIONS");
+			create_CountryCodeRange(955, 955, "MALAYSIA");
+			create_CountryCodeRange(958, 958, "MACAU");
+			create_CountryCodeRange(960, 961, "GS1 UK OFFICE: GTIN-8 ALLOCATIONS");
+			create_CountryCodeRange(962, 969, "GS1 GLOBAL OFFICE: GTIN-8 ALLOCATIONS");
+			create_CountryCodeRange(977, 977, "SERIAL PUBLICATIONS (ISSN)");
+			create_CountryCodeRange(978, 979, "BOOKLAND (ISBN) – 979-0 USED FOR SHEET MUSIC (ISMN-13, REPLACES DEPRECATED ISMN M- NUMBERS)");
+			create_CountryCodeRange(980, 980, "REFUND RECEIPTS");
+			create_CountryCodeRange(981, 984, "GS1 COUPON IDENTIFICATION FOR COMMON CURRENCY AREAS");
+			create_CountryCodeRange(990, 999, "GS1 COUPON IDENTIFICATION");
         }//init_CountryCodes
         private void CheckDigit()
         {
