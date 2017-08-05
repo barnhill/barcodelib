@@ -172,7 +172,7 @@ namespace BarcodeLib.Symbologies
             List<DataRow> rows = new List<DataRow>();
 
             //if two chars are numbers (or FNC1) then START_C or CODE_C
-            if (s.Length > 1 && (Char.IsNumber(s[0]) || s[0] == Convert.ToChar(200)) && (Char.IsNumber(s[1]) || s[0] == Convert.ToChar(200)))
+            if (s.Length > 1 && (Char.IsNumber(s[0]) || s[0] == Convert.ToChar(200)) && (Char.IsNumber(s[1]) || s[1] == Convert.ToChar(200)))
             {
                 if (StartCharacter == null)
                 {

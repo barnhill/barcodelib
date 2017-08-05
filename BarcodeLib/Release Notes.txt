@@ -1,5 +1,8 @@
 Release Notes for BarcodeLib.dll
 ================================
+1.0.0.24
+- bug fix with Code 128 START_C char
+- add missing EAN-13 country codes
 1.0.0.21
 - Fixed bug in UPC-E encoding
 1.0.0.19
