@@ -1,5 +1,4 @@
 barcodelib
-This library is a simple .NET assembly that developers can use to enable their applications to generate barcode images.
 ==========
 ![Build Status](http://server.bradbarnhill.com:9500/job/Barcode%20Library/badge/icon)
 
