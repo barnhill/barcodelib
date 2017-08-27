@@ -1,5 +1,2 @@
 language: csharp
 solution: Barcode.sln
-
-script:
-  - msbuild /p:Configuration=Debug Barcode.sln
