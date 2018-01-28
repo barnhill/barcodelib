@@ -13,8 +13,7 @@ using BarcodeLib.Symbologies;
  *                 Barcode Library                   *
  *                                                   *
  *             Written by: Brad Barnhill             *
- *                   Date: 09-21-2007                *
- *          Last Modified: 03-16-2017                *
+ *              Started on: 09-21-2007               *
  *                                                   *
  *  This library was designed to give developers an  *
  *  easy class to use when they need to generate     *
