@@ -1,3 +1,4 @@
 language: csharp
 script:
   - xbuild /p:Configuration=Debug Barcode.sln
+  - msbuild /p:Configuration=Debug Barcode.sln
