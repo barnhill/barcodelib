@@ -49,7 +49,8 @@ namespace BarcodeLib.Symbologies
                     evensum += Int32.Parse(c.ToString());
                 foreach (char c in odds)
                     oddsum += Int32.Parse(c.ToString());
-                int checksum = 10 - ((oddsum + evensum) % 10);
+                int mod = (oddsum + evensum) % 10;
+                int checksum = mod == 0 ? 0 : 10 - mod;
                 PreEncoded += checksum.ToString();
             }//if
 
@@ -62,7 +63,8 @@ namespace BarcodeLib.Symbologies
                     if (weight > 7) weight = 2;
                     sum += Int32.Parse(PreEncoded[i].ToString()) * weight++;
                 }//foreach
-                int checksum = 11 - (sum % 11);
+                int mod = sum % 11;
+                int checksum = mod == 0 ? 0 : 11 - mod;
 
                 PreEncoded += checksum.ToString();
             }//else

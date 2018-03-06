@@ -94,7 +94,7 @@ namespace BarcodeLib.Symbologies
             int pos = 0;
             foreach (char c in pattern)
             {
-                int i = Int32.Parse(Raw_Data[pos++].ToString());
+                int i = Int32.Parse(Raw_Data[++pos].ToString());
                 if (c == 'a')
                 {
                     result += EAN_CodeA[i];
