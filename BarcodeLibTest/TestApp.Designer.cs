@@ -513,7 +513,7 @@ namespace BarcodeLibTest
             // lblEncodingTime
             // 
             this.lblEncodingTime.AutoSize = true;
-            this.lblEncodingTime.Location = new System.Drawing.Point(124, 342);
+            this.lblEncodingTime.Location = new System.Drawing.Point(133, 376);
             this.lblEncodingTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEncodingTime.Name = "lblEncodingTime";
             this.lblEncodingTime.Size = new System.Drawing.Size(0, 20);
