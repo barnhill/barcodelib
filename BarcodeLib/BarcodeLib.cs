@@ -297,8 +297,7 @@ namespace BarcodeLib
             public double Height { get; set; }
             public bool Metric { get; set; }
         }
-
-        #region Functions
+        
         #region General Encode
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -500,8 +499,8 @@ namespace BarcodeLib
         private Bitmap Generate_Image()
         {
             if (Encoded_Value == "") throw new Exception("EGENERATE_IMAGE-1: Must be encoded first.");
-            Bitmap b = null;
-            
+            Bitmap bitmap = null;
+
             DateTime dtStartTime = DateTime.Now;
 
             switch (this.Encoded_Type)
@@ -530,12 +529,12 @@ namespace BarcodeLib
                             ILHeight -= this.LabelFont.Height;
                         }
 
-                        b = new Bitmap(Width, Height);
+                        bitmap = new Bitmap(Width, Height);
 
-                        int bearerwidth = (int)((b.Width) / 12.05);
-                        int iquietzone = Convert.ToInt32(b.Width * 0.05);
-                        int iBarWidth = (b.Width - (bearerwidth * 2) - (iquietzone * 2)) / Encoded_Value.Length;
-                        int shiftAdjustment = ((b.Width - (bearerwidth * 2) - (iquietzone * 2)) % Encoded_Value.Length) / 2;
+                        int bearerwidth = (int)((bitmap.Width) / 12.05);
+                        int iquietzone = Convert.ToInt32(bitmap.Width * 0.05);
+                        int iBarWidth = (bitmap.Width - (bearerwidth * 2) - (iquietzone * 2)) / Encoded_Value.Length;
+                        int shiftAdjustment = ((bitmap.Width - (bearerwidth * 2) - (iquietzone * 2)) % Encoded_Value.Length) / 2;
 
                         if (iBarWidth <= 0 || iquietzone <= 0)
                             throw new Exception("EGENERATE_IMAGE-3: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel or quiet zone determined to be less than 1 pixel)");
@@ -543,7 +542,7 @@ namespace BarcodeLib
                         //draw image
                         int pos = 0;
 
-                        using (Graphics g = Graphics.FromImage(b))
+                        using (Graphics g = Graphics.FromImage(bitmap))
                         {
                             //fill background
                             g.Clear(BackColor);
@@ -566,19 +565,19 @@ namespace BarcodeLib
                                 pen.Width = (float)ILHeight / 8;
                                 pen.Color = ForeColor;
                                 pen.Alignment = PenAlignment.Center;
-                                g.DrawLine(pen, new Point(0, 0), new Point(b.Width, 0));//top
-                                g.DrawLine(pen, new Point(0, ILHeight), new Point(b.Width, ILHeight));//bottom
+                                g.DrawLine(pen, new Point(0, 0), new Point(bitmap.Width, 0));//top
+                                g.DrawLine(pen, new Point(0, ILHeight), new Point(bitmap.Width, ILHeight));//bottom
                                 g.DrawLine(pen, new Point(0, 0), new Point(0, ILHeight));//left
-                                g.DrawLine(pen, new Point(b.Width, 0), new Point(b.Width, ILHeight));//right
+                                g.DrawLine(pen, new Point(bitmap.Width, 0), new Point(bitmap.Width, ILHeight));//right
                             }//using
                         }//using
 
                         if (IncludeLabel)
-                            Label_ITF14((Image)b);
+                            Labels.Label_ITF14(this, bitmap);
 
                         break;
                     }//case
-                case TYPE.EAN13:
+                case TYPE.UPCA:
                     {
                         // Automatically calculate Width if applicable.
                         Width = BarWidth * Encoded_Value.Length ?? Width;
@@ -587,50 +586,49 @@ namespace BarcodeLib
                         Height = (int?)(Width / AspectRatio) ?? Height;
 
                         int ILHeight = Height;
-                        int topLableAdjustment = 0;
+                        int topLabelAdjustment = 0;
 
                         int shiftAdjustment = 0;
+                        int iBarWidth = Width / Encoded_Value.Length;
 
                         if (IncludeLabel)
                         {
+                            //set alignment
+                            switch (Alignment)
+                            {
+                                case AlignmentPositions.LEFT:
+                                    shiftAdjustment = 0;
+                                    break;
+                                case AlignmentPositions.RIGHT:
+                                    shiftAdjustment = (Width % Encoded_Value.Length);
+                                    break;
+                                case AlignmentPositions.CENTER:
+                                default:
+                                    shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                                    break;
+                            }//switch
+
                             if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
                             {
-                                // EAN13 standardized label
+                                // UPCA standardized label
                                 string defTxt = RawData;
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
 
                                 Font font = this.LabelFont;
-                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
                                 LabelFont = labFont;
 
                                 ILHeight -= (labFont.Height / 2);
 
-                                shiftAdjustment = (Width % Encoded_Value.Length);
+                                iBarWidth = (int)Width / Encoded_Value.Length;
                             }
                             else
                             {
                                 // Shift drawing down if top label.
                                 if ((LabelPosition & (LabelPositions.TOPCENTER | LabelPositions.TOPLEFT | LabelPositions.TOPRIGHT)) > 0)
-                                    topLableAdjustment = this.LabelFont.Height;
+                                    topLabelAdjustment = this.LabelFont.Height;
 
                                 ILHeight -= this.LabelFont.Height;
-
-                                //set alignment
-                                switch (Alignment)
-                                {
-                                    case AlignmentPositions.CENTER:
-                                        shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                        break;
-                                    case AlignmentPositions.LEFT:
-                                        shiftAdjustment = 0;
-                                        break;
-                                    case AlignmentPositions.RIGHT:
-                                        shiftAdjustment = (Width % Encoded_Value.Length);
-                                        break;
-                                    default:
-                                        shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                        break;
-                                }//switch
                             }
                         }
                         else
@@ -638,23 +636,20 @@ namespace BarcodeLib
                             //set alignment
                             switch (Alignment)
                             {
-                                case AlignmentPositions.CENTER:
-                                    shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                    break;
                                 case AlignmentPositions.LEFT:
                                     shiftAdjustment = 0;
                                     break;
                                 case AlignmentPositions.RIGHT:
                                     shiftAdjustment = (Width % Encoded_Value.Length);
                                     break;
+                                case AlignmentPositions.CENTER:
                                 default:
                                     shiftAdjustment = (Width % Encoded_Value.Length) / 2;
                                     break;
                             }//switch
                         }
 
-                        b = new Bitmap(Width, Height);
-                        int iBarWidth = Width / Encoded_Value.Length;
+                        bitmap = new Bitmap(Width, Height);
                         int iBarWidthModifier = 1;
                         if (iBarWidth <= 0)
                             throw new Exception("EGENERATE_IMAGE-2: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel)");
@@ -663,7 +658,7 @@ namespace BarcodeLib
                         int pos = 0;
                         int halfBarWidth = (int)(iBarWidth * 0.5);
 
-                        using (Graphics g = Graphics.FromImage(b))
+                        using (Graphics g = Graphics.FromImage(bitmap))
                         {
                             //clears the image and colors the entire background
                             g.Clear(BackColor);
@@ -677,7 +672,7 @@ namespace BarcodeLib
                                     {
                                         if (Encoded_Value[pos] == '1')
                                         {
-                                            g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment));
+                                            g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLabelAdjustment));
                                         }
 
                                         pos++;
@@ -689,11 +684,128 @@ namespace BarcodeLib
                         {
                             if ((RawData.StartsWith(AlternateLabel) || AlternateLabel == null) && _StandardizeLabel == true)
                             {
-                                Label_EAN13((Image)b);
+                                Labels.Label_UPCA(this, bitmap);
                             }
                             else
                             {
-                                Label_Generic((Image)b);
+                                Labels.Label_Generic(this, bitmap);
+                            }
+                        }
+
+                        break;
+                    }//case
+                case TYPE.EAN13:
+                    {
+                        // Automatically calculate Width if applicable.
+                        Width = BarWidth * Encoded_Value.Length ?? Width;
+
+                        // Automatically calculate Height if applicable.
+                        Height = (int?)(Width / AspectRatio) ?? Height;
+
+                        int ILHeight = Height;
+                        int topLabelAdjustment = 0;
+
+                        int shiftAdjustment = 0;
+
+                        if (IncludeLabel)
+                        {
+                            if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
+                            {
+                                // EAN13 standardized label
+                                string defTxt = RawData;
+                                string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
+
+                                Font font = this.LabelFont;
+                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                LabelFont = labFont;
+
+                                ILHeight -= (labFont.Height / 2);
+
+                                shiftAdjustment = (Width % Encoded_Value.Length);
+                            }
+                            else
+                            {
+                                // Shift drawing down if top label.
+                                if ((LabelPosition & (LabelPositions.TOPCENTER | LabelPositions.TOPLEFT | LabelPositions.TOPRIGHT)) > 0)
+                                    topLabelAdjustment = this.LabelFont.Height;
+
+                                ILHeight -= this.LabelFont.Height;
+
+                                //set alignment
+                                switch (Alignment)
+                                {
+                                    case AlignmentPositions.LEFT:
+                                        shiftAdjustment = 0;
+                                        break;
+                                    case AlignmentPositions.RIGHT:
+                                        shiftAdjustment = (Width % Encoded_Value.Length);
+                                        break;
+                                    case AlignmentPositions.CENTER:
+                                    default:
+                                        shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                                        break;
+                                }//switch
+                            }
+                        }
+                        else
+                        {
+                            //set alignment
+                            switch (Alignment)
+                            {
+                                case AlignmentPositions.LEFT:
+                                    shiftAdjustment = 0;
+                                    break;
+                                case AlignmentPositions.RIGHT:
+                                    shiftAdjustment = (Width % Encoded_Value.Length);
+                                    break;
+                                case AlignmentPositions.CENTER:
+                                default:
+                                    shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                                    break;
+                            }//switch
+                        }
+
+                        bitmap = new Bitmap(Width, Height);
+                        int iBarWidth = Width / Encoded_Value.Length;
+                        int iBarWidthModifier = 1;
+                        if (iBarWidth <= 0)
+                            throw new Exception("EGENERATE_IMAGE-2: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel)");
+
+                        //draw image
+                        int pos = 0;
+                        int halfBarWidth = (int)(iBarWidth * 0.5);
+
+                        using (Graphics g = Graphics.FromImage(bitmap))
+                        {
+                            //clears the image and colors the entire background
+                            g.Clear(BackColor);
+
+                            //lines are fBarWidth wide so draw the appropriate color line vertically
+                            using (Pen backpen = new Pen(BackColor, iBarWidth / iBarWidthModifier))
+                            {
+                                using (Pen pen = new Pen(ForeColor, iBarWidth / iBarWidthModifier))
+                                {
+                                    while (pos < Encoded_Value.Length)
+                                    {
+                                        if (Encoded_Value[pos] == '1')
+                                        {
+                                            g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLabelAdjustment));
+                                        }
+
+                                        pos++;
+                                    }//while
+                                }//using
+                            }//using
+                        }//using
+                        if (IncludeLabel)
+                        {
+                            if ((RawData.StartsWith(AlternateLabel) || AlternateLabel == null) && _StandardizeLabel == true)
+                            {
+                                Labels.Label_EAN13(this, bitmap);
+                            }
+                            else
+                            {
+                                Labels.Label_Generic(this, bitmap);
                             }
                         }
 
@@ -708,19 +820,19 @@ namespace BarcodeLib
                         Height = (int?)(Width / AspectRatio) ?? Height;
 
                         int ILHeight = Height;
-                        int topLableAdjustment = 0;
+                        int topLabelAdjustment = 0;
 
                         if (IncludeLabel)
                         {
                             // Shift drawing down if top label.
                             if ((LabelPosition & (LabelPositions.TOPCENTER | LabelPositions.TOPLEFT | LabelPositions.TOPRIGHT)) > 0)
-                                topLableAdjustment = this.LabelFont.Height;
+                                topLabelAdjustment = this.LabelFont.Height;
 
                             ILHeight -= this.LabelFont.Height;
                         }
 
-                                                
-                        b = new Bitmap(Width, Height);
+
+                        bitmap = new Bitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
                         int shiftAdjustment = 0;
                         int iBarWidthModifier = 1;
@@ -731,13 +843,15 @@ namespace BarcodeLib
                         //set alignment
                         switch (Alignment)
                         {
-                            case AlignmentPositions.CENTER: shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                            case AlignmentPositions.LEFT:
+                                shiftAdjustment = 0;
                                 break;
-                            case AlignmentPositions.LEFT: shiftAdjustment = 0;
+                            case AlignmentPositions.RIGHT:
+                                shiftAdjustment = (Width % Encoded_Value.Length);
                                 break;
-                            case AlignmentPositions.RIGHT: shiftAdjustment = (Width % Encoded_Value.Length);
-                                break;
-                            default: shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                            case AlignmentPositions.CENTER:
+                            default:
+                                shiftAdjustment = (Width % Encoded_Value.Length) / 2;
                                 break;
                         }//switch
 
@@ -746,13 +860,13 @@ namespace BarcodeLib
 
                         //draw image
                         int pos = 0;
-                        int halfBarWidth = (int)(iBarWidth * 0.5);
+                        int halfBarWidth = (int)Math.Round(iBarWidth * 0.5);
 
-                        using (Graphics g = Graphics.FromImage(b))
+                        using (Graphics g = Graphics.FromImage(bitmap))
                         {
                             //clears the image and colors the entire background
                             g.Clear(BackColor);
-                            
+
                             //lines are fBarWidth wide so draw the appropriate color line vertically
                             using (Pen backpen = new Pen(BackColor, iBarWidth / iBarWidthModifier))
                             {
@@ -764,14 +878,14 @@ namespace BarcodeLib
                                         {
                                             //draw half bars in postnet
                                             if (Encoded_Value[pos] == '0')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, (ILHeight / 2) + topLableAdjustment));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLabelAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, (ILHeight / 2) + topLabelAdjustment));
                                             else
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLableAdjustment));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLabelAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment));
                                         }//if
                                         else
                                         {
                                             if (Encoded_Value[pos] == '1')
-                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLableAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLableAdjustment));
+                                                g.DrawLine(pen, new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new Point(pos * iBarWidth + shiftAdjustment + halfBarWidth, ILHeight + topLabelAdjustment));
                                         }
                                         pos++;
                                     }//while
@@ -780,33 +894,18 @@ namespace BarcodeLib
                         }//using
                         if (IncludeLabel)
                         {
-                            if (this.EncodedType == TYPE.EAN13)
-                            {
-                                if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
-                                {
-                                    
-                                    Label_EAN13((Image)b);
-                                }
-                                else
-                                {
-                                    Label_Generic((Image)b);
-                                }
-                            }
-                            else
-                            { 
-                                Label_Generic((Image)b);
-                            }                            
-                        }
-                        
+                            Labels.Label_Generic(this, bitmap);
+                        }//if
+
                         break;
-                    }//case
+                    }//switch
             }//switch
 
-            _Encoded_Image = (Image)b;
+            _Encoded_Image = (Image)bitmap;
 
             this.EncodingTime += ((TimeSpan)(DateTime.Now - dtStartTime)).TotalMilliseconds;
 
-            return b;
+            return bitmap;
         }//Generate_Image
         /// <summary>
         /// Gets the bytes that represent the image.
@@ -851,11 +950,11 @@ namespace BarcodeLib
                     System.Drawing.Imaging.ImageFormat imageformat;
                     switch (FileType)
                     {
-                        case SaveTypes.BMP: imageformat = System.Drawing.Imaging.ImageFormat.Bmp; break;
-                        case SaveTypes.GIF: imageformat = System.Drawing.Imaging.ImageFormat.Gif; break;
-                        case SaveTypes.JPG: imageformat = System.Drawing.Imaging.ImageFormat.Jpeg; break;
-                        case SaveTypes.PNG: imageformat = System.Drawing.Imaging.ImageFormat.Png; break;
-                        case SaveTypes.TIFF: imageformat = System.Drawing.Imaging.ImageFormat.Tiff; break;
+                        case SaveTypes.BMP: imageformat = ImageFormat.Bmp; break;
+                        case SaveTypes.GIF: imageformat = ImageFormat.Gif; break;
+                        case SaveTypes.JPG: imageformat = ImageFormat.Jpeg; break;
+                        case SaveTypes.PNG: imageformat = ImageFormat.Png; break;
+                        case SaveTypes.TIFF: imageformat = ImageFormat.Tiff; break;
                         default: imageformat = ImageFormat; break;
                     }//switch
                     ((Bitmap)_Encoded_Image).Save(Filename, imageformat);
@@ -880,11 +979,11 @@ namespace BarcodeLib
                     System.Drawing.Imaging.ImageFormat imageformat;
                     switch (FileType)
                     {
-                        case SaveTypes.BMP: imageformat = System.Drawing.Imaging.ImageFormat.Bmp; break;
-                        case SaveTypes.GIF: imageformat = System.Drawing.Imaging.ImageFormat.Gif; break;
-                        case SaveTypes.JPG: imageformat = System.Drawing.Imaging.ImageFormat.Jpeg; break;
-                        case SaveTypes.PNG: imageformat = System.Drawing.Imaging.ImageFormat.Png; break;
-                        case SaveTypes.TIFF: imageformat = System.Drawing.Imaging.ImageFormat.Tiff; break;
+                        case SaveTypes.BMP: imageformat = ImageFormat.Bmp; break;
+                        case SaveTypes.GIF: imageformat = ImageFormat.Gif; break;
+                        case SaveTypes.JPG: imageformat = ImageFormat.Jpeg; break;
+                        case SaveTypes.PNG: imageformat = ImageFormat.Png; break;
+                        case SaveTypes.TIFF: imageformat = ImageFormat.Tiff; break;
                         default: imageformat = ImageFormat; break;
                     }//switch
                     ((Bitmap)_Encoded_Image).Save(stream, imageformat);
@@ -924,289 +1023,8 @@ namespace BarcodeLib
             return new ImageSize(Width, Height, Metric);
         }
         #endregion
-        
-        #region Label Generation
-        private Image Label_ITF14(Image img)
-        {
-            try
-            {
-                Font font = this.LabelFont;
 
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.DrawImage(img, (float)0, (float)0);
-
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-
-                    //color a white box at the bottom of the barcode to hold the string of data
-                    g.FillRectangle(new SolidBrush(this.BackColor), new Rectangle(0, img.Height - (font.Height - 2), img.Width, font.Height));
-
-                    //draw datastring under the barcode image
-                    StringFormat f = new StringFormat();
-                    f.Alignment = StringAlignment.Center;
-                    g.DrawString(AlternateLabel == null ? RawData : AlternateLabel, font, new SolidBrush(ForeColor), (float)(img.Width / 2), img.Height - font.Height + 1, f);
-
-                    Pen pen = new Pen(ForeColor, (float)img.Height / 16);
-                    pen.Alignment = PenAlignment.Inset;
-                    g.DrawLine(pen, new Point(0, img.Height - font.Height - 2), new Point(img.Width, img.Height - font.Height - 2));//bottom
-
-                    g.Save();
-                }//using
-                return img;
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("ELABEL_ITF14-1: " + ex.Message);
-            }//catch
-        }
-        private Image Label_Generic(Image img)
-        {
-            try
-            {
-                Font font = this.LabelFont;
-
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.DrawImage(img, (float)0, (float)0);
-
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-
-                    StringFormat f = new StringFormat();
-                    f.Alignment = StringAlignment.Near;
-                    f.LineAlignment = StringAlignment.Near;
-                    int LabelX = 0;
-                    int LabelY = 0;
-
-                    switch (LabelPosition)
-                    {
-                        case LabelPositions.BOTTOMCENTER:
-                            LabelX = img.Width / 2;
-                            LabelY = img.Height - (font.Height);
-                            f.Alignment = StringAlignment.Center;
-                            break;
-                        case LabelPositions.BOTTOMLEFT:
-                            LabelX = 0;
-                            LabelY = img.Height - (font.Height);
-                            f.Alignment = StringAlignment.Near;
-                            break;
-                        case LabelPositions.BOTTOMRIGHT:
-                            LabelX = img.Width;
-                            LabelY = img.Height - (font.Height);
-                            f.Alignment = StringAlignment.Far;
-                            break;
-                        case LabelPositions.TOPCENTER:
-                            LabelX = img.Width / 2;
-                            LabelY = 0;
-                            f.Alignment = StringAlignment.Center;
-                            break;
-                        case LabelPositions.TOPLEFT:
-                            LabelX = img.Width;
-                            LabelY = 0;
-                            f.Alignment = StringAlignment.Near;
-                            break;
-                        case LabelPositions.TOPRIGHT:
-                            LabelX = img.Width;
-                            LabelY = 0;
-                            f.Alignment = StringAlignment.Far;
-                            break;
-                    }//switch
-                    
-                    //color a background color box at the bottom of the barcode to hold the string of data
-                    g.FillRectangle(new SolidBrush(BackColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height));
-
-                    //draw datastring under the barcode image
-                    g.DrawString(AlternateLabel == null ? RawData : AlternateLabel, font, new SolidBrush(ForeColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height), f);
-                    
-                    g.Save();
-                }//using
-                return img;
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("ELABEL_GENERIC-1: " + ex.Message);
-            }//catch
-        }//Label_Generic
-
-        private Image Label_EAN13(Image img)
-        {
-            try
-            {
-                int iBarWidth = Width / Encoded_Value.Length;
-                string defTxt = RawData;
-
-                Font labFont = new Font("Arial", getFontsize(Width - Width % Encoded_Value.Length, img.Height, defTxt), FontStyle.Regular);
-                Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.6f, labFont.Style);
-
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.DrawImage(img, (float)0, (float)0);
-
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-
-                    StringFormat f = new StringFormat();
-                    f.Alignment = StringAlignment.Near;
-                    f.LineAlignment = StringAlignment.Near;
-                    int LabelX = 0;
-                    int LabelY = 0;
-
-                    //Default alignment for EAN13
-                    LabelY = img.Height - labFont.Height;
-                    f.Alignment = StringAlignment.Near;
-
-                    //measureString(smallFont, defTxt.Substring(0, 1)
-                    float w1 = iBarWidth * 4; //Width of first block
-                    float w2 = iBarWidth * 42; //Width of second block
-                    float w3 = iBarWidth * 42; //Width of third block
-                    
-                    float s2 = Width - (EncodedValue.Length * iBarWidth) + (iBarWidth * 3); //Start position of block 2
-                    float s1 = s2 - (iBarWidth * 5) - w1;
-                    float s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
-
-                    //Draw the background rectangles for each block
-                    g.FillRectangle(new SolidBrush(BackColor), new RectangleF(s2, (float)LabelY, w2, (float)labFont.Height));
-                    g.FillRectangle(new SolidBrush(BackColor), new RectangleF(s3, (float)LabelY, w3, (float)labFont.Height));
-                    
-                    //draw datastring under the barcode image
-                    g.DrawString(defTxt.Substring(0, 1), smallFont, new SolidBrush(ForeColor), new RectangleF(s1, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(1, 6), labFont, new SolidBrush(ForeColor), new RectangleF(s2 - (iBarWidth * .75f), (float)LabelY, (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(7), labFont, new SolidBrush(ForeColor), new RectangleF(s3 - (iBarWidth * 1.75f), (float)LabelY, (float)img.Width, (float)labFont.Height), f);
-                    
-                    g.Save();
-                }//using
-                return img;
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("ELABEL_EAN13-1: " + ex.Message);
-            }//catch
-        }//Label_EAN13
-        
-        /// <summary>
-        /// Draws Label for UPC-A barcodes (NOT COMPLETE)
-        /// </summary>
-        /// <param name="img"></param>
-        /// <returns></returns>
-        private Image Label_UPCA(Image img)
-        {
-            try
-            {
-                int iBarWidth = Width / Encoded_Value.Length;
-                int shiftAdjustment = 0;
-                
-                //set alignment
-                switch (Alignment)
-                {
-                    case AlignmentPositions.CENTER: shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                        break;
-                    case AlignmentPositions.LEFT: shiftAdjustment = 0;
-                        break;
-                    case AlignmentPositions.RIGHT: shiftAdjustment = (Width % Encoded_Value.Length);
-                        break;
-                    default: shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                        break;
-                }//switch
-
-                Font font = new Font("OCR A Extended", 12F, FontStyle.Bold, GraphicsUnit.Point, 0); ;
-
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.DrawImage(img, (float)0, (float)0);
-
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-
-                    //draw datastring under the barcode image
-                    RectangleF rect = new RectangleF((iBarWidth * 3) + shiftAdjustment, this.Height - (int)(this.Height * 0.1), (iBarWidth * 43), (int)(this.Height * 0.1));
-                    g.FillRectangle(new SolidBrush(Color.Yellow), rect.X, rect.Y, rect.Width, rect.Height);
-                    g.DrawString(this.RawData.Substring(1, 5), font, new SolidBrush(this.ForeColor), rect.X, rect.Y);
-
-                    g.Save();
-                }//using
-                return img;
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("ELABEL_UPCA-1: " + ex.Message);
-            }//catch
-        }//Label_UPCA
-
-
-
-        private int getFontsize(int wid, int hgt, string lbl)
-        {
-            //Returns the optimal font size for the specified dimensions
-            int fontSize = 10;
-
-            if (lbl.Length > 0)
-            {
-                Image fakeImage = new Bitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
-
-                // Make a Graphics object to measure the text.
-                using (Graphics gr = Graphics.FromImage(fakeImage))
-                {
-                    for (int i = 1; i <= 100; i++)
-                    {
-                        using (Font test_font =
-                            new Font("Arial", i))
-                        {
-                            // See how much space the text would
-                            // need, specifying a maximum width.
-                            SizeF text_size =
-                                gr.MeasureString(lbl, test_font);
-                            if ((text_size.Width > wid) ||
-                                (text_size.Height > hgt))
-                            {
-                                fontSize = i - 1;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-
-            };
-            
-            return fontSize;
-        }
-
-
-        private int measureString(Font fnt, string lbl)
-        {
-            //Returns the width of a string using a specific font
-            int stWidth = 0;
-            
-            if (lbl.Length > 0)
-            {
-                Image fakeImage = new Bitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
-
-                // Make a Graphics object to measure the text.
-                using (Graphics gr = Graphics.FromImage(fakeImage))
-                {
-                    SizeF text_size = gr.MeasureString(lbl, fnt);
-                    stWidth = (int)text_size.Width; 
-                }
-            };
-
-            return stWidth;
-        }
-        
-        #endregion
-        #endregion
-
-        #region Misc
+        #region XML Methods
         private string GetXML()
         {
             if (EncodedValue == "")
@@ -1274,7 +1092,7 @@ namespace BarcodeLib
         }
         #endregion
 
-        #region Static Methods
+        #region Static Encode Methods
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>

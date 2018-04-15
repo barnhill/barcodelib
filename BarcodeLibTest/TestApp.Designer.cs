@@ -88,10 +88,10 @@ namespace BarcodeLibTest
             this.tsslEncodedType,
             this.tslblLibraryVersion,
             this.tslblCredits});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 552);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 883);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1052, 34);
+            this.statusStrip1.Size = new System.Drawing.Size(1523, 34);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 30;
             this.statusStrip1.Text = "statusStrip1";
@@ -106,7 +106,7 @@ namespace BarcodeLibTest
             // 
             this.tslblLibraryVersion.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslblLibraryVersion.Name = "tslblLibraryVersion";
-            this.tslblLibraryVersion.Size = new System.Drawing.Size(823, 29);
+            this.tslblLibraryVersion.Size = new System.Drawing.Size(1294, 29);
             this.tslblLibraryVersion.Spring = true;
             this.tslblLibraryVersion.Text = "LibVersion";
             // 
@@ -125,7 +125,7 @@ namespace BarcodeLibTest
             this.barcode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.barcode.Name = "barcode";
             this.barcode.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.barcode.Size = new System.Drawing.Size(781, 552);
+            this.barcode.Size = new System.Drawing.Size(1252, 883);
             this.barcode.TabIndex = 36;
             this.barcode.TabStop = false;
             this.barcode.Text = "Barcode Image";
@@ -168,7 +168,7 @@ namespace BarcodeLibTest
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.barcode);
-            this.splitContainer1.Size = new System.Drawing.Size(1052, 552);
+            this.splitContainer1.Size = new System.Drawing.Size(1523, 883);
             this.splitContainer1.SplitterDistance = 265;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 37;
@@ -236,7 +236,7 @@ namespace BarcodeLibTest
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(50, 26);
             this.txtWidth.TabIndex = 43;
-            this.txtWidth.Text = "300";
+            this.txtWidth.Text = "600";
             // 
             // label7
             // 
@@ -265,7 +265,7 @@ namespace BarcodeLibTest
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(50, 26);
             this.txtHeight.TabIndex = 44;
-            this.txtHeight.Text = "150";
+            this.txtHeight.Text = "300";
             // 
             // label9
             // 
@@ -375,7 +375,7 @@ namespace BarcodeLibTest
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Location = new System.Drawing.Point(176, 466);
+            this.btnSave.Location = new System.Drawing.Point(176, 797);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(86, 71);
@@ -387,7 +387,7 @@ namespace BarcodeLibTest
             // btnSaveXML
             // 
             this.btnSaveXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveXML.Location = new System.Drawing.Point(270, 466);
+            this.btnSaveXML.Location = new System.Drawing.Point(270, 797);
             this.btnSaveXML.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSaveXML.Name = "btnSaveXML";
             this.btnSaveXML.Size = new System.Drawing.Size(126, 35);
@@ -399,7 +399,7 @@ namespace BarcodeLibTest
             // btnLoadXML
             // 
             this.btnLoadXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnLoadXML.Location = new System.Drawing.Point(270, 504);
+            this.btnLoadXML.Location = new System.Drawing.Point(270, 835);
             this.btnLoadXML.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnLoadXML.Name = "btnLoadXML";
             this.btnLoadXML.Size = new System.Drawing.Size(126, 35);
@@ -421,7 +421,7 @@ namespace BarcodeLibTest
             // btnEncode
             // 
             this.btnEncode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEncode.Location = new System.Drawing.Point(12, 466);
+            this.btnEncode.Location = new System.Drawing.Point(12, 797);
             this.btnEncode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnEncode.Name = "btnEncode";
             this.btnEncode.Size = new System.Drawing.Size(158, 71);
@@ -450,7 +450,7 @@ namespace BarcodeLibTest
             this.txtEncoded.Name = "txtEncoded";
             this.txtEncoded.ReadOnly = true;
             this.txtEncoded.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEncoded.Size = new System.Drawing.Size(382, 53);
+            this.txtEncoded.Size = new System.Drawing.Size(382, 384);
             this.txtEncoded.TabIndex = 62;
             this.txtEncoded.TabStop = false;
             // 
@@ -595,7 +595,7 @@ namespace BarcodeLibTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1052, 586);
+            this.ClientSize = new System.Drawing.Size(1523, 917);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.DoubleBuffered = true;
