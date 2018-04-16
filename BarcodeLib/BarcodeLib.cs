@@ -591,23 +591,23 @@ namespace BarcodeLib
                         int shiftAdjustment = 0;
                         int iBarWidth = Width / Encoded_Value.Length;
 
+                        //set alignment
+                        switch (Alignment)
+                        {
+                            case AlignmentPositions.LEFT:
+                                shiftAdjustment = 0;
+                                break;
+                            case AlignmentPositions.RIGHT:
+                                shiftAdjustment = (Width % Encoded_Value.Length);
+                                break;
+                            case AlignmentPositions.CENTER:
+                            default:
+                                shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                                break;
+                        }//switch
+
                         if (IncludeLabel)
                         {
-                            //set alignment
-                            switch (Alignment)
-                            {
-                                case AlignmentPositions.LEFT:
-                                    shiftAdjustment = 0;
-                                    break;
-                                case AlignmentPositions.RIGHT:
-                                    shiftAdjustment = (Width % Encoded_Value.Length);
-                                    break;
-                                case AlignmentPositions.CENTER:
-                                default:
-                                    shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                    break;
-                            }//switch
-
                             if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
                             {
                                 // UPCA standardized label
@@ -630,23 +630,6 @@ namespace BarcodeLib
 
                                 ILHeight -= this.LabelFont.Height;
                             }
-                        }
-                        else
-                        {
-                            //set alignment
-                            switch (Alignment)
-                            {
-                                case AlignmentPositions.LEFT:
-                                    shiftAdjustment = 0;
-                                    break;
-                                case AlignmentPositions.RIGHT:
-                                    shiftAdjustment = (Width % Encoded_Value.Length);
-                                    break;
-                                case AlignmentPositions.CENTER:
-                                default:
-                                    shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                    break;
-                            }//switch
                         }
 
                         bitmap = new Bitmap(Width, Height);
@@ -707,6 +690,21 @@ namespace BarcodeLib
 
                         int shiftAdjustment = 0;
 
+                        //set alignment
+                        switch (Alignment)
+                        {
+                            case AlignmentPositions.LEFT:
+                                shiftAdjustment = 0;
+                                break;
+                            case AlignmentPositions.RIGHT:
+                                shiftAdjustment = (Width % Encoded_Value.Length);
+                                break;
+                            case AlignmentPositions.CENTER:
+                            default:
+                                shiftAdjustment = (Width % Encoded_Value.Length) / 2;
+                                break;
+                        }//switch
+
                         if (IncludeLabel)
                         {
                             if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
@@ -720,8 +718,6 @@ namespace BarcodeLib
                                 LabelFont = labFont;
 
                                 ILHeight -= (labFont.Height / 2);
-
-                                shiftAdjustment = (Width % Encoded_Value.Length);
                             }
                             else
                             {
@@ -730,39 +726,7 @@ namespace BarcodeLib
                                     topLabelAdjustment = this.LabelFont.Height;
 
                                 ILHeight -= this.LabelFont.Height;
-
-                                //set alignment
-                                switch (Alignment)
-                                {
-                                    case AlignmentPositions.LEFT:
-                                        shiftAdjustment = 0;
-                                        break;
-                                    case AlignmentPositions.RIGHT:
-                                        shiftAdjustment = (Width % Encoded_Value.Length);
-                                        break;
-                                    case AlignmentPositions.CENTER:
-                                    default:
-                                        shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                        break;
-                                }//switch
                             }
-                        }
-                        else
-                        {
-                            //set alignment
-                            switch (Alignment)
-                            {
-                                case AlignmentPositions.LEFT:
-                                    shiftAdjustment = 0;
-                                    break;
-                                case AlignmentPositions.RIGHT:
-                                    shiftAdjustment = (Width % Encoded_Value.Length);
-                                    break;
-                                case AlignmentPositions.CENTER:
-                                default:
-                                    shiftAdjustment = (Width % Encoded_Value.Length) / 2;
-                                    break;
-                            }//switch
                         }
 
                         bitmap = new Bitmap(Width, Height);
