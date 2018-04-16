@@ -29,10 +29,6 @@ Barcode(string, BarcodeLib.TYPE);
 
 If you decide to create an instance with parameters, the parameters are as follows: the string is the data to be encoded into the barcode, and BarcodeLib.TYPE is the symbology to encode the data with. If you do not choose to specify the data and type at the time the instance is created, you may specify them through the appropriate property later on (but before you encode).
 
-```
-BarcodeLib.Barcode b = new BarcodeLib.Barcode(BarcodeLib.TYPE.UPCA, 
-          "038000356216", Color.Black, Color.White, 300, 150);
-```
 ### Example ###
 ```
 BarcodeLib.Barcode b = new BarcodeLib.Barcode();
