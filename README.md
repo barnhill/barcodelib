@@ -1,6 +1,4 @@
-barcodelib
-==========
-![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)
+# barcodelib ![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)
 
 [Download Latest DLL](http://pnuema.com:2500/job/Barcode%20Library/ws/BarcodeLib/bin/Debug/BarcodeLib.dll)
 
