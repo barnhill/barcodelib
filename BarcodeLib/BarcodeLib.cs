@@ -608,7 +608,7 @@ namespace BarcodeLib
 
                         if (IncludeLabel)
                         {
-                            if (((AlternateLabel == null) || RawData.StartsWith(AlternateLabel)  ) && _StandardizeLabel == true)
+                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel == true)
                             {
                                 // UPCA standardized label
                                 string defTxt = RawData;
