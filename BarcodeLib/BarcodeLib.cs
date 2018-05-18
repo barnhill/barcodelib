@@ -608,7 +608,7 @@ namespace BarcodeLib
 
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
+                            if (((AlternateLabel == null) || RawData.StartsWith(AlternateLabel)  ) && _StandardizeLabel == true)
                             {
                                 // UPCA standardized label
                                 string defTxt = RawData;
@@ -665,7 +665,7 @@ namespace BarcodeLib
                         }//using
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || AlternateLabel == null) && _StandardizeLabel == true)
+                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel == true)
                             {
                                 Labels.Label_UPCA(this, bitmap);
                             }
@@ -707,7 +707,7 @@ namespace BarcodeLib
 
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
+                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel == true)
                             {
                                 // EAN13 standardized label
                                 string defTxt = RawData;
@@ -763,7 +763,7 @@ namespace BarcodeLib
                         }//using
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || AlternateLabel == null) && _StandardizeLabel == true)
+                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel == true)
                             {
                                 Labels.Label_EAN13(this, bitmap);
                             }
