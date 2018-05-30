@@ -26,13 +26,13 @@ namespace BarcodeLib
     #region Enums
     public enum TYPE : int { UNSPECIFIED, UPCA, UPCE, UPC_SUPPLEMENTAL_2DIGIT, UPC_SUPPLEMENTAL_5DIGIT, EAN13, EAN8, Interleaved2of5, Standard2of5, Industrial2of5, CODE39, CODE39Extended, CODE39_Mod43, Codabar, PostNet, BOOKLAND, ISBN, JAN13, MSI_Mod10, MSI_2Mod10, MSI_Mod11, MSI_Mod11_Mod10, Modified_Plessey, CODE11, USD8, UCC12, UCC13, LOGMARS, CODE128, CODE128A, CODE128B, CODE128C, ITF14, CODE93, TELEPEN, FIM, PHARMACODE };
     public enum SaveTypes : int { JPG, BMP, PNG, GIF, TIFF, UNSPECIFIED };
-    public enum AlignmentPositions : int { CENTER, LEFT, RIGHT};
+    public enum AlignmentPositions : int { CENTER, LEFT, RIGHT };
     public enum LabelPositions : int { TOPLEFT, TOPCENTER, TOPRIGHT, BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT };
     #endregion
     /// <summary>
     /// Generates a barcode image of a specified symbology from a string of data.
     /// </summary>
-    public class Barcode: IDisposable
+    public class Barcode : IDisposable
     {
         #region Variables
         private IBarcode ibarcode = new BarcodeLib.Symbologies.Blank();
@@ -106,16 +106,16 @@ namespace BarcodeLib
         public TYPE EncodedType
         {
             set { Encoded_Type = value; }
-            get { return Encoded_Type;  }
+            get { return Encoded_Type; }
         }//EncodedType
         /// <summary>
         /// Gets the Image of the generated barcode.
         /// </summary>
         public Image EncodedImage
         {
-            get 
+            get
             {
-                return _Encoded_Image; 
+                return _Encoded_Image;
             }
         }//EncodedImage
         /// <summary>
@@ -198,16 +198,16 @@ namespace BarcodeLib
             get;
             set;
         }
-        
+
         /// <summary>
         /// Alternate label to be displayed.  (IncludeLabel must be set to true as well)
         /// </summary>
-        public String AlternateLabel 
-        { 
-            get; 
-            set; 
+        public String AlternateLabel
+        {
+            get;
+            set;
         }
-        
+
         /// <summary>
         /// Try to standardize the label format. (Valid only for EAN13 and empty AlternateLabel, default is true)
         /// </summary>
@@ -216,7 +216,7 @@ namespace BarcodeLib
             get { return _StandardizeLabel; }
             set { _StandardizeLabel = value; }
         }
-        
+
         /// <summary>
         /// Gets or sets the amount of time in milliseconds that it took to encode and draw the barcode.
         /// </summary>
@@ -264,7 +264,7 @@ namespace BarcodeLib
             {
                 if (_Encoded_Image == null)
                     return null;
-                
+
                 using (MemoryStream ms = new MemoryStream())
                 {
                     _Encoded_Image.Save(ms, _ImageFormat);
@@ -277,14 +277,14 @@ namespace BarcodeLib
         /// </summary>
         public static Version Version
         {
-            get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;}
+            get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version; }
         }
         #endregion
 
         /// <summary>
         /// Represents the size of an image in real world coordinates (millimeters or inches).
         /// </summary>
-        public class ImageSize 
+        public class ImageSize
         {
             public ImageSize(double width, double height, bool metric)
             {
@@ -297,7 +297,7 @@ namespace BarcodeLib
             public double Height { get; set; }
             public bool Metric { get; set; }
         }
-        
+
         #region General Encode
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -373,15 +373,15 @@ namespace BarcodeLib
             DateTime dtStartTime = DateTime.Now;
 
             //make sure there is something to encode
-            if (Raw_Data.Trim() == "") 
+            if (Raw_Data.Trim() == "")
                 throw new Exception("EENCODE-1: Input data not allowed to be blank.");
 
-            if (this.EncodedType == TYPE.UNSPECIFIED) 
+            if (this.EncodedType == TYPE.UNSPECIFIED)
                 throw new Exception("EENCODE-2: Symbology type not allowed to be unspecified.");
 
             this.Encoded_Value = "";
             this._Country_Assigning_Manufacturer_Code = "N/A";
-            
+
             switch (this.Encoded_Type)
             {
                 case TYPE.UCC12:
@@ -486,7 +486,7 @@ namespace BarcodeLib
             _XML = GetXML();
 
             this.EncodingTime = ((TimeSpan)(DateTime.Now - dtStartTime)).TotalMilliseconds;
-            
+
             return EncodedImage;
         }//Encode
         #endregion
@@ -879,7 +879,7 @@ namespace BarcodeLib
         public byte[] GetImageData(SaveTypes savetype)
         {
             byte[] imageData = null;
-              
+
             try
             {
                 if (_Encoded_Image != null)
@@ -924,7 +924,7 @@ namespace BarcodeLib
                     ((Bitmap)_Encoded_Image).Save(Filename, imageformat);
                 }//if
             }//try
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("ESAVEIMAGE-1: Could not save image.\n\n=======================\n\n" + ex.Message);
             }//catch
@@ -958,7 +958,7 @@ namespace BarcodeLib
                 throw new Exception("ESAVEIMAGE-2: Could not save image.\n\n=======================\n\n" + ex.Message);
             }//catch
         }//SaveImage(Stream, SaveTypes)
-        
+
         /// <summary>
         /// Returns the size of the EncodedImage in real world coordinates (millimeters or inches).
         /// </summary>
