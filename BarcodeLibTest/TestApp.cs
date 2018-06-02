@@ -24,7 +24,7 @@ namespace BarcodeLibTest
             this.cbBarcodeAlign.SelectedIndex = 0;
             this.cbLabelLocation.SelectedIndex = 0;
 
-            this.cbRotateFlip.DataSource = System.Enum.GetNames(typeof(RotateFlipType));
+            this.cbRotateFlip.DataSource = Enum.GetNames(typeof(RotateFlipType));
 
             int i = 0;
             foreach (object o in cbRotateFlip.Items)
