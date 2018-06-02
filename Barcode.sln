@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeLibTest", "BarcodeLibTest\BarcodeLibTest.csproj", "{8DB57BA1-E88C-43D9-AD0E-04BFA6B11C61}"
+	ProjectSection(ProjectDependencies) = postProject
+		{36DF2260-C377-4760-9550-BE16331B2325} = {36DF2260-C377-4760-9550-BE16331B2325}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcodeLib", "BarcodeLib\BarcodeLib.csproj", "{36DF2260-C377-4760-9550-BE16331B2325}"
 EndProject
