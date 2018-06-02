@@ -131,9 +131,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BarcodeLib">
-      <Version>2.0.0</Version>
-    </PackageReference>
+    <ProjectReference Include="..\BarcodeLib\BarcodeLib.csproj">
+      <Project>{36df2260-c377-4760-9550-be16331b2325}</Project>
+      <Name>BarcodeLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
