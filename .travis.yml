@@ -1,5 +1,6 @@
 language: csharp
 mono: none
+os: linux
 dotnet: 2.0.0
 solution: Barcode.sln
 
