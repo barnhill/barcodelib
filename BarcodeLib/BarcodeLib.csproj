@@ -10,7 +10,7 @@
     <RepositoryType>Git</RepositoryType>
     <Description>This library was designed to give an easy class for developers to use when they need to generate barcode images from a string of data.</Description>
     <Copyright>Copyright 2007-2018 Brad Barnhill</Copyright>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly Condition="'$(OS)' == 'Windows_NT'">true</SignAssembly>
     <AssemblyOriginatorKeyFile>signingKey.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>BarcodeLib</PackageId>
