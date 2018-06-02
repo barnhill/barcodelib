@@ -8,4 +8,5 @@ install:
 - dotnet restore
 
 script:
+ - cd BarcodeLib
  - dotnet build
