@@ -1,3 +1,4 @@
 language: csharp
 script:
+  - dotnet restore
   - msbuild Barcode.sln
