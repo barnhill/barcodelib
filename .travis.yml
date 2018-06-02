@@ -1,11 +1,12 @@
 language: csharp
+sudo: required
 mono: none
 os: linux
 dotnet: 2.1.4
 solution: Barcode.sln
 
 install:
-- dotnet restore
+- sudo dotnet restore
 
 script:
- - dotnet build
+ - sudo dotnet build
