@@ -17,6 +17,8 @@
     <Authors>Brad Barnhill</Authors>
     <Company>Pnuema Productions</Company>
     <Product>BarcodeLib</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

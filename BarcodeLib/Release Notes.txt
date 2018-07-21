@@ -1,5 +1,8 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.0.0.0
+- Conversion to support .NET Core 2.0 and .NET 4.6.2
+- Build nuget package on every build
 1.0.0.24
 - bug fix with Code 128 START_C char
 - add missing EAN-13 country codes
