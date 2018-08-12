@@ -60,7 +60,7 @@ namespace BarcodeLibTest
             BarcodeLib.TYPE type = BarcodeLib.TYPE.UNSPECIFIED;
             switch (cbEncodeType.SelectedItem.ToString().Trim())
             {
-                case "UPC-111111A": type = BarcodeLib.TYPE.UPCA; break;
+                case "UPC-1A": type = BarcodeLib.TYPE.UPCA; break;
                 case "UPC-Ef": type = BarcodeLib.TYPE.UPCE; break;
                 case "UPC 2 Digit Ext.": type = BarcodeLib.TYPE.UPC_SUPPLEMENTAL_2DIGIT; break;
                 case "UPC 5 Digit Ext.": type = BarcodeLib.TYPE.UPC_SUPPLEMENTAL_5DIGIT; break;
