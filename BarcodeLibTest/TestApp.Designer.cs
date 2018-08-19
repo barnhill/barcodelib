@@ -561,7 +561,7 @@ namespace BarcodeLibTest
             this.MinimumSize = new System.Drawing.Size(637, 392);
             this.Name = "TestApp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Barcode Encoder System";
+            this.Text = "Barcode Encoder";
             this.Load += new System.EventHandler(this.TestApp_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
