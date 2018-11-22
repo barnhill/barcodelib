@@ -1,6 +1,6 @@
 # barcodelib ![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)
 
-[Download Latest DLL](http://pnuema.com:2500/job/Barcode%20Library/ws/BarcodeLib/bin/Debug/BarcodeLib.dll)
+[Download Latest DLL](https://github.com/barnhill/barcodelib/releases/latest)
 
 ### Overview ###
  
@@ -37,4 +37,4 @@ Image img = b.Encode(BarcodeLib.TYPE.UPCA, "038000356216", Color.Black, Color.Wh
 
 ### Copyright and license ###
 
-Copyright 2007-2017 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
+Copyright 2007-2018 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).

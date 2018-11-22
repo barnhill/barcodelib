@@ -1,3 +1,12 @@
 language: csharp
+mono: none
+os: linux
+dotnet: 2.1.4
+solution: Barcode.sln
+
+install:
+- dotnet restore
+
 script:
-  - xbuild Barcode.sln
+ - cd BarcodeStandard
+ - dotnet build
