@@ -610,7 +610,7 @@ namespace BarcodeLib
 
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
+                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel)
                             {
                                 // UPCA standardized label
                                 string defTxt = RawData;
@@ -667,7 +667,7 @@ namespace BarcodeLib
                         }//using
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || AlternateLabel == null) && _StandardizeLabel == true)
+                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel)
                             {
                                 Labels.Label_UPCA(this, bitmap);
                             }
@@ -709,7 +709,7 @@ namespace BarcodeLib
 
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || (AlternateLabel == null)) && _StandardizeLabel == true)
+                            if (((AlternateLabel == null) || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel)
                             {
                                 // EAN13 standardized label
                                 string defTxt = RawData;
@@ -765,7 +765,7 @@ namespace BarcodeLib
                         }//using
                         if (IncludeLabel)
                         {
-                            if ((RawData.StartsWith(AlternateLabel) || AlternateLabel == null) && _StandardizeLabel == true)
+                            if (((AlternateLabel == null) || RawData.StartsWith(AlternateLabel)) && _StandardizeLabel)
                             {
                                 Labels.Label_EAN13(this, bitmap);
                             }
@@ -913,7 +913,7 @@ namespace BarcodeLib
             {
                 if (_Encoded_Image != null)
                 {
-                    System.Drawing.Imaging.ImageFormat imageformat;
+                    ImageFormat imageformat;
                     switch (FileType)
                     {
                         case SaveTypes.BMP: imageformat = ImageFormat.Bmp; break;
@@ -942,7 +942,7 @@ namespace BarcodeLib
             {
                 if (_Encoded_Image != null)
                 {
-                    System.Drawing.Imaging.ImageFormat imageformat;
+                    ImageFormat imageformat;
                     switch (FileType)
                     {
                         case SaveTypes.BMP: imageformat = ImageFormat.Bmp; break;
