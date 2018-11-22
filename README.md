@@ -1,6 +1,6 @@
 # barcodelib ![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)
 
-[Download Latest DLL](https://github.com/barnhill/barcodelib/releases/latest)
+[Nuget package](https://www.nuget.org/packages/BarcodeLib)
 
 ### Overview ###
  
