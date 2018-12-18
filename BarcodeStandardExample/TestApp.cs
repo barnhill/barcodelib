@@ -1,5 +1,8 @@
+using BarcodeLib;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BarcodeStandardExample
@@ -353,6 +356,63 @@ namespace BarcodeStandardExample
                     }//using
                 }//if
             }//using
+        }
+
+        private void btnMassGeneration_Click(object sender, EventArgs e)
+        {
+            int x = 1500;
+            double sum = 0;
+
+            progressBar1.Visible = true;
+            progressBar1.Value = 0;
+            progressBar1.Maximum = x;
+
+            for (int i = 0; i < x; i++)
+            {
+                String data = new Random().Next(10000, 10000000).ToString();
+
+                DateTime dtStartTime = DateTime.Now;
+                GetBarCode39(data);
+                sum += (DateTime.Now - dtStartTime).TotalMilliseconds;
+                progressBar1.Value = i;
+            }
+
+            progressBar1.Visible = false;
+            lblAverageGenerationTime.Text = Math.Round(sum / x, 2, MidpointRounding.AwayFromZero).ToString() + " ms";
+        }
+
+        public byte[] GetBarCode39(string CodeNumber, int Length = 1000, int Height = 200, int FontSize = 40)
+        {
+            try
+            {
+                using (Barcode barcode = new Barcode())
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        barcode.IncludeLabel = true;
+                        barcode.Alignment = AlignmentPositions.CENTER;
+                        barcode.LabelFont = new Font(FontFamily.GenericMonospace, FontSize, FontStyle.Regular);
+
+                        var barcodeImage = barcode.Encode(TYPE.CODE39, CodeNumber, Color.Black, Color.White, Length, Height);
+
+                        barcodeImage.Save(ms, ImageFormat.Jpeg);
+
+                        using (BinaryReader reader = new BinaryReader(ms))
+                        {
+                            byte[] bytes = (byte[])reader.ReadBytes((int)ms.Length).Clone();
+
+                            reader.Dispose();
+                            ms.Dispose();
+
+                            return bytes;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }//class
 }//namespace
