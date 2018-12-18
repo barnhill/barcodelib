@@ -28,16 +28,25 @@ namespace BarcodeLib
                     g.CompositingQuality = CompositingQuality.HighQuality;
 
                     //color a white box at the bottom of the barcode to hold the string of data
-                    g.FillRectangle(new SolidBrush(Barcode.BackColor), new Rectangle(0, img.Height - (font.Height - 2), img.Width, font.Height));
+                    using (SolidBrush backBrush = new SolidBrush(Barcode.BackColor))
+                    {
+                        g.FillRectangle(backBrush, new Rectangle(0, img.Height - (font.Height - 2), img.Width, font.Height));
+                    }
 
                     //draw datastring under the barcode image
                     StringFormat f = new StringFormat();
                     f.Alignment = StringAlignment.Center;
-                    g.DrawString(Barcode.AlternateLabel == null ? Barcode.RawData : Barcode.AlternateLabel, font, new SolidBrush(Barcode.ForeColor), (float)(img.Width / 2), img.Height - font.Height + 1, f);
 
-                    Pen pen = new Pen(Barcode.ForeColor, (float)img.Height / 16);
-                    pen.Alignment = PenAlignment.Inset;
-                    g.DrawLine(pen, new Point(0, img.Height - font.Height - 2), new Point(img.Width, img.Height - font.Height - 2));//bottom
+                    using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
+                    {
+                        g.DrawString(Barcode.AlternateLabel == null ? Barcode.RawData : Barcode.AlternateLabel, font, foreBrush, (float)(img.Width / 2), img.Height - font.Height + 1, f);
+                    }
+
+                    using (Pen pen = new Pen(Barcode.ForeColor, (float)img.Height / 16))
+                    {
+                        pen.Alignment = PenAlignment.Inset;
+                        g.DrawLine(pen, new Point(0, img.Height - font.Height - 2), new Point(img.Width, img.Height - font.Height - 2));//bottom
+                    }
 
                     g.Save();
                 }//using
@@ -111,10 +120,16 @@ namespace BarcodeLib
                     }//switch
 
                     //color a background color box at the bottom of the barcode to hold the string of data
-                    g.FillRectangle(new SolidBrush(Barcode.BackColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height));
+                    using (SolidBrush backBrush = new SolidBrush(Barcode.BackColor))
+                    {
+                        g.FillRectangle(backBrush, new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height));
+                    }
 
                     //draw datastring under the barcode image
-                    g.DrawString(Barcode.AlternateLabel == null ? Barcode.RawData : Barcode.AlternateLabel, font, new SolidBrush(Barcode.ForeColor), new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height), f);
+                    using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
+                    {
+                        g.DrawString(Barcode.AlternateLabel == null ? Barcode.RawData : Barcode.AlternateLabel, font, foreBrush, new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height), f);
+                    }
 
                     g.Save();
                 }//using
@@ -139,61 +154,73 @@ namespace BarcodeLib
                 int iBarWidth = Barcode.Width / Barcode.EncodedValue.Length;
                 string defTxt = Barcode.RawData;
 
-                Font labFont = new Font("Arial", getFontsize(Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt), FontStyle.Regular);
-                Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style);
-
-                int shiftAdjustment;
-                switch (Barcode.Alignment)
+                using (Font labFont = new Font("Arial", getFontsize(Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt), FontStyle.Regular))
                 {
-                    case AlignmentPositions.LEFT:
-                        shiftAdjustment = 0;
-                        break;
-                    case AlignmentPositions.RIGHT:
-                        shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length);
-                        break;
-                    case AlignmentPositions.CENTER:
-                    default:
-                        shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length) / 2;
-                        break;
-                }//switch
+                    int shiftAdjustment;
+                    switch (Barcode.Alignment)
+                    {
+                        case AlignmentPositions.LEFT:
+                            shiftAdjustment = 0;
+                            break;
+                        case AlignmentPositions.RIGHT:
+                            shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length);
+                            break;
+                        case AlignmentPositions.CENTER:
+                        default:
+                            shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length) / 2;
+                            break;
+                    }//switch
 
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.DrawImage(img, (float)0, (float)0);
+                    using (Graphics g = Graphics.FromImage(img))
+                    {
+                        g.DrawImage(img, (float)0, (float)0);
 
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                        g.CompositingQuality = CompositingQuality.HighQuality;
+                        g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
-                    StringFormat f = new StringFormat();
-                    f.Alignment = StringAlignment.Near;
-                    f.LineAlignment = StringAlignment.Near;
-                    int LabelY = 0;
+                        StringFormat f = new StringFormat
+                        {
+                            Alignment = StringAlignment.Near,
+                            LineAlignment = StringAlignment.Near
+                        };
+                        int LabelY = 0;
 
-                    //Default alignment for EAN13
-                    LabelY = img.Height - labFont.Height;
-                    f.Alignment = StringAlignment.Near;
+                        //Default alignment for EAN13
+                        LabelY = img.Height - labFont.Height;
+                        f.Alignment = StringAlignment.Near;
 
-                    float w1 = iBarWidth * 4; //Width of first block
-                    float w2 = iBarWidth * 42; //Width of second block
-                    float w3 = iBarWidth * 42; //Width of third block
+                        float w1 = iBarWidth * 4; //Width of first block
+                        float w2 = iBarWidth * 42; //Width of second block
+                        float w3 = iBarWidth * 42; //Width of third block
 
-                    float s1 = shiftAdjustment - iBarWidth;
-                    float s2 = s1 + (iBarWidth * 4); //Start position of block 2
-                    float s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
+                        float s1 = shiftAdjustment - iBarWidth;
+                        float s2 = s1 + (iBarWidth * 4); //Start position of block 2
+                        float s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
 
-                    //Draw the background rectangles for each block
-                    g.FillRectangle(new SolidBrush(Barcode.BackColor), new RectangleF(s2, (float)LabelY, w2, (float)labFont.Height));
-                    g.FillRectangle(new SolidBrush(Barcode.BackColor), new RectangleF(s3, (float)LabelY, w3, (float)labFont.Height));
+                        //Draw the background rectangles for each block
+                        using (SolidBrush backBrush = new SolidBrush(Barcode.BackColor))
+                        {
+                            g.FillRectangle(backBrush, new RectangleF(s2, (float)LabelY, w2, (float)labFont.Height));
+                            g.FillRectangle(backBrush, new RectangleF(s3, (float)LabelY, w3, (float)labFont.Height));
 
-                    //draw datastring under the barcode image
-                    g.DrawString(defTxt.Substring(0, 1), smallFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s1, (float)img.Height - (float)(smallFont.Height * 0.9), (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(1, 6), labFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s2, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(7), labFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s3 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
+                        }
 
-                    g.Save();
+                        //draw datastring under the barcode image
+                        using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
+                        {
+                            using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style))
+                            {
+                                g.DrawString(defTxt.Substring(0, 1), smallFont, foreBrush, new RectangleF(s1, (float)img.Height - (float)(smallFont.Height * 0.9), (float)img.Width, (float)labFont.Height), f);
+                            }
+                            g.DrawString(defTxt.Substring(1, 6), labFont, foreBrush, new RectangleF(s2, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
+                            g.DrawString(defTxt.Substring(7), labFont, foreBrush, new RectangleF(s3 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
+                        }
+
+                        g.Save();
+                    }
                 }//using
                 return img;
             }//try
@@ -216,63 +243,72 @@ namespace BarcodeLib
                 int halfBarWidth = (int)(iBarWidth * 0.5);
                 string defTxt = Barcode.RawData;
 
-                Font labFont = new Font("Arial", getFontsize((int)((Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt), FontStyle.Regular);
-                Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style);
-
-                int shiftAdjustment;
-                switch (Barcode.Alignment)
+                using (Font labFont = new Font("Arial", getFontsize((int)((Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt), FontStyle.Regular))
                 {
-                    case AlignmentPositions.LEFT:
-                        shiftAdjustment = 0;
-                        break;
-                    case AlignmentPositions.RIGHT:
-                        shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length);
-                        break;
-                    case AlignmentPositions.CENTER:
-                    default:
-                        shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length) / 2;
-                        break;
-                }//switch
+                    int shiftAdjustment;
+                    switch (Barcode.Alignment)
+                    {
+                        case AlignmentPositions.LEFT:
+                            shiftAdjustment = 0;
+                            break;
+                        case AlignmentPositions.RIGHT:
+                            shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length);
+                            break;
+                        case AlignmentPositions.CENTER:
+                        default:
+                            shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length) / 2;
+                            break;
+                    }//switch
 
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.DrawImage(img, (float)0, (float)0);
+                    using (Graphics g = Graphics.FromImage(img))
+                    {
+                        g.DrawImage(img, (float)0, (float)0);
 
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                        g.CompositingQuality = CompositingQuality.HighQuality;
+                        g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
-                    StringFormat f = new StringFormat();
-                    f.Alignment = StringAlignment.Near;
-                    f.LineAlignment = StringAlignment.Near;
-                    int LabelY = 0;
+                        StringFormat f = new StringFormat();
+                        f.Alignment = StringAlignment.Near;
+                        f.LineAlignment = StringAlignment.Near;
+                        int LabelY = 0;
 
-                    //Default alignment for UPCA
-                    LabelY = img.Height - labFont.Height;
-                    f.Alignment = StringAlignment.Near;
+                        //Default alignment for UPCA
+                        LabelY = img.Height - labFont.Height;
+                        f.Alignment = StringAlignment.Near;
 
-                    float w1 = iBarWidth * 4; //Width of first block
-                    float w2 = iBarWidth * 34; //Width of second block
-                    float w3 = iBarWidth * 34; //Width of third block
+                        float w1 = iBarWidth * 4; //Width of first block
+                        float w2 = iBarWidth * 34; //Width of second block
+                        float w3 = iBarWidth * 34; //Width of third block
 
-                    float s1 = shiftAdjustment - iBarWidth;
-                    float s2 = s1 + (iBarWidth * 12); //Start position of block 2
-                    float s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
-                    float s4 = s3 + w3 + (iBarWidth * 8) - halfBarWidth;
+                        float s1 = shiftAdjustment - iBarWidth;
+                        float s2 = s1 + (iBarWidth * 12); //Start position of block 2
+                        float s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
+                        float s4 = s3 + w3 + (iBarWidth * 8) - halfBarWidth;
 
-                    //Draw the background rectangles for each block
-                    g.FillRectangle(new SolidBrush(Barcode.BackColor), new RectangleF(s2, (float)LabelY, w2, (float)labFont.Height));
-                    g.FillRectangle(new SolidBrush(Barcode.BackColor), new RectangleF(s3, (float)LabelY, w3, (float)labFont.Height));
+                        //Draw the background rectangles for each block
+                        using (SolidBrush backBrush = new SolidBrush(Barcode.BackColor))
+                        {
+                            g.FillRectangle(backBrush, new RectangleF(s2, (float)LabelY, w2, (float)labFont.Height));
+                            g.FillRectangle(backBrush, new RectangleF(s3, (float)LabelY, w3, (float)labFont.Height));
+                        }
 
-                    //draw data string under the barcode image
-                    g.DrawString(defTxt.Substring(0, 1), smallFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s1, (float)img.Height - smallFont.Height, (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(1, 5), labFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s2 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(6, 5), labFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s3 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
-                    g.DrawString(defTxt.Substring(11), smallFont, new SolidBrush(Barcode.ForeColor), new RectangleF(s4, (float)img.Height - smallFont.Height, (float)img.Width, (float)labFont.Height), f);
+                        //draw data string under the barcode image
+                        using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
+                        {
+                            using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style))
+                            {
+                                g.DrawString(defTxt.Substring(0, 1), smallFont, foreBrush, new RectangleF(s1, (float)img.Height - smallFont.Height, (float)img.Width, (float)labFont.Height), f);
+                                g.DrawString(defTxt.Substring(1, 5), labFont, foreBrush, new RectangleF(s2 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
+                                g.DrawString(defTxt.Substring(6, 5), labFont, foreBrush, new RectangleF(s3 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
+                                g.DrawString(defTxt.Substring(11), smallFont, foreBrush, new RectangleF(s4, (float)img.Height - smallFont.Height, (float)img.Width, (float)labFont.Height), f);
+                            }
+                        }
 
-                    g.Save();
+                        g.Save();
+                    }
                 }//using
                 return img;
             }//try
@@ -296,13 +332,11 @@ namespace BarcodeLib
                 {
                     for (int i = 1; i <= 100; i++)
                     {
-                        using (Font test_font =
-                            new Font("Arial", i))
+                        using (Font test_font = new Font("Arial", i))
                         {
                             // See how much space the text would
                             // need, specifying a maximum width.
-                            SizeF text_size =
-                                gr.MeasureString(lbl, test_font);
+                            SizeF text_size = gr.MeasureString(lbl, test_font);
                             if ((text_size.Width > wid) || (text_size.Height > hgt))
                             {
                                 fontSize = i - 1;

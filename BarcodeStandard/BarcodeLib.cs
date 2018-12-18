@@ -34,7 +34,7 @@ namespace BarcodeLib
     public class Barcode : IDisposable
     {
         #region Variables
-        private IBarcode ibarcode = new BarcodeLib.Symbologies.Blank();
+        private IBarcode ibarcode = new Blank();
         private string Raw_Data = "";
         private string Encoded_Value = "";
         private string _Country_Assigning_Manufacturer_Code = "N/A";
@@ -612,9 +612,12 @@ namespace BarcodeLib
                                 // UPCA standardized label
                                 string defTxt = RawData;
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
-
-                                Font font = this.LabelFont;
-                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                
+                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                if (this.LabelFont != null)
+                                {
+                                    this.LabelFont.Dispose();
+                                }
                                 LabelFont = labFont;
 
                                 ILHeight -= (labFont.Height / 2);
@@ -714,6 +717,12 @@ namespace BarcodeLib
 
                                 Font font = this.LabelFont;
                                 Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+
+                                if (font != null)
+                                {
+                                    this.LabelFont.Dispose();
+                                }
+
                                 LabelFont = labFont;
 
                                 ILHeight -= (labFont.Height / 2);
@@ -1195,20 +1204,59 @@ namespace BarcodeLib
             }//using
         }
 
-        #endregion
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        #region IDisposable Members
-
-        public void Dispose()
+        protected virtual void Dispose(bool disposing)
         {
-            try
+            if (!disposedValue)
             {
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("EDISPOSE-1: " + ex.Message);
-            }//catch
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                try
+                {
+                    LabelFont.Dispose();
+                    LabelFont = null;
+
+                    _Encoded_Image.Dispose();
+                    _Encoded_Image = null;
+
+                    _XML = null;
+                    Raw_Data = null;
+                    Encoded_Value = null;
+                    _Country_Assigning_Manufacturer_Code = null;
+                    _ImageFormat = null;
+                }//try
+                catch (Exception ex)
+                {
+                    throw new Exception("EDISPOSE-1: " + ex.Message);
+                }//catch
+
+                disposedValue = true;
+            }
         }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~Barcode() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        void IDisposable.Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
 
         #endregion
     }//Barcode Class
