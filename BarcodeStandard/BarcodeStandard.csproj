@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <PackageId>BarcodeLib</PackageId>
     <Company>Pnuema Productions</Company>
     <Product>BarcodeLib</Product>
     <Authors>Brad Barnhill</Authors>
     <Description>This library was designed to give an easy class for developers to use when they need to generate barcode images from a string of data.</Description>
-    <Copyright>Copyright 2007-2017 Brad Barnhill</Copyright>
+    <Copyright>Copyright 2007-2018 Brad Barnhill</Copyright>
     <PackageLicenseUrl>https://github.com/bbarnhill/barcodelib/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/barnhill/barcodelib</PackageProjectUrl>
     <PackageIconUrl>https://github.com/barnhill/barcodelib/blob/master/BarcodeStandard/examples/upca.gif</PackageIconUrl>

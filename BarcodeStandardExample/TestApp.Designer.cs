@@ -37,6 +37,9 @@ namespace BarcodeStandardExample
             this.barcode = new System.Windows.Forms.GroupBox();
             this.btnMassGeneration = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblAverageGenerationTime = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBoxAspectRatio = new System.Windows.Forms.TextBox();
             this.textBoxBarWidth = new System.Windows.Forms.TextBox();
@@ -73,9 +76,6 @@ namespace BarcodeStandardExample
             this.txtData = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label14 = new System.Windows.Forms.Label();
-            this.lblAverageGenerationTime = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -127,19 +127,19 @@ namespace BarcodeStandardExample
             this.barcode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.barcode.Location = new System.Drawing.Point(0, 0);
             this.barcode.Name = "barcode";
-            this.barcode.Size = new System.Drawing.Size(746, 572);
+            this.barcode.Size = new System.Drawing.Size(745, 572);
             this.barcode.TabIndex = 36;
             this.barcode.TabStop = false;
             this.barcode.Text = "Barcode Image";
             // 
             // btnMassGeneration
             // 
-            this.btnMassGeneration.Location = new System.Drawing.Point(7, 504);
+            this.btnMassGeneration.Location = new System.Drawing.Point(7, 515);
             this.btnMassGeneration.Margin = new System.Windows.Forms.Padding(2);
             this.btnMassGeneration.Name = "btnMassGeneration";
             this.btnMassGeneration.Size = new System.Drawing.Size(257, 24);
             this.btnMassGeneration.TabIndex = 0;
-            this.btnMassGeneration.Text = "Generate 1500 Barcodes";
+            this.btnMassGeneration.Text = "Generate 1000 Barcodes";
             this.btnMassGeneration.UseVisualStyleBackColor = true;
             this.btnMassGeneration.Click += new System.EventHandler(this.btnMassGeneration_Click);
             // 
@@ -147,7 +147,6 @@ namespace BarcodeStandardExample
             // 
             this.splitContainer1.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
@@ -185,9 +184,34 @@ namespace BarcodeStandardExample
             // 
             this.splitContainer1.Panel2.Controls.Add(this.barcode);
             this.splitContainer1.Size = new System.Drawing.Size(1015, 572);
-            this.splitContainer1.SplitterDistance = 265;
+            this.splitContainer1.SplitterDistance = 266;
             this.splitContainer1.TabIndex = 37;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
+            // 
+            // lblAverageGenerationTime
+            // 
+            this.lblAverageGenerationTime.AutoSize = true;
+            this.lblAverageGenerationTime.Location = new System.Drawing.Point(133, 554);
+            this.lblAverageGenerationTime.Name = "lblAverageGenerationTime";
+            this.lblAverageGenerationTime.Size = new System.Drawing.Size(0, 13);
+            this.lblAverageGenerationTime.TabIndex = 81;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(1, 554);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(134, 13);
+            this.label14.TabIndex = 80;
+            this.label14.Text = "Average Generation Time: ";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(8, 543);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(254, 5);
+            this.progressBar1.TabIndex = 79;
+            this.progressBar1.Visible = false;
             // 
             // groupBox4
             // 
@@ -202,20 +226,20 @@ namespace BarcodeStandardExample
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Location = new System.Drawing.Point(136, 44);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(128, 91);
+            this.groupBox4.Size = new System.Drawing.Size(128, 93);
             this.groupBox4.TabIndex = 78;
             this.groupBox4.TabStop = false;
             // 
             // textBoxAspectRatio
             // 
-            this.textBoxAspectRatio.Location = new System.Drawing.Point(71, 67);
+            this.textBoxAspectRatio.Location = new System.Drawing.Point(73, 67);
             this.textBoxAspectRatio.Name = "textBoxAspectRatio";
             this.textBoxAspectRatio.Size = new System.Drawing.Size(35, 20);
             this.textBoxAspectRatio.TabIndex = 55;
             // 
             // textBoxBarWidth
             // 
-            this.textBoxBarWidth.Location = new System.Drawing.Point(13, 68);
+            this.textBoxBarWidth.Location = new System.Drawing.Point(16, 68);
             this.textBoxBarWidth.Name = "textBoxBarWidth";
             this.textBoxBarWidth.Size = new System.Drawing.Size(35, 20);
             this.textBoxBarWidth.TabIndex = 54;
@@ -223,7 +247,7 @@ namespace BarcodeStandardExample
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(56, 51);
+            this.label13.Location = new System.Drawing.Point(59, 51);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(65, 13);
             this.label13.TabIndex = 53;
@@ -232,7 +256,7 @@ namespace BarcodeStandardExample
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(5, 51);
+            this.label12.Location = new System.Drawing.Point(8, 51);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(51, 13);
             this.label12.TabIndex = 52;
@@ -240,7 +264,7 @@ namespace BarcodeStandardExample
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(16, 25);
+            this.txtWidth.Location = new System.Drawing.Point(19, 25);
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(35, 20);
             this.txtWidth.TabIndex = 43;
@@ -249,7 +273,7 @@ namespace BarcodeStandardExample
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 8);
+            this.label7.Location = new System.Drawing.Point(16, 8);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 41;
@@ -258,7 +282,7 @@ namespace BarcodeStandardExample
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(59, 8);
+            this.label6.Location = new System.Drawing.Point(61, 8);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(38, 13);
             this.label6.TabIndex = 42;
@@ -266,7 +290,7 @@ namespace BarcodeStandardExample
             // 
             // txtHeight
             // 
-            this.txtHeight.Location = new System.Drawing.Point(61, 25);
+            this.txtHeight.Location = new System.Drawing.Point(64, 25);
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(35, 20);
             this.txtHeight.TabIndex = 44;
@@ -275,7 +299,7 @@ namespace BarcodeStandardExample
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(50, 27);
+            this.label9.Location = new System.Drawing.Point(53, 27);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(12, 13);
             this.label9.TabIndex = 51;
@@ -333,7 +357,7 @@ namespace BarcodeStandardExample
             "TopRight"});
             this.cbLabelLocation.Location = new System.Drawing.Point(6, 94);
             this.cbLabelLocation.Name = "cbLabelLocation";
-            this.cbLabelLocation.Size = new System.Drawing.Size(90, 21);
+            this.cbLabelLocation.Size = new System.Drawing.Size(99, 21);
             this.cbLabelLocation.TabIndex = 0;
             // 
             // lblLabelLocation
@@ -364,13 +388,12 @@ namespace BarcodeStandardExample
             "Right"});
             this.cbRotateFlip.Location = new System.Drawing.Point(7, 106);
             this.cbRotateFlip.Name = "cbRotateFlip";
-            this.cbRotateFlip.Size = new System.Drawing.Size(108, 21);
+            this.cbRotateFlip.Size = new System.Drawing.Size(127, 21);
             this.cbRotateFlip.TabIndex = 75;
             // 
             // btnSave
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Location = new System.Drawing.Point(116, 435);
+            this.btnSave.Location = new System.Drawing.Point(116, 448);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(57, 46);
             this.btnSave.TabIndex = 61;
@@ -380,8 +403,7 @@ namespace BarcodeStandardExample
             // 
             // btnSaveXML
             // 
-            this.btnSaveXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveXML.Location = new System.Drawing.Point(179, 435);
+            this.btnSaveXML.Location = new System.Drawing.Point(179, 448);
             this.btnSaveXML.Name = "btnSaveXML";
             this.btnSaveXML.Size = new System.Drawing.Size(84, 23);
             this.btnSaveXML.TabIndex = 71;
@@ -391,8 +413,7 @@ namespace BarcodeStandardExample
             // 
             // btnLoadXML
             // 
-            this.btnLoadXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnLoadXML.Location = new System.Drawing.Point(179, 460);
+            this.btnLoadXML.Location = new System.Drawing.Point(179, 474);
             this.btnLoadXML.Name = "btnLoadXML";
             this.btnLoadXML.Size = new System.Drawing.Size(84, 23);
             this.btnLoadXML.TabIndex = 72;
@@ -411,8 +432,7 @@ namespace BarcodeStandardExample
             // 
             // btnEncode
             // 
-            this.btnEncode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEncode.Location = new System.Drawing.Point(7, 435);
+            this.btnEncode.Location = new System.Drawing.Point(7, 448);
             this.btnEncode.Name = "btnEncode";
             this.btnEncode.Size = new System.Drawing.Size(105, 46);
             this.btnEncode.TabIndex = 60;
@@ -431,14 +451,12 @@ namespace BarcodeStandardExample
             // 
             // txtEncoded
             // 
-            this.txtEncoded.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.txtEncoded.Location = new System.Drawing.Point(7, 262);
             this.txtEncoded.Multiline = true;
             this.txtEncoded.Name = "txtEncoded";
             this.txtEncoded.ReadOnly = true;
             this.txtEncoded.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEncoded.Size = new System.Drawing.Size(256, 167);
+            this.txtEncoded.Size = new System.Drawing.Size(256, 170);
             this.txtEncoded.TabIndex = 62;
             this.txtEncoded.TabStop = false;
             // 
@@ -471,7 +489,7 @@ namespace BarcodeStandardExample
             "Right"});
             this.cbBarcodeAlign.Location = new System.Drawing.Point(7, 148);
             this.cbBarcodeAlign.Name = "cbBarcodeAlign";
-            this.cbBarcodeAlign.Size = new System.Drawing.Size(107, 21);
+            this.cbBarcodeAlign.Size = new System.Drawing.Size(127, 21);
             this.cbBarcodeAlign.TabIndex = 73;
             // 
             // btnForeColor
@@ -525,7 +543,9 @@ namespace BarcodeStandardExample
             "EAN-8",
             "ITF-14",
             "Interleaved 2 of 5",
+            "Interleaved 2 of 5 Mod 10",
             "Standard 2 of 5",
+            "Standard 2 of 5 Mod 10",
             "Codabar",
             "PostNet",
             "Bookland/ISBN",
@@ -545,7 +565,7 @@ namespace BarcodeStandardExample
             "Pharmacode"});
             this.cbEncodeType.Location = new System.Drawing.Point(7, 64);
             this.cbEncodeType.Name = "cbEncodeType";
-            this.cbEncodeType.Size = new System.Drawing.Size(108, 21);
+            this.cbEncodeType.Size = new System.Drawing.Size(127, 21);
             this.cbEncodeType.TabIndex = 59;
             // 
             // txtData
@@ -569,31 +589,6 @@ namespace BarcodeStandardExample
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(8, 531);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(254, 5);
-            this.progressBar1.TabIndex = 79;
-            this.progressBar1.Visible = false;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 543);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(134, 13);
-            this.label14.TabIndex = 80;
-            this.label14.Text = "Average Generation Time: ";
-            // 
-            // lblAverageGenerationTime
-            // 
-            this.lblAverageGenerationTime.AutoSize = true;
-            this.lblAverageGenerationTime.Location = new System.Drawing.Point(140, 543);
-            this.lblAverageGenerationTime.Name = "lblAverageGenerationTime";
-            this.lblAverageGenerationTime.Size = new System.Drawing.Size(0, 13);
-            this.lblAverageGenerationTime.TabIndex = 81;
-            // 
             // TestApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -603,7 +598,7 @@ namespace BarcodeStandardExample
             this.Controls.Add(this.statusStrip1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(637, 392);
+            this.MinimumSize = new System.Drawing.Size(635, 386);
             this.Name = "TestApp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Barcode Encoder";

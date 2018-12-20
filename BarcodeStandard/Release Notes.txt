@@ -1,5 +1,10 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.2.0.0
+- Add Interleaved 2 of 5 Mod 10
+- Add Standard 2 of 5 Mod 10
+2.1.0.0
+- Fix massive memory leak
 2.0.0.0
 - Conversion to .NET Standard 2.0
 - Build nuget package on every build

@@ -14,7 +14,7 @@ namespace BarcodeStandardExample
     /// </summary>
     public partial class TestApp : Form
     {
-        BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+        Barcode b = new Barcode();
         
         public TestApp()
         {
@@ -39,7 +39,7 @@ namespace BarcodeStandardExample
             this.cbRotateFlip.SelectedIndex = i;
 
             //Show library version
-            this.tslblLibraryVersion.Text = "Barcode Library Version: " + BarcodeLib.Barcode.Version.ToString();
+            this.tslblLibraryVersion.Text = "Barcode Library Version: " + Barcode.Version.ToString();
 
             this.btnBackColor.BackColor = this.b.BackColor;
             this.btnForeColor.BackColor = this.b.ForeColor;
@@ -50,52 +50,54 @@ namespace BarcodeStandardExample
             errorProvider1.Clear();
             int W = Convert.ToInt32(this.txtWidth.Text.Trim());
             int H = Convert.ToInt32(this.txtHeight.Text.Trim());
-            b.Alignment = BarcodeLib.AlignmentPositions.CENTER;
+            b.Alignment = AlignmentPositions.CENTER;
 
             //barcode alignment
             switch (cbBarcodeAlign.SelectedItem.ToString().Trim().ToLower())
             {
-                case "left": b.Alignment = BarcodeLib.AlignmentPositions.LEFT; break;
-                case "right": b.Alignment = BarcodeLib.AlignmentPositions.RIGHT; break;
-                default: b.Alignment = BarcodeLib.AlignmentPositions.CENTER; break;
+                case "left": b.Alignment = AlignmentPositions.LEFT; break;
+                case "right": b.Alignment = AlignmentPositions.RIGHT; break;
+                default: b.Alignment = AlignmentPositions.CENTER; break;
             }//switch
 
-            BarcodeLib.TYPE type = BarcodeLib.TYPE.UNSPECIFIED;
+            TYPE type = TYPE.UNSPECIFIED;
             switch (cbEncodeType.SelectedItem.ToString().Trim())
             {
-                case "UPC-A": type = BarcodeLib.TYPE.UPCA; break;
-                case "UPC-E": type = BarcodeLib.TYPE.UPCE; break;
-                case "UPC 2 Digit Ext.": type = BarcodeLib.TYPE.UPC_SUPPLEMENTAL_2DIGIT; break;
-                case "UPC 5 Digit Ext.": type = BarcodeLib.TYPE.UPC_SUPPLEMENTAL_5DIGIT; break;
-                case "EAN-13": type = BarcodeLib.TYPE.EAN13; break;
-                case "JAN-13": type = BarcodeLib.TYPE.JAN13; break;
-                case "EAN-8": type = BarcodeLib.TYPE.EAN8; break;
-                case "ITF-14": type = BarcodeLib.TYPE.ITF14; break;
-                case "Codabar": type = BarcodeLib.TYPE.Codabar; break;
-                case "PostNet": type = BarcodeLib.TYPE.PostNet; break;
-                case "Bookland/ISBN": type = BarcodeLib.TYPE.BOOKLAND; break;
-                case "Code 11": type = BarcodeLib.TYPE.CODE11; break;
-                case "Code 39": type = BarcodeLib.TYPE.CODE39; break;
-                case "Code 39 Extended": type = BarcodeLib.TYPE.CODE39Extended; break;
-                case "Code 39 Mod 43": type = BarcodeLib.TYPE.CODE39_Mod43; break;
-                case "Code 93": type = BarcodeLib.TYPE.CODE93; break;
-                case "LOGMARS": type = BarcodeLib.TYPE.LOGMARS; break;
-                case "MSI": type = BarcodeLib.TYPE.MSI_Mod10; break;
-                case "Interleaved 2 of 5": type = BarcodeLib.TYPE.Interleaved2of5; break;
-                case "Standard 2 of 5": type = BarcodeLib.TYPE.Standard2of5; break;
-                case "Code 128": type = BarcodeLib.TYPE.CODE128; break;
-                case "Code 128-A": type = BarcodeLib.TYPE.CODE128A; break;
-                case "Code 128-B": type = BarcodeLib.TYPE.CODE128B; break;
-                case "Code 128-C": type = BarcodeLib.TYPE.CODE128C; break;
-                case "Telepen": type = BarcodeLib.TYPE.TELEPEN; break;
-                case "FIM": type = BarcodeLib.TYPE.FIM; break;
-                case "Pharmacode": type = BarcodeLib.TYPE.PHARMACODE; break;
+                case "UPC-A": type = TYPE.UPCA; break;
+                case "UPC-E": type = TYPE.UPCE; break;
+                case "UPC 2 Digit Ext.": type = TYPE.UPC_SUPPLEMENTAL_2DIGIT; break;
+                case "UPC 5 Digit Ext.": type = TYPE.UPC_SUPPLEMENTAL_5DIGIT; break;
+                case "EAN-13": type = TYPE.EAN13; break;
+                case "JAN-13": type = TYPE.JAN13; break;
+                case "EAN-8": type = TYPE.EAN8; break;
+                case "ITF-14": type = TYPE.ITF14; break;
+                case "Codabar": type = TYPE.Codabar; break;
+                case "PostNet": type = TYPE.PostNet; break;
+                case "Bookland/ISBN": type = TYPE.BOOKLAND; break;
+                case "Code 11": type = TYPE.CODE11; break;
+                case "Code 39": type = TYPE.CODE39; break;
+                case "Code 39 Extended": type = TYPE.CODE39Extended; break;
+                case "Code 39 Mod 43": type = TYPE.CODE39_Mod43; break;
+                case "Code 93": type = TYPE.CODE93; break;
+                case "LOGMARS": type = TYPE.LOGMARS; break;
+                case "MSI": type = TYPE.MSI_Mod10; break;
+                case "Interleaved 2 of 5": type = TYPE.Interleaved2of5; break;
+                case "Interleaved 2 of 5 Mod 10": type = TYPE.Interleaved2of5_Mod10; break;
+                case "Standard 2 of 5": type = TYPE.Standard2of5; break;
+                case "Standard 2 of 5 Mod 10": type = TYPE.Standard2of5_Mod10; break;
+                case "Code 128": type = TYPE.CODE128; break;
+                case "Code 128-A": type = TYPE.CODE128A; break;
+                case "Code 128-B": type = TYPE.CODE128B; break;
+                case "Code 128-C": type = TYPE.CODE128C; break;
+                case "Telepen": type = TYPE.TELEPEN; break;
+                case "FIM": type = TYPE.FIM; break;
+                case "Pharmacode": type = TYPE.PHARMACODE; break;
                 default: MessageBox.Show("Please specify the encoding type."); break;
             }//switch
 
             try
             {
-                if (type != BarcodeLib.TYPE.UNSPECIFIED)
+                if (type != TYPE.UNSPECIFIED)
                 {
                     try
                     {
@@ -125,12 +127,12 @@ namespace BarcodeStandardExample
                     //label alignment and position
                     switch (this.cbLabelLocation.SelectedItem.ToString().Trim().ToUpper())
                     {
-                        case "BOTTOMLEFT":  b.LabelPosition = BarcodeLib.LabelPositions.BOTTOMLEFT; break;
-                        case "BOTTOMRIGHT": b.LabelPosition = BarcodeLib.LabelPositions.BOTTOMRIGHT; break;
-                        case "TOPCENTER": b.LabelPosition = BarcodeLib.LabelPositions.TOPCENTER; break;
-                        case "TOPLEFT": b.LabelPosition = BarcodeLib.LabelPositions.TOPLEFT; break;
-                        case "TOPRIGHT": b.LabelPosition = BarcodeLib.LabelPositions.TOPRIGHT; break;
-                        default: b.LabelPosition = BarcodeLib.LabelPositions.BOTTOMCENTER; break;
+                        case "BOTTOMLEFT":  b.LabelPosition = LabelPositions.BOTTOMLEFT; break;
+                        case "BOTTOMRIGHT": b.LabelPosition = LabelPositions.BOTTOMRIGHT; break;
+                        case "TOPCENTER": b.LabelPosition = LabelPositions.TOPCENTER; break;
+                        case "TOPLEFT": b.LabelPosition = LabelPositions.TOPLEFT; break;
+                        case "TOPRIGHT": b.LabelPosition = LabelPositions.TOPRIGHT; break;
+                        default: b.LabelPosition = LabelPositions.BOTTOMCENTER; break;
                     }//switch
 
                     //===== Encoding performed here =====
@@ -168,14 +170,14 @@ namespace BarcodeStandardExample
             sfd.AddExtension = true;
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                BarcodeLib.SaveTypes savetype = BarcodeLib.SaveTypes.UNSPECIFIED;
+                SaveTypes savetype = SaveTypes.UNSPECIFIED;
                 switch (sfd.FilterIndex)
                 {
-                    case 1: /* BMP */  savetype = BarcodeLib.SaveTypes.BMP; break;
-                    case 2: /* GIF */  savetype = BarcodeLib.SaveTypes.GIF; break;
-                    case 3: /* JPG */  savetype = BarcodeLib.SaveTypes.JPG; break;
-                    case 4: /* PNG */  savetype = BarcodeLib.SaveTypes.PNG; break;
-                    case 5: /* TIFF */ savetype = BarcodeLib.SaveTypes.TIFF; break;
+                    case 1: /* BMP */  savetype = SaveTypes.BMP; break;
+                    case 2: /* GIF */  savetype = SaveTypes.GIF; break;
+                    case 3: /* JPG */  savetype = SaveTypes.JPG; break;
+                    case 4: /* PNG */  savetype = SaveTypes.PNG; break;
+                    case 5: /* TIFF */ savetype = SaveTypes.TIFF; break;
                     default: break;
                 }//switch
                 b.SaveImage(sfd.FileName, savetype);
@@ -222,7 +224,7 @@ namespace BarcodeStandardExample
                 sfd.Filter = "XML Files|*.xml";
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter(sfd.FileName))
+                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
                     {
                         sw.Write(b.XML);
                     }//using
@@ -237,13 +239,13 @@ namespace BarcodeStandardExample
                 ofd.Multiselect = false;
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string fileContents = System.IO.File.ReadAllText(ofd.FileName);
-                    using (BarcodeStandard.SaveData XML = BarcodeLib.Barcode.GetSaveDataFromFile(fileContents))
+                    string fileContents = File.ReadAllText(ofd.FileName);
+                    using (BarcodeStandard.SaveData XML = Barcode.GetSaveDataFromFile(fileContents))
                     {
                         //load image from xml
                         this.barcode.Width = XML.ImageWidth;
                         this.barcode.Height = XML.ImageHeight;
-                        this.barcode.BackgroundImage = BarcodeLib.Barcode.GetImageFromXML(fileContents);
+                        this.barcode.BackgroundImage = Barcode.GetImageFromXML(fileContents);
 
                         //populate the screen
                         this.txtData.Text = XML.RawData;
@@ -259,10 +261,15 @@ namespace BarcodeStandardExample
                             case "EAN13":
                                 this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("EAN-13");
                                 break;
+                            case "Interleaved2of5_Mod10":
+                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
+                                break;
                             case "Interleaved2of5":
                                 this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Interleaved 2 of 5");
                                 break;
-                            case "Industrial2of5":
+                            case "Standard2of5_Mod10":
+                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Standard 2 of 5 Mod 10");
+                                break;
                             case "Standard2of5":
                                 this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Standard 2 of 5");
                                 break;
@@ -360,7 +367,7 @@ namespace BarcodeStandardExample
 
         private void btnMassGeneration_Click(object sender, EventArgs e)
         {
-            int x = 1500;
+            int x = 1000;
             double sum = 0;
 
             progressBar1.Visible = true;
