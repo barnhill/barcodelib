@@ -1,4 +1,4 @@
-# barcodelib ![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)
+# barcodelib [![Build Status](https://www.travis-ci.org/barnhill/barcodelib.svg?branch=master)](https://travis-ci.org/barnhill/barcodelib)
 
 [Nuget package](https://www.nuget.org/packages/BarcodeLib)
 
