@@ -10,6 +10,11 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Code128 : BarcodeCommon, IBarcode
     {
+        public static char FNC1 = Convert.ToChar(200);
+        public static char FNC2 = Convert.ToChar(201);
+        public static char FNC3 = Convert.ToChar(202);
+        public static char FNC4 = Convert.ToChar(203);
+
         public enum TYPES:int { DYNAMIC, A, B, C };
         private DataTable C128_Code = new DataTable("C128");
         private List<string> _FormattedData = new List<string>();
@@ -154,13 +159,13 @@ namespace BarcodeLib.Symbologies
             this.C128_Code.Rows.Add(new object[] { "94", Convert.ToChar(30).ToString(), "~", "94", "10001011110" });
 
             this.C128_Code.Rows.Add(new object[] { "95", Convert.ToChar(31).ToString(), Convert.ToChar(127).ToString(), "95", "10111101000" });
-            this.C128_Code.Rows.Add(new object[] { "96", Convert.ToChar(202).ToString()/*FNC3*/, Convert.ToChar(202).ToString()/*FNC3*/, "96", "10111100010" });
-            this.C128_Code.Rows.Add(new object[] { "97", Convert.ToChar(201).ToString()/*FNC2*/, Convert.ToChar(201).ToString()/*FNC2*/, "97", "11110101000" });
+            this.C128_Code.Rows.Add(new object[] { "96", FNC3, FNC3, "96", "10111100010" });
+            this.C128_Code.Rows.Add(new object[] { "97", FNC2, FNC2, "97", "11110101000" });
             this.C128_Code.Rows.Add(new object[] { "98", "SHIFT", "SHIFT", "98", "11110100010" });
             this.C128_Code.Rows.Add(new object[] { "99", "CODE_C", "CODE_C", "99", "10111011110" });
-            this.C128_Code.Rows.Add(new object[] { "100", "CODE_B", Convert.ToChar(203).ToString()/*FNC4*/, "CODE_B", "10111101110" });
-            this.C128_Code.Rows.Add(new object[] { "101", Convert.ToChar(203).ToString()/*FNC4*/, "CODE_A", "CODE_A", "11101011110" });
-            this.C128_Code.Rows.Add(new object[] { "102", Convert.ToChar(200).ToString()/*FNC1*/, Convert.ToChar(200).ToString()/*FNC1*/, Convert.ToChar(200).ToString()/*FNC1*/, "11110101110" });
+            this.C128_Code.Rows.Add(new object[] { "100", "CODE_B", FNC4, "CODE_B", "10111101110" });
+            this.C128_Code.Rows.Add(new object[] { "101", FNC4, "CODE_A", "CODE_A", "11101011110" });
+            this.C128_Code.Rows.Add(new object[] { "102", FNC1, FNC1, FNC1, "11110101110" });
             this.C128_Code.Rows.Add(new object[] { "103", "START_A", "START_A", "START_A", "11010000100" });
             this.C128_Code.Rows.Add(new object[] { "104", "START_B", "START_B", "START_B", "11010010000" });
             this.C128_Code.Rows.Add(new object[] { "105", "START_C", "START_C", "START_C", "11010011100" });
@@ -171,7 +176,7 @@ namespace BarcodeLib.Symbologies
             List<DataRow> rows = new List<DataRow>();
 
             //if two chars are numbers (or FNC1) then START_C or CODE_C
-            if (s.Length > 1 && (Char.IsNumber(s[0]) || s[0] == Convert.ToChar(200)) && (Char.IsNumber(s[1]) || s[1] == Convert.ToChar(200)))
+            if (s.Length > 1 && (Char.IsNumber(s[0]) || s[0] == FNC1) && (Char.IsNumber(s[1]) || s[1] == FNC1))
             {
                 if (StartCharacter == null)
                 {
@@ -268,24 +273,45 @@ namespace BarcodeLib.Symbologies
         {
             string temp = "";
             string tempRawData = Raw_Data;
-            
-            //breaking the raw data up for code A and code B will mess up the encoding
-            if (this.type == TYPES.A || this.type == TYPES.B)
-            {
-                foreach (char c in Raw_Data)
-                    _FormattedData.Add(c.ToString());
-                return;
-            }//if
-            if (this.type == TYPES.C)
-            {
-                if (!CheckNumericOnly(Raw_Data))
-                    Error("EC128-6: Only numeric values can be encoded with C128-C.");
 
-                //CODE C: adds a 0 to the front of the Raw_Data if the length is not divisible by 2
-                if (Raw_Data.Length % 2 > 0)
-                    tempRawData = "0" + Raw_Data;
-            }//if
-           
+            //breaking the raw data up for code A and code B will mess up the encoding
+            switch (this.type)
+            {
+                case TYPES.A:
+                case TYPES.B:
+                    {
+                        foreach (char c in Raw_Data)
+                            _FormattedData.Add(c.ToString());
+                        return;
+                    }
+
+                case TYPES.C:
+                    {
+                        int indexOfFirstNumeric = -1;
+                        int numericCount = 0;
+                        for (int x = 0; x < RawData.Length; x++)
+                        {
+                            Char c = RawData[x];
+                            if (Char.IsNumber(c))
+                            {
+                                numericCount++;
+                                if (indexOfFirstNumeric == -1)
+                                {
+                                    indexOfFirstNumeric = x;
+                                }
+                            } else if (c != FNC1)
+                            {
+                                Error("EC128-6: Only numeric values can be encoded with C128-C (Invalid char at position " + x + ").");
+                            }
+                        }
+
+                        //CODE C: adds a 0 to the front of the Raw_Data if the length is not divisible by 2
+                        if (numericCount % 2 == 1)
+                            tempRawData = tempRawData.Insert(indexOfFirstNumeric, "0");
+                        break;
+                    }
+            }
+
             foreach (char c in tempRawData)
             {
                 if (Char.IsNumber(c))
