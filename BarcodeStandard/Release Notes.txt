@@ -1,5 +1,10 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.2.2.0
+- Simplified the code to check numeric
+- Allow FNC1 for Code 128-C
+2.2.1.0
+- standard 2 of 5 append check digit encoding
 2.2.0.0
 - Add Interleaved 2 of 5 Mod 10
 - Add Standard 2 of 5 Mod 10
