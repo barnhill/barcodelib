@@ -12,7 +12,7 @@
     <Copyright>Copyright 2007-2018 Brad Barnhill</Copyright>
     <PackageLicenseUrl>https://github.com/bbarnhill/barcodelib/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/barnhill/barcodelib</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/barnhill/barcodelib/blob/master/BarcodeStandard/examples/upca.gif</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/barnhill/barcodelib/master/BarcodeStandard/examples/upca.gif</PackageIconUrl>
     <RepositoryUrl>https://github.com/barnhill/barcodelib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
