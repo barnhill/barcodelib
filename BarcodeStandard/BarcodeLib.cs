@@ -1222,26 +1222,18 @@ namespace BarcodeLib
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                try
-                {
-                    LabelFont.Dispose();
-                    LabelFont = null;
-
-                    _Encoded_Image.Dispose();
-                    _Encoded_Image = null;
-
-                    _XML = null;
-                    Raw_Data = null;
-                    Encoded_Value = null;
-                    _Country_Assigning_Manufacturer_Code = null;
-                    _ImageFormat = null;
-                }//try
-                catch (Exception ex)
-                {
-                    throw new Exception("EDISPOSE-1: " + ex.Message);
-                }//catch
-
                 disposedValue = true;
+                LabelFont?.Dispose();
+                LabelFont = null;
+
+                _Encoded_Image?.Dispose();
+                _Encoded_Image = null;
+
+                _XML = null;
+                Raw_Data = null;
+                Encoded_Value = null;
+                _Country_Assigning_Manufacturer_Code = null;
+                _ImageFormat = null;
             }
         }
 
