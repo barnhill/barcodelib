@@ -1,7 +1,7 @@
 language: csharp
 mono: none
 os: linux
-dist: xenial
+dist: bionic
 dotnet: 2.2
 solution: Barcode.sln
 
