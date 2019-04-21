@@ -1,7 +1,8 @@
 language: csharp
 mono: none
 os: linux
-dotnet: 2.1.502
+dist: xenial
+dotnet: 2.2
 solution: Barcode.sln
 
 install:
