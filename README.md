@@ -33,6 +33,9 @@ Image img = b.Encode(BarcodeLib.TYPE.UPCA, "038000356216", Color.Black, Color.Wh
 
 ![Alt text](BarcodeStandard/examples/upca.gif?raw=true "UPC-A")
 
+### Support ###
+If you find this or any of my software useful and decide it worth supporting.  You can do so here:  [Become a Patron!](https://www.patreon.com/bePatron?u=10143118)
+
 ### Copyright and license ###
 
 Copyright 2007-2018 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
