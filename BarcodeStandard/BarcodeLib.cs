@@ -73,6 +73,7 @@ namespace BarcodeLib
         {
             this.Raw_Data = data;
             this.Encoded_Type = iType;
+            GenerateBarcode();
         }
         #endregion
 
@@ -363,13 +364,44 @@ namespace BarcodeLib
             return Encode();
         }//Encode()
         /// <summary>
-        /// Encodes the raw data into binary form representing bars and spaces.
+        /// Encodes the raw data into a barcode image.
         /// </summary>
         internal Image Encode()
         {
             ibarcode.Errors.Clear();
 
             DateTime dtStartTime = DateTime.Now;
+
+            GenerateBarcode();
+
+            this.Encoded_Value = ibarcode.Encoded_Value;
+            this.Raw_Data = ibarcode.RawData;
+
+            _Encoded_Image = (Image)Generate_Image();
+
+            this.EncodedImage.RotateFlip(this.RotateFlipType);
+
+            this.EncodingTime = ((TimeSpan)(DateTime.Now - dtStartTime)).TotalMilliseconds;
+
+            _XML = GetXML();
+
+            return EncodedImage;
+        }//Encode
+
+        /// <summary>
+        /// Encodes the raw data into binary form representing bars and spaces.
+        /// </summary>
+        /// <returns>
+        /// Returns a string containing the binary value of the barcode. 
+        /// This also sets the internal values used within the class.
+        /// </returns>
+        /// <param name="raw_data" >Optional raw_data parameter to for quick barcode generation</param>
+        public string GenerateBarcode(string raw_data = "")
+        {
+            if (raw_data != "")
+            {
+                Raw_Data = raw_data;
+            }
 
             //make sure there is something to encode
             if (Raw_Data.Trim() == "")
@@ -380,6 +412,7 @@ namespace BarcodeLib
 
             this.Encoded_Value = "";
             this._Country_Assigning_Manufacturer_Code = "N/A";
+
 
             switch (this.Encoded_Type)
             {
@@ -478,19 +511,9 @@ namespace BarcodeLib
                 default: throw new Exception("EENCODE-2: Unsupported encoding type specified.");
             }//switch
 
-            this.Encoded_Value = ibarcode.Encoded_Value;
-            this.Raw_Data = ibarcode.RawData;
+            return this.Encoded_Value;
 
-            _Encoded_Image = (Image)Generate_Image();
-
-            this.EncodedImage.RotateFlip(this.RotateFlipType);
-            
-            this.EncodingTime = ((TimeSpan)(DateTime.Now - dtStartTime)).TotalMilliseconds;
-
-            _XML = GetXML();
-
-            return EncodedImage;
-        }//Encode
+        }
         #endregion
 
         #region Image Functions
