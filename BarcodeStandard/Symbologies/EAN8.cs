@@ -15,6 +15,9 @@ namespace BarcodeLib.Symbologies
         {
             Raw_Data = input;
 
+            //check numeric only
+            if (!CheckNumericOnly(Raw_Data)) Error("EEAN8-2: Numeric only.");
+
             CheckDigit();
         }
         /// <summary>
@@ -24,9 +27,6 @@ namespace BarcodeLib.Symbologies
         {
             //check length
             if (Raw_Data.Length != 8 && Raw_Data.Length != 7) Error("EEAN8-1: Invalid data length. (7 or 8 numbers only)");
-
-            //check numeric only
-            if (!CheckNumericOnly(Raw_Data)) Error("EEAN8-2: Numeric only.");
 
             //encode the data
             string result = "101";
