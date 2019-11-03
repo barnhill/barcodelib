@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using BarcodeLib.Symbologies;
 using BarcodeStandard;
 using System.Xml.Serialization;
+using System.Security;
 
 /* 
  * ***************************************************
@@ -20,6 +21,7 @@ using System.Xml.Serialization;
  *  barcode images from a string of data.            *
  * ***************************************************
  */
+[assembly: AllowPartiallyTrustedCallers]
 namespace BarcodeLib
 {
     #region Enums
