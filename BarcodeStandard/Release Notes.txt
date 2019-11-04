@@ -1,5 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.2.3.0
+- Allow use in partially trusted assemblies for SSRS
 2.2.2.0
 - Simplified the code to check numeric
 - Allow FNC1 for Code 128-C

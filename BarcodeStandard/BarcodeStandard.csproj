@@ -1,20 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.2</Version>
+    <Version>2.2.3</Version>
     <PackageId>BarcodeLib</PackageId>
     <Company>Pnuema Productions</Company>
     <Product>BarcodeLib</Product>
     <Authors>Brad Barnhill</Authors>
     <Description>This library was designed to give an easy class for developers to use when they need to generate barcode images from a string of data.</Description>
-    <Copyright>Copyright 2007-2018 Brad Barnhill</Copyright>
-    <PackageLicenseUrl>https://github.com/bbarnhill/barcodelib/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright 2007-2019 Brad Barnhill</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/barnhill/barcodelib</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/barnhill/barcodelib/master/BarcodeStandard/examples/upca.gif</PackageIconUrl>
     <RepositoryUrl>https://github.com/barnhill/barcodelib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageReleaseNotes>- Allow use in partially trusted assemblies for SSRS</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,6 +55,10 @@
     </None>
     <None Update="Release Notes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 
