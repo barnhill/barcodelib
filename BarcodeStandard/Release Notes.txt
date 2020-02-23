@@ -1,5 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.2.4.0
+- Fix incorrect encoding for single digit Pharmacode
 2.2.3.0
 - Allow use in partially trusted assemblies for SSRS
 2.2.2.0

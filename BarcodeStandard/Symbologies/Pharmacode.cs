@@ -58,35 +58,25 @@ namespace BarcodeLib.Symbologies
                 }
             }
 
-            double sum = Math.Pow(2, startIndex + 1) - 2;
-            string [] encoded = new string[startIndex + 1];
-            int i = 0;
-
-            for (int index = startIndex; index >= 0; index--)
+            string result = String.Empty;
+            do
             {
-                double power = Math.Pow(2, index);
-                double diff = num - sum;
-                if (diff > power)
+                if ((num & 1) == 0)
                 {
-                    encoded[i++] = _thickBar;
-                    sum += power;
+                    result = _thickBar + result;
+                    num = (num - 2) / 2;
                 }
                 else
                 {
-                    encoded[i++] = _thinBar;
+                    result = _thinBar + result;
+                    num = (num - 1) / 2;
                 }
-            }
 
-            string result = String.Empty;
-            foreach (string s in encoded)
-            {
-                if (result != String.Empty)
+                if (num != 0)
                 {
-                    result += _gap;
+                    result = _gap + result;
                 }
-
-                result += s;
-            }
+            } while (num != 0);
 
             return result;
         }
