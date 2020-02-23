@@ -46,18 +46,6 @@ namespace BarcodeLib.Symbologies
                 Error("EPHARM-4: Data contains invalid  characters (invalid numeric range).");
             }//if
 
-            int startIndex = 0;
-
-            //find start index
-            for (int index = 15; index >= 0; index--)
-            { 
-                if (Math.Pow(2, index) < num/2)
-                {
-                    startIndex = index;
-                    break;
-                }
-            }
-
             string result = String.Empty;
             do
             {

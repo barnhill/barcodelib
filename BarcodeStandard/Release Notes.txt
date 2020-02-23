@@ -1,5 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.2.5.0
+- Remove unnecessary calculations to make Pharmacode more efficient
 2.2.4.0
 - Fix incorrect encoding for single digit Pharmacode
 2.2.3.0
