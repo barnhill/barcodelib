@@ -38,4 +38,4 @@ If you find this or any of my software useful and decide it worth supporting.  Y
 
 ### Copyright and license ###
 
-Copyright 2007-2018 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
+Copyright 2007-2020 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
