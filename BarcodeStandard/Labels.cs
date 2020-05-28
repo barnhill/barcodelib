@@ -156,20 +156,7 @@ namespace BarcodeLib
 
                 using (Font labFont = new Font("Arial", getFontsize(Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt), FontStyle.Regular))
                 {
-                    int shiftAdjustment;
-                    switch (Barcode.Alignment)
-                    {
-                        case AlignmentPositions.LEFT:
-                            shiftAdjustment = 0;
-                            break;
-                        case AlignmentPositions.RIGHT:
-                            shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length);
-                            break;
-                        case AlignmentPositions.CENTER:
-                        default:
-                            shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length) / 2;
-                            break;
-                    }//switch
+                    int shiftAdjustment = (Barcode.Width % Barcode.EncodedValue.Length);
 
                     using (Graphics g = Graphics.FromImage(img))
                     {
@@ -196,8 +183,8 @@ namespace BarcodeLib
                         float w2 = iBarWidth * 42; //Width of second block
                         float w3 = iBarWidth * 42; //Width of third block
 
-                        float s1 = shiftAdjustment - iBarWidth;
-                        float s2 = s1 + (iBarWidth * 4); //Start position of block 2
+                        float s2 = Barcode.Width - (Barcode.EncodedValue.Length * iBarWidth) + (iBarWidth * 3); //Start position of block 2
+                        float s1 = s2 - (iBarWidth * 5) - w1;
                         float s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
 
                         //Draw the background rectangles for each block
@@ -205,7 +192,6 @@ namespace BarcodeLib
                         {
                             g.FillRectangle(backBrush, new RectangleF(s2, (float)LabelY, w2, (float)labFont.Height));
                             g.FillRectangle(backBrush, new RectangleF(s3, (float)LabelY, w3, (float)labFont.Height));
-
                         }
 
                         //draw datastring under the barcode image
@@ -213,8 +199,9 @@ namespace BarcodeLib
                         {
                             using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style))
                             {
-                                g.DrawString(defTxt.Substring(0, 1), smallFont, foreBrush, new RectangleF(s1, (float)img.Height - (float)(smallFont.Height * 0.9), (float)img.Width, (float)labFont.Height), f);
+                                g.DrawString(defTxt.Substring(0, 1), smallFont, foreBrush, new RectangleF(s1, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
                             }
+
                             g.DrawString(defTxt.Substring(1, 6), labFont, foreBrush, new RectangleF(s2, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
                             g.DrawString(defTxt.Substring(7), labFont, foreBrush, new RectangleF(s3 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
                         }
