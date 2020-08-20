@@ -374,9 +374,7 @@ namespace BarcodeLib
 
             DateTime dtStartTime = DateTime.Now;
 
-            GenerateBarcode();
-
-            this.Encoded_Value = ibarcode.Encoded_Value;
+            this.Encoded_Value = GenerateBarcode();
             this.Raw_Data = ibarcode.RawData;
 
             _Encoded_Image = (Image)Generate_Image();
@@ -513,8 +511,7 @@ namespace BarcodeLib
                 default: throw new Exception("EENCODE-2: Unsupported encoding type specified.");
             }//switch
 
-            return this.Encoded_Value;
-
+            return ibarcode.Encoded_Value;
         }
         #endregion
 
