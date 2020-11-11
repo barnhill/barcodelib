@@ -19,6 +19,8 @@ jobs:
         dotnet-version: 3.1.404
     - name: Install dependencies
       run: dotnet restore
+    - name: Change to Library directory
+      run: cd BarcodeStandard
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Run unit tests
