@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: BarcodeStandard/dotnet build --configuration Release --no-restore
+      run: dotnet build BarcodeStandard/BarcodeStandard.csproj --configuration Release --no-restore
     - name: Run unit tests
-      run: dotnet test --configuration Release
+      run: dotnet test BarcodeStandard/BarcodeStandard.csproj --configuration Release
       working-directory: ./src
