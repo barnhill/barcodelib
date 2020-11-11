@@ -21,6 +21,3 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build BarcodeStandard/BarcodeStandard.csproj --configuration Release --no-restore
-    - name: Run unit tests
-      run: dotnet test BarcodeStandard/BarcodeStandard.csproj --configuration Release
-      working-directory: ./src
