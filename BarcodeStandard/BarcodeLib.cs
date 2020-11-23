@@ -48,7 +48,7 @@ namespace BarcodeLib
         private int _Height = 150;
         private string _XML = "";
         private ImageFormat _ImageFormat = ImageFormat.Jpeg;
-        private Font _LabelFont = new Font("Microsoft Sans Serif", 10, FontStyle.Bold);
+        private Font _LabelFont = new Font("Microsoft Sans Serif", 10 * DotsPerPointAt96Dpi, FontStyle.Bold, GraphicsUnit.Pixel);
         private LabelPositions _LabelPosition = LabelPositions.BOTTOMCENTER;
         private RotateFlipType _RotateFlipType = RotateFlipType.RotateNoneFlipNone;
         private bool _StandardizeLabel = true;
@@ -77,6 +77,19 @@ namespace BarcodeLib
             this.Encoded_Type = iType;
             GenerateBarcode();
         }
+        #endregion
+
+        #region Constants
+        /// <summary>
+        ///   The number of pixels in one point at 96DPI. Since there are 72 points in an inch, this is
+        ///   96/72.
+        /// </summary>
+        /// <remarks><para>
+        ///   Used when calculating default font size in terms of points at 96DPI by manually calculating
+        ///   pixels to avoid being affected by the system DPI. See issue #100
+        ///   and https://stackoverflow.com/a/10800363.
+        /// </para></remarks>
+        public const float DotsPerPointAt96Dpi = 96f / 72;
         #endregion
 
         #region Properties
@@ -638,7 +651,7 @@ namespace BarcodeLib
                                 string defTxt = RawData;
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
                                 
-                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
                                 if (this.LabelFont != null)
                                 {
                                     this.LabelFont.Dispose();
@@ -741,7 +754,7 @@ namespace BarcodeLib
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
 
                                 Font font = this.LabelFont;
-                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
 
                                 if (font != null)
                                 {

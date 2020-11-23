@@ -398,7 +398,7 @@ namespace BarcodeStandardExample
                     {
                         barcode.IncludeLabel = true;
                         barcode.Alignment = AlignmentPositions.CENTER;
-                        barcode.LabelFont = new Font(FontFamily.GenericMonospace, FontSize, FontStyle.Regular);
+                        barcode.LabelFont = new Font(FontFamily.GenericMonospace, FontSize * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
 
                         var barcodeImage = barcode.Encode(TYPE.CODE39, CodeNumber, Color.Black, Color.White, Length, Height);
 
