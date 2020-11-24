@@ -517,6 +517,16 @@ namespace BarcodeLib
 
         #region Image Functions
         /// <summary>
+        /// Create and preconfigures a Bitmap for use by the library. Ensures it is independent from
+        /// system DPI, etc.
+        /// </summary>
+        internal static Bitmap CreateBitmap(int width, int height)
+        {
+            var bitmap = new Bitmap(width, height);
+            bitmap.SetResolution(96, 96);
+            return bitmap;
+        }
+        /// <summary>
         /// Gets a bitmap representation of the encoded data.
         /// </summary>
         /// <returns>Bitmap of encoded value.</returns>
@@ -553,7 +563,7 @@ namespace BarcodeLib
                             ILHeight -= this.LabelFont.Height;
                         }
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
 
                         int bearerwidth = (int)((bitmap.Width) / 12.05);
                         int iquietzone = Convert.ToInt32(bitmap.Width * 0.05);
@@ -659,7 +669,7 @@ namespace BarcodeLib
                             }
                         }
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
                         int iBarWidthModifier = 1;
                         if (iBarWidth <= 0)
                             throw new Exception("EGENERATE_IMAGE-2: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel)");
@@ -762,7 +772,7 @@ namespace BarcodeLib
                             }
                         }
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
                         int iBarWidthModifier = 1;
                         if (iBarWidth <= 0)
@@ -829,7 +839,7 @@ namespace BarcodeLib
                         }
 
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
                         int shiftAdjustment = 0;
                         int iBarWidthModifier = 1;

@@ -325,7 +325,7 @@ namespace BarcodeLib
 
             if (lbl.Length > 0)
             {
-                Image fakeImage = new Bitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
+                Image fakeImage = Barcode.CreateBitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
 
                 // Make a Graphics object to measure the text.
                 using (Graphics gr = Graphics.FromImage(fakeImage))
