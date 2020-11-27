@@ -46,7 +46,7 @@ namespace BarcodeLib.Symbologies
                 Error("EPHARM-4: Data contains invalid  characters (invalid numeric range).");
             }//if
 
-            string result = String.Empty;
+            var result = String.Empty;
             do
             {
                 if ((num & 1) == 0)
@@ -71,10 +71,7 @@ namespace BarcodeLib.Symbologies
 
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_Pharmacode(); }
-        }
+        public string Encoded_Value => Encode_Pharmacode();
 
         #endregion
     }

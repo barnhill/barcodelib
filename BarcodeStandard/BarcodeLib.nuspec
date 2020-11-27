@@ -11,7 +11,7 @@
     <iconUrl>https://github.com/bbarnhill/barcodelib/blob/master/BarcodeLibTest/Barcode.ico?raw=true</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>https://github.com/bbarnhill/barcodelib</releaseNotes>
     <copyright>Copyright © Brad Barnhill 2007-present</copyright>
     <tags>barcode</tags>
   </metadata>

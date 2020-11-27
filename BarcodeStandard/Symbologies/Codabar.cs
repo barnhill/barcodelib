@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Codabar: BarcodeCommon, IBarcode
     {
-        private System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
+        private readonly System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
         
         public Codabar(string input)
         {
@@ -43,10 +43,10 @@ namespace BarcodeLib.Symbologies
             }//switch
 
             //populate the hashtable to begin the process
-            this.init_Codabar();
+            init_Codabar();
 
             //replace non-numeric VALID chars with empty strings before checking for all numerics
-            string temp = Raw_Data;
+            var temp = Raw_Data;
 
             foreach (char c in Codabar_Code.Keys)
             {
@@ -60,9 +60,9 @@ namespace BarcodeLib.Symbologies
             if (!CheckNumericOnly(temp))
                 Error("ECODABAR-4: Data contains invalid  characters.");
 
-            string result = "";
+            var result = "";
 
-            foreach (char c in Raw_Data)
+            foreach (var c in Raw_Data)
             {
                 result += Codabar_Code[c].ToString();
                 result += "0"; //inter-character space
@@ -72,7 +72,7 @@ namespace BarcodeLib.Symbologies
             result = result.Remove(result.Length - 1);
 
             //clears the hashtable so it no longer takes up memory
-            this.Codabar_Code.Clear();
+            Codabar_Code.Clear();
 
             //change the Raw_Data to strip out the start stop chars for label purposes
             Raw_Data = Raw_Data.Trim().Substring(1, RawData.Trim().Length - 2);
@@ -110,10 +110,7 @@ namespace BarcodeLib.Symbologies
 
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_Codabar(); }
-        }
+        public string Encoded_Value => Encode_Codabar();
 
         #endregion
 
