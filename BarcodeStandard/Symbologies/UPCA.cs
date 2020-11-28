@@ -232,24 +232,20 @@ namespace BarcodeLib.Symbologies
                 string RawDataHolder = Raw_Data.Substring(0, 11);
 
                 //calculate check digit
-                int even = 0;
-                int odd = 0;
+                int sum = 0;
 
                 for (int i = 0; i < RawDataHolder.Length; i++)
                 {
                     if (i % 2 == 0)
-                        odd += Int32.Parse(RawDataHolder.Substring(i, 1)) * 3;
+                        sum += Int32.Parse(RawDataHolder.Substring(i, 1)) * 3;
                     else
-                        even += Int32.Parse(RawDataHolder.Substring(i, 1));
+                        sum += Int32.Parse(RawDataHolder.Substring(i, 1));
                 }//for
 
-                int total = even + odd;
-                int cs = total % 10;
-                cs = 10 - cs;
-                if (cs == 10)
-                    cs = 0;
+                int cs = (10 - sum % 10) % 10;
 
-                Raw_Data = RawDataHolder + cs.ToString()[0];
+                //replace checksum if provided by the user and replace with the calculated checksum
+                Raw_Data = RawDataHolder + cs;
             }//try
             catch
             {
