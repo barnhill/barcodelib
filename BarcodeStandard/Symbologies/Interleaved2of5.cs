@@ -83,10 +83,7 @@ namespace BarcodeLib.Symbologies
                 even = !even;
             }
 
-            int checksum = sum % 10;
-            checksum = (10 - checksum) % 10;
-
-            return checksum;
+            return (10 - sum % 10) % 10;
         }
 
         #region IBarcode Members
