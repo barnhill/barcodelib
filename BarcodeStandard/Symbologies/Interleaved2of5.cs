@@ -77,11 +77,16 @@ namespace BarcodeLib.Symbologies
             var even = true;
             for (var i = Raw_Data.Length - 1; i >= 0; --i)
             {
-                sum += Convert.ToInt32(Raw_Data[i]) * (even ? 3 : 1);
+                //convert numeric in char format to integer and
+                //multiply by 3 or 1 based on if an even index from the end
+                sum += (Raw_Data[i] - '0') * (even ? 3 : 1);
                 even = !even;
             }
 
-            return 10 - (sum % 10);
+            int checksum = sum % 10;
+            checksum = (10 - checksum) % 10;
+
+            return checksum;
         }
 
         #region IBarcode Members
