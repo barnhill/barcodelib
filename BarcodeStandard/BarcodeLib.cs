@@ -81,6 +81,10 @@ namespace BarcodeLib
 
         #region Constants
         /// <summary>
+        ///   The default resolution of 96 dots per inch.
+        /// </summary>
+        const float DefaultResolution = 96f;
+        /// <summary>
         ///   The number of pixels in one point at 96DPI. Since there are 72 points in an inch, this is
         ///   96/72.
         /// </summary>
@@ -89,7 +93,7 @@ namespace BarcodeLib
         ///   pixels to avoid being affected by the system DPI. See issue #100
         ///   and https://stackoverflow.com/a/10800363.
         /// </para></remarks>
-        public const float DotsPerPointAt96Dpi = 96f / 72;
+        public const float DotsPerPointAt96Dpi = DefaultResolution / 72;
         #endregion
 
         #region Properties
@@ -189,6 +193,14 @@ namespace BarcodeLib
             get { return _Height; }
             set { _Height = value; }
         }
+        /// <summary>
+        ///   The number of pixels per horizontal inch. Used when creating the Bitmap.
+        /// </summary>
+        public float HoritontalResolution { get; set; } = DefaultResolution;
+        /// <summary>
+        ///   The number of pixels per vertical inch. Used when creating the Bitmap.
+        /// </summary>
+        public float VerticalResolution { get; set; } = DefaultResolution;
         /// <summary>
         ///   If non-null, sets the width of a bar. <see cref="Width"/> is ignored and calculated automatically.
         /// </summary>
@@ -533,10 +545,10 @@ namespace BarcodeLib
         /// Create and preconfigures a Bitmap for use by the library. Ensures it is independent from
         /// system DPI, etc.
         /// </summary>
-        internal static Bitmap CreateBitmap(int width, int height)
+        internal Bitmap CreateBitmap(int width, int height)
         {
             var bitmap = new Bitmap(width, height);
-            bitmap.SetResolution(96, 96);
+            bitmap.SetResolution(HoritontalResolution, VerticalResolution);
             return bitmap;
         }
         /// <summary>
@@ -661,7 +673,7 @@ namespace BarcodeLib
                                 string defTxt = RawData;
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
                                 
-                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
+                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(this, Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
                                 if (this.LabelFont != null)
                                 {
                                     this.LabelFont.Dispose();
@@ -764,7 +776,7 @@ namespace BarcodeLib
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
 
                                 Font font = this.LabelFont;
-                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
+                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(this, Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
 
                                 if (font != null)
                                 {

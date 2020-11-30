@@ -154,7 +154,7 @@ namespace BarcodeLib
                 int iBarWidth = Barcode.Width / Barcode.EncodedValue.Length;
                 string defTxt = Barcode.RawData;
 
-                using (Font labFont = new Font("Arial", getFontsize(Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt) * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
+                using (Font labFont = new Font("Arial", getFontsize(Barcode, Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt) * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
                 {
                     int shiftAdjustment;
                     switch (Barcode.Alignment)
@@ -243,7 +243,7 @@ namespace BarcodeLib
                 int halfBarWidth = (int)(iBarWidth * 0.5);
                 string defTxt = Barcode.RawData;
 
-                using (Font labFont = new Font("Arial", getFontsize((int)((Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt) * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
+                using (Font labFont = new Font("Arial", getFontsize(Barcode, (int)((Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt) * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
                 {
                     int shiftAdjustment;
                     switch (Barcode.Alignment)
@@ -318,14 +318,14 @@ namespace BarcodeLib
             }//catch
         }//Label_UPCA
 
-        public static int getFontsize(int wid, int hgt, string lbl)
+        public static int getFontsize(Barcode barcode, int wid, int hgt, string lbl)
         {
             //Returns the optimal font size for the specified dimensions
             int fontSize = 10;
 
             if (lbl.Length > 0)
             {
-                Image fakeImage = Barcode.CreateBitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
+                Image fakeImage = barcode.CreateBitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
 
                 // Make a Graphics object to measure the text.
                 using (Graphics gr = Graphics.FromImage(fakeImage))
