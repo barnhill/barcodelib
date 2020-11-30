@@ -48,7 +48,7 @@ namespace BarcodeLib
         private int _Height = 150;
         private string _XML = "";
         private ImageFormat _ImageFormat = ImageFormat.Jpeg;
-        private Font _LabelFont = new Font("Microsoft Sans Serif", 10, FontStyle.Bold);
+        private Font _LabelFont = new Font("Microsoft Sans Serif", 10 * DotsPerPointAt96Dpi, FontStyle.Bold, GraphicsUnit.Pixel);
         private LabelPositions _LabelPosition = LabelPositions.BOTTOMCENTER;
         private RotateFlipType _RotateFlipType = RotateFlipType.RotateNoneFlipNone;
         private bool _StandardizeLabel = true;
@@ -77,6 +77,19 @@ namespace BarcodeLib
             this.Encoded_Type = iType;
             GenerateBarcode();
         }
+        #endregion
+
+        #region Constants
+        /// <summary>
+        ///   The number of pixels in one point at 96DPI. Since there are 72 points in an inch, this is
+        ///   96/72.
+        /// </summary>
+        /// <remarks><para>
+        ///   Used when calculating default font size in terms of points at 96DPI by manually calculating
+        ///   pixels to avoid being affected by the system DPI. See issue #100
+        ///   and https://stackoverflow.com/a/10800363.
+        /// </para></remarks>
+        public const float DotsPerPointAt96Dpi = 96f / 72;
         #endregion
 
         #region Properties
@@ -517,6 +530,16 @@ namespace BarcodeLib
 
         #region Image Functions
         /// <summary>
+        /// Create and preconfigures a Bitmap for use by the library. Ensures it is independent from
+        /// system DPI, etc.
+        /// </summary>
+        internal static Bitmap CreateBitmap(int width, int height)
+        {
+            var bitmap = new Bitmap(width, height);
+            bitmap.SetResolution(96, 96);
+            return bitmap;
+        }
+        /// <summary>
         /// Gets a bitmap representation of the encoded data.
         /// </summary>
         /// <returns>Bitmap of encoded value.</returns>
@@ -553,7 +576,7 @@ namespace BarcodeLib
                             ILHeight -= this.LabelFont.Height;
                         }
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
 
                         int bearerwidth = (int)((bitmap.Width) / 12.05);
                         int iquietzone = Convert.ToInt32(bitmap.Width * 0.05);
@@ -638,7 +661,7 @@ namespace BarcodeLib
                                 string defTxt = RawData;
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
                                 
-                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
                                 if (this.LabelFont != null)
                                 {
                                     this.LabelFont.Dispose();
@@ -659,7 +682,7 @@ namespace BarcodeLib
                             }
                         }
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
                         int iBarWidthModifier = 1;
                         if (iBarWidth <= 0)
                             throw new Exception("EGENERATE_IMAGE-2: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel)");
@@ -741,7 +764,7 @@ namespace BarcodeLib
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
 
                                 Font font = this.LabelFont;
-                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt), FontStyle.Regular);
+                                Font labFont = new Font(font != null ? font.FontFamily.Name : "Arial", Labels.getFontsize(Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
 
                                 if (font != null)
                                 {
@@ -762,7 +785,7 @@ namespace BarcodeLib
                             }
                         }
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
                         int iBarWidthModifier = 1;
                         if (iBarWidth <= 0)
@@ -829,7 +852,7 @@ namespace BarcodeLib
                         }
 
 
-                        bitmap = new Bitmap(Width, Height);
+                        bitmap = CreateBitmap(Width, Height);
                         int iBarWidth = Width / Encoded_Value.Length;
                         int shiftAdjustment = 0;
                         int iBarWidthModifier = 1;

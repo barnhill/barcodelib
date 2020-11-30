@@ -154,7 +154,7 @@ namespace BarcodeLib
                 int iBarWidth = Barcode.Width / Barcode.EncodedValue.Length;
                 string defTxt = Barcode.RawData;
 
-                using (Font labFont = new Font("Arial", getFontsize(Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt), FontStyle.Regular))
+                using (Font labFont = new Font("Arial", getFontsize(Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length, img.Height, defTxt) * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
                 {
                     int shiftAdjustment;
                     switch (Barcode.Alignment)
@@ -211,7 +211,7 @@ namespace BarcodeLib
                         //draw datastring under the barcode image
                         using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
                         {
-                            using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style))
+                            using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f * Barcode.DotsPerPointAt96Dpi, labFont.Style, GraphicsUnit.Pixel))
                             {
                                 g.DrawString(defTxt.Substring(0, 1), smallFont, foreBrush, new RectangleF(s1, (float)img.Height - (float)(smallFont.Height * 0.9), (float)img.Width, (float)labFont.Height), f);
                             }
@@ -243,7 +243,7 @@ namespace BarcodeLib
                 int halfBarWidth = (int)(iBarWidth * 0.5);
                 string defTxt = Barcode.RawData;
 
-                using (Font labFont = new Font("Arial", getFontsize((int)((Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt), FontStyle.Regular))
+                using (Font labFont = new Font("Arial", getFontsize((int)((Barcode.Width - Barcode.Width % Barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt) * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
                 {
                     int shiftAdjustment;
                     switch (Barcode.Alignment)
@@ -298,7 +298,7 @@ namespace BarcodeLib
                         //draw data string under the barcode image
                         using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
                         {
-                            using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f, labFont.Style))
+                            using (Font smallFont = new Font(labFont.FontFamily, labFont.SizeInPoints * 0.5f * Barcode.DotsPerPointAt96Dpi, labFont.Style, GraphicsUnit.Pixel))
                             {
                                 g.DrawString(defTxt.Substring(0, 1), smallFont, foreBrush, new RectangleF(s1, (float)img.Height - smallFont.Height, (float)img.Width, (float)labFont.Height), f);
                                 g.DrawString(defTxt.Substring(1, 5), labFont, foreBrush, new RectangleF(s2 - iBarWidth, (float)LabelY, (float)img.Width, (float)labFont.Height), f);
@@ -325,14 +325,14 @@ namespace BarcodeLib
 
             if (lbl.Length > 0)
             {
-                Image fakeImage = new Bitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
+                Image fakeImage = Barcode.CreateBitmap(1, 1); //As we cannot use CreateGraphics() in a class library, so the fake image is used to load the Graphics.
 
                 // Make a Graphics object to measure the text.
                 using (Graphics gr = Graphics.FromImage(fakeImage))
                 {
                     for (int i = 1; i <= 100; i++)
                     {
-                        using (Font test_font = new Font("Arial", i))
+                        using (Font test_font = new Font("Arial", i * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel))
                         {
                             // See how much space the text would
                             // need, specifying a maximum width.

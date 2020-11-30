@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Postnet : BarcodeCommon, IBarcode
     {
-        private string[] POSTNET_Code = { "11000", "00011", "00101", "00110", "01001", "01010", "01100", "10001", "10010", "10100" };
+        private readonly string[] POSTNET_Code = { "11000", "00011", "00101", "00110", "01001", "01010", "01100", "10001", "10010", "10100" };
 
         public Postnet(string input)
         {
@@ -35,14 +35,14 @@ namespace BarcodeLib.Symbologies
 
             //Note: 0 = half bar and 1 = full bar
             //initialize the result with the starting bar
-            string result = "1";
-            int checkdigitsum = 0;
+            var result = "1";
+            var checkdigitsum = 0;
 
-            foreach (char c in Raw_Data)
+            foreach (var c in Raw_Data)
             {
                 try
                 {
-                    int index = Convert.ToInt32(c.ToString());
+                    var index = Convert.ToInt32(c.ToString());
                     result += POSTNET_Code[index];
                     checkdigitsum += index;
                 }//try
@@ -53,8 +53,8 @@ namespace BarcodeLib.Symbologies
             }//foreach
 
             //calculate and add check digit
-            int temp = checkdigitsum % 10;
-            int checkdigit = 10 - (temp == 0 ? 10 : temp);
+            var temp = checkdigitsum % 10;
+            var checkdigit = 10 - (temp == 0 ? 10 : temp);
 
             result += POSTNET_Code[checkdigit];
 
@@ -66,10 +66,7 @@ namespace BarcodeLib.Symbologies
 
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_Postnet(); }
-        }
+        public string Encoded_Value => Encode_Postnet();
 
         #endregion
     }//class

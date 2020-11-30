@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Code93 : BarcodeCommon, IBarcode
     {
-        private System.Data.DataTable C93_Code = new System.Data.DataTable("C93_Code");
+        private readonly System.Data.DataTable C93_Code = new System.Data.DataTable("C93_Code");
 
         /// <summary>
         /// Encodes with Code93.
@@ -24,16 +24,16 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Code93()
         {
-            this.init_Code93();
+            init_Code93();
 
-            string FormattedData = Add_CheckDigits(Raw_Data);
+            var formattedData = Add_CheckDigits(Raw_Data);
 
-            string result = C93_Code.Select("Character = '*'")[0]["Encoding"].ToString();
-            foreach (char c in FormattedData)
+            var result = C93_Code.Select("Character = '*'")[0]["Encoding"].ToString();
+            foreach (var c in formattedData)
             {
                 try
                 {
-                    result += C93_Code.Select("Character = '" + c.ToString() + "'")[0]["Encoding"].ToString();
+                    result += C93_Code.Select("Character = '" + c + "'")[0]["Encoding"].ToString();
                 }//try
                 catch
                 {
@@ -47,7 +47,7 @@ namespace BarcodeLib.Symbologies
             result += "1";
 
             //clear the hashtable so it no longer takes up memory
-            this.C93_Code.Clear();
+            C93_Code.Clear();
 
             return result;
         }//Encode_Code93
@@ -110,9 +110,9 @@ namespace BarcodeLib.Symbologies
         private string Add_CheckDigits(string input)
         {
             //populate the C weights
-            int[] aryCWeights = new int[input.Length];
-            int curweight = 1;
-            for (int i = input.Length - 1; i >= 0; i--)
+            var aryCWeights = new int[input.Length];
+            var curweight = 1;
+            for (var i = input.Length - 1; i >= 0; i--)
             {
                 if (curweight > 20)
                     curweight = 1;
@@ -121,9 +121,9 @@ namespace BarcodeLib.Symbologies
             }//for
 
             //populate the K weights
-            int[] aryKWeights = new int[input.Length + 1];
+            var aryKWeights = new int[input.Length + 1];
             curweight = 1;
-            for (int i = input.Length; i >= 0; i--)
+            for (var i = input.Length; i >= 0; i--)
             {
                 if (curweight > 15)
                     curweight = 1;
@@ -132,34 +132,31 @@ namespace BarcodeLib.Symbologies
             }//for
 
             //calculate C checksum
-            int SUM = 0;
-            for (int i = 0; i < input.Length; i++)
+            var sum = 0;
+            for (var i = 0; i < input.Length; i++)
             {
-                SUM += aryCWeights[i] * Int32.Parse(C93_Code.Select("Character = '" + input[i].ToString() + "'")[0]["Value"].ToString());
+                sum += aryCWeights[i] * Int32.Parse(C93_Code.Select("Character = '" + input[i] + "'")[0]["Value"].ToString());
             }//for
-            int ChecksumValue = SUM % 47;
+            var checksumValue = sum % 47;
 
-            input += C93_Code.Select("Value = '" + ChecksumValue.ToString() + "'")[0]["Character"].ToString();
+            input += C93_Code.Select("Value = '" + checksumValue + "'")[0]["Character"].ToString();
 
             //calculate K checksum
-            SUM = 0;
-            for (int i = 0; i < input.Length; i++)
+            sum = 0;
+            for (var i = 0; i < input.Length; i++)
             {
-                SUM += aryKWeights[i] * Int32.Parse(C93_Code.Select("Character = '" + input[i].ToString() + "'")[0]["Value"].ToString());
+                sum += aryKWeights[i] * Int32.Parse(C93_Code.Select("Character = '" + input[i] + "'")[0]["Value"].ToString());
             }//for
-            ChecksumValue = SUM % 47;
+            checksumValue = sum % 47;
 
-            input += C93_Code.Select("Value = '" + ChecksumValue.ToString() + "'")[0]["Character"].ToString();
+            input += C93_Code.Select("Value = '" + checksumValue + "'")[0]["Character"].ToString();
 
             return input;
         }//Calculate_CheckDigits
         
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_Code93(); }
-        }
+        public string Encoded_Value => Encode_Code93();
 
         #endregion
     }//class

@@ -6,7 +6,7 @@
     /// </summary>
     class FIM: BarcodeCommon, IBarcode
     {
-        private string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111" };
+        private readonly string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111" };
         public enum FIMTypes {FIM_A = 0, FIM_B, FIM_C, FIM_D};
 
         public FIM(string input)
@@ -34,23 +34,20 @@
 
         public string Encode_FIM()
         {
-            string Encoded = "";
+            string encoded = "";
             foreach (char c in RawData)
             {
-                Encoded += c + "0";
+                encoded += c + "0";
             }//foreach
 
-            Encoded = Encoded.Substring(0, Encoded.Length - 1);
+            encoded = encoded.Substring(0, encoded.Length - 1);
 
-            return Encoded;
+            return encoded;
         }
 
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_FIM(); }
-        }
+        public string Encoded_Value => Encode_FIM();
 
         #endregion
     }
