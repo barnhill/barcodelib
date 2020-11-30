@@ -25,10 +25,7 @@ namespace BarcodeLib.Symbologies
 
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_JAN13(); }
-        }
+        public string Encoded_Value => Encode_JAN13();
 
         #endregion
     }

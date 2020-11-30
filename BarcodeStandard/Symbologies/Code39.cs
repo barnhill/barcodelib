@@ -8,10 +8,10 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Code39 : BarcodeCommon, IBarcode
     {
-        private System.Collections.Hashtable C39_Code = new System.Collections.Hashtable(); //is initialized by init_Code39()
-        private System.Collections.Hashtable ExtC39_Translation = new System.Collections.Hashtable();
-        private bool _AllowExtended = false;
-        private bool _EnableChecksum = false;
+        private readonly System.Collections.Hashtable C39_Code = new System.Collections.Hashtable(); //is initialized by init_Code39()
+        private readonly System.Collections.Hashtable ExtC39_Translation = new System.Collections.Hashtable();
+        private readonly bool _allowExtended;
+        private readonly bool _enableChecksum;
 
         /// <summary>
         /// Encodes with Code39.
@@ -26,24 +26,24 @@ namespace BarcodeLib.Symbologies
         /// Encodes with Code39.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        /// <param name="AllowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
-        public Code39(string input, bool AllowExtended)
+        /// <param name="allowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
+        public Code39(string input, bool allowExtended)
         {
             Raw_Data = input;
-            _AllowExtended = AllowExtended;
+            _allowExtended = allowExtended;
         }
 
         /// <summary>
         /// Encodes with Code39.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        /// <param name="AllowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
-        /// <param name="EnableChecksum">Whether to calculate the Mod 43 checksum and encode it into the barcode</param>
-        public Code39(string input, bool AllowExtended, bool EnableChecksum)
+        /// <param name="allowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
+        /// <param name="enableChecksum">Whether to calculate the Mod 43 checksum and encode it into the barcode</param>
+        public Code39(string input, bool allowExtended, bool enableChecksum)
         {
             Raw_Data = input;
-            _AllowExtended = AllowExtended;
-            _EnableChecksum = EnableChecksum;
+            _allowExtended = allowExtended;
+            _enableChecksum = enableChecksum;
         }
 
         /// <summary>
@@ -51,18 +51,18 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Code39()
         {
-            this.init_Code39();
-            this.init_ExtendedCode39();
+            init_Code39();
+            init_ExtendedCode39();
 
-            string strNoAstr = Raw_Data.Replace("*", "");
-            string strFormattedData = "*" + strNoAstr + (_EnableChecksum ? getChecksumChar(strNoAstr).ToString() : String.Empty) + "*";
+            var strNoAstr = Raw_Data.Replace("*", "");
+            var strFormattedData = "*" + strNoAstr + (_enableChecksum ? GetChecksumChar(strNoAstr).ToString() : String.Empty) + "*";
 
-            if (_AllowExtended)
+            if (_allowExtended)
                 InsertExtendedCharsIfNeeded(ref strFormattedData);
 
-            string result = "";
+            var result = "";
             //foreach (char c in this.FormattedData)
-            foreach (char c in strFormattedData)
+            foreach (var c in strFormattedData)
             {
                 try
                 {
@@ -71,7 +71,7 @@ namespace BarcodeLib.Symbologies
                 }//try
                 catch
                 {
-                    if (_AllowExtended)
+                    if (_allowExtended)
                         Error("EC39-1: Invalid data.");
                     else
                         Error("EC39-1: Invalid data. (Try using Extended Code39)");
@@ -81,7 +81,7 @@ namespace BarcodeLib.Symbologies
             result = result.Substring(0, result.Length-1);
             
             //clear the hashtable so it no longer takes up memory
-            this.C39_Code.Clear();
+            C39_Code.Clear();
 
             return result;
         }//Encode_Code39
@@ -226,37 +226,37 @@ namespace BarcodeLib.Symbologies
             ExtC39_Translation.Add("z", "+Z");
             ExtC39_Translation.Add(Convert.ToChar(127).ToString(), "%T"); //also %X, %Y, %Z 
         }
-        private void InsertExtendedCharsIfNeeded(ref string FormattedData)
+        private void InsertExtendedCharsIfNeeded(ref string formattedData)
         {
-            string output = "";
-            foreach (char c in FormattedData)
+            var output = "";
+            foreach (var c in formattedData)
             {
                 try
                 {
-                    string s = C39_Code[c].ToString();
+                    var s = C39_Code[c].ToString();
                     output += c;
                 }//try
                 catch 
                 { 
                     //insert extended substitution
-                    object oTrans = ExtC39_Translation[c.ToString()];
+                    var oTrans = ExtC39_Translation[c.ToString()];
                     output += oTrans.ToString();
                 }//catch
             }//foreach
 
-            FormattedData = output;
+            formattedData = output;
         }
-        private char getChecksumChar(string strNoAstr) 
+        private char GetChecksumChar(string strNoAstr) 
         {
             //checksum
-            string Code39_Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
+            var Code39_Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
+            var sum = 0;
             InsertExtendedCharsIfNeeded(ref strNoAstr);
-            int sum = 0;
 
             //Calculate the checksum
-            for (int i = 0; i < strNoAstr.Length; ++i)
+            foreach (var t in strNoAstr)
             {
-                sum = sum + Code39_Charset.IndexOf(strNoAstr[i].ToString());
+                sum = sum + Code39_Charset.IndexOf(t.ToString(), StringComparison.Ordinal);
             }
 
             //return the checksum char
@@ -264,10 +264,7 @@ namespace BarcodeLib.Symbologies
         }
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return Encode_Code39(); }
-        }
+        public string Encoded_Value => Encode_Code39();
 
         #endregion
     }//class

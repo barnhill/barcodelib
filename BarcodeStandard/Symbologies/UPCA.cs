@@ -9,10 +9,10 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class UPCA : BarcodeCommon, IBarcode
     {
-        private string[] UPC_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private string[] UPC_CodeB = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
-        private string _Country_Assigning_Manufacturer_Code = "N/A";
-        private Hashtable CountryCodes = new Hashtable(); //is initialized by init_CountryCodes()
+        private readonly string[] UPC_Code_A = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
+        private readonly string[] UPC_Code_B = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
+        private string _countryAssigningManufacturerCode = "N/A";
+        private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
 
         public UPCA(string input)
         {
@@ -32,16 +32,16 @@ namespace BarcodeLib.Symbologies
 
             CheckDigit();
             
-            string result = "101"; //start with guard bars
+            var result = "101"; //start with guard bars
 
             //first number
-            result += UPC_CodeA[Int32.Parse(Raw_Data[0].ToString())];
+            result += UPC_Code_A[Int32.Parse(Raw_Data[0].ToString())];
 
             //second (group) of numbers
-            int pos = 0;
+            var pos = 0;
             while (pos < 5)
             {
-                result += UPC_CodeA[Int32.Parse(Raw_Data[pos + 1].ToString())];
+                result += UPC_Code_A[Int32.Parse(Raw_Data[pos + 1].ToString())];
                 pos++;
             }//while
 
@@ -52,204 +52,204 @@ namespace BarcodeLib.Symbologies
             pos = 0;
             while (pos < 5)
             {
-                result += UPC_CodeB[Int32.Parse(Raw_Data[(pos++) + 6].ToString())];
+                result += UPC_Code_B[Int32.Parse(Raw_Data[(pos++) + 6].ToString())];
             }//while
 
             //forth
-            result += UPC_CodeB[Int32.Parse(Raw_Data[Raw_Data.Length - 1].ToString())];
+            result += UPC_Code_B[Int32.Parse(Raw_Data[Raw_Data.Length - 1].ToString())];
 
             //add ending guard bars
             result += "101";
 
             //get the manufacturer assigning country
-            this.init_CountryCodes();
-            string twodigitCode = "0" + Raw_Data.Substring(0, 1);
+            init_CountryCodes();
+            var twodigitCode = "0" + Raw_Data.Substring(0, 1);
             try
             {
-                _Country_Assigning_Manufacturer_Code = CountryCodes[twodigitCode].ToString();
+                _countryAssigningManufacturerCode = _countryCodes[twodigitCode].ToString();
             }//try
             catch
             {
                 Error("EUPCA-3: Country assigning manufacturer code not found.");
             }//catch
-            finally { CountryCodes.Clear(); }
+            finally { _countryCodes.Clear(); }
 
             return result;
         }//Encode_UPCA
         private void init_CountryCodes()
         {
-            CountryCodes.Clear();
-            CountryCodes.Add("00", "US / CANADA");
-            CountryCodes.Add("01", "US / CANADA");
-            CountryCodes.Add("02", "US / CANADA");
-            CountryCodes.Add("03", "US / CANADA");
-            CountryCodes.Add("04", "US / CANADA");
-            CountryCodes.Add("05", "US / CANADA");
-            CountryCodes.Add("06", "US / CANADA");
-            CountryCodes.Add("07", "US / CANADA");
-            CountryCodes.Add("08", "US / CANADA");
-            CountryCodes.Add("09", "US / CANADA");
-            CountryCodes.Add("10", "US / CANADA");
-            CountryCodes.Add("11", "US / CANADA");
-            CountryCodes.Add("12", "US / CANADA");
-            CountryCodes.Add("13", "US / CANADA");
+            _countryCodes.Clear();
+            _countryCodes.Add("00", "US / CANADA");
+            _countryCodes.Add("01", "US / CANADA");
+            _countryCodes.Add("02", "US / CANADA");
+            _countryCodes.Add("03", "US / CANADA");
+            _countryCodes.Add("04", "US / CANADA");
+            _countryCodes.Add("05", "US / CANADA");
+            _countryCodes.Add("06", "US / CANADA");
+            _countryCodes.Add("07", "US / CANADA");
+            _countryCodes.Add("08", "US / CANADA");
+            _countryCodes.Add("09", "US / CANADA");
+            _countryCodes.Add("10", "US / CANADA");
+            _countryCodes.Add("11", "US / CANADA");
+            _countryCodes.Add("12", "US / CANADA");
+            _countryCodes.Add("13", "US / CANADA");
 
-            CountryCodes.Add("20", "IN STORE");
-            CountryCodes.Add("21", "IN STORE");
-            CountryCodes.Add("22", "IN STORE");
-            CountryCodes.Add("23", "IN STORE");
-            CountryCodes.Add("24", "IN STORE");
-            CountryCodes.Add("25", "IN STORE");
-            CountryCodes.Add("26", "IN STORE");
-            CountryCodes.Add("27", "IN STORE");
-            CountryCodes.Add("28", "IN STORE");
-            CountryCodes.Add("29", "IN STORE");
+            _countryCodes.Add("20", "IN STORE");
+            _countryCodes.Add("21", "IN STORE");
+            _countryCodes.Add("22", "IN STORE");
+            _countryCodes.Add("23", "IN STORE");
+            _countryCodes.Add("24", "IN STORE");
+            _countryCodes.Add("25", "IN STORE");
+            _countryCodes.Add("26", "IN STORE");
+            _countryCodes.Add("27", "IN STORE");
+            _countryCodes.Add("28", "IN STORE");
+            _countryCodes.Add("29", "IN STORE");
 
-            CountryCodes.Add("30", "FRANCE");
-            CountryCodes.Add("31", "FRANCE");
-            CountryCodes.Add("32", "FRANCE");
-            CountryCodes.Add("33", "FRANCE");
-            CountryCodes.Add("34", "FRANCE");
-            CountryCodes.Add("35", "FRANCE");
-            CountryCodes.Add("36", "FRANCE");
-            CountryCodes.Add("37", "FRANCE");
+            _countryCodes.Add("30", "FRANCE");
+            _countryCodes.Add("31", "FRANCE");
+            _countryCodes.Add("32", "FRANCE");
+            _countryCodes.Add("33", "FRANCE");
+            _countryCodes.Add("34", "FRANCE");
+            _countryCodes.Add("35", "FRANCE");
+            _countryCodes.Add("36", "FRANCE");
+            _countryCodes.Add("37", "FRANCE");
 
-            CountryCodes.Add("40", "GERMANY");
-            CountryCodes.Add("41", "GERMANY");
-            CountryCodes.Add("42", "GERMANY");
-            CountryCodes.Add("43", "GERMANY");
-            CountryCodes.Add("44", "GERMANY");
+            _countryCodes.Add("40", "GERMANY");
+            _countryCodes.Add("41", "GERMANY");
+            _countryCodes.Add("42", "GERMANY");
+            _countryCodes.Add("43", "GERMANY");
+            _countryCodes.Add("44", "GERMANY");
 
-            CountryCodes.Add("45", "JAPAN");
-            CountryCodes.Add("46", "RUSSIAN FEDERATION");
-            CountryCodes.Add("49", "JAPAN (JAN-13)");
+            _countryCodes.Add("45", "JAPAN");
+            _countryCodes.Add("46", "RUSSIAN FEDERATION");
+            _countryCodes.Add("49", "JAPAN (JAN-13)");
 
-            CountryCodes.Add("50", "UNITED KINGDOM");
-            CountryCodes.Add("54", "BELGIUM / LUXEMBOURG");
-            CountryCodes.Add("57", "DENMARK");
+            _countryCodes.Add("50", "UNITED KINGDOM");
+            _countryCodes.Add("54", "BELGIUM / LUXEMBOURG");
+            _countryCodes.Add("57", "DENMARK");
 
-            CountryCodes.Add("64", "FINLAND");
+            _countryCodes.Add("64", "FINLAND");
 
-            CountryCodes.Add("70", "NORWAY");
-            CountryCodes.Add("73", "SWEDEN");
-            CountryCodes.Add("76", "SWITZERLAND");
+            _countryCodes.Add("70", "NORWAY");
+            _countryCodes.Add("73", "SWEDEN");
+            _countryCodes.Add("76", "SWITZERLAND");
 
-            CountryCodes.Add("80", "ITALY");
-            CountryCodes.Add("81", "ITALY");
-            CountryCodes.Add("82", "ITALY");
-            CountryCodes.Add("83", "ITALY");
-            CountryCodes.Add("84", "SPAIN");
-            CountryCodes.Add("87", "NETHERLANDS");
+            _countryCodes.Add("80", "ITALY");
+            _countryCodes.Add("81", "ITALY");
+            _countryCodes.Add("82", "ITALY");
+            _countryCodes.Add("83", "ITALY");
+            _countryCodes.Add("84", "SPAIN");
+            _countryCodes.Add("87", "NETHERLANDS");
 
-            CountryCodes.Add("90", "AUSTRIA");
-            CountryCodes.Add("91", "AUSTRIA");
-            CountryCodes.Add("93", "AUSTRALIA");
-            CountryCodes.Add("94", "NEW ZEALAND");
-            CountryCodes.Add("99", "COUPONS");
+            _countryCodes.Add("90", "AUSTRIA");
+            _countryCodes.Add("91", "AUSTRIA");
+            _countryCodes.Add("93", "AUSTRALIA");
+            _countryCodes.Add("94", "NEW ZEALAND");
+            _countryCodes.Add("99", "COUPONS");
 
-            CountryCodes.Add("471", "TAIWAN");
-            CountryCodes.Add("474", "ESTONIA");
-            CountryCodes.Add("475", "LATVIA");
-            CountryCodes.Add("477", "LITHUANIA");
-            CountryCodes.Add("479", "SRI LANKA");
-            CountryCodes.Add("480", "PHILIPPINES");
-            CountryCodes.Add("482", "UKRAINE");
-            CountryCodes.Add("484", "MOLDOVA");
-            CountryCodes.Add("485", "ARMENIA");
-            CountryCodes.Add("486", "GEORGIA");
-            CountryCodes.Add("487", "KAZAKHSTAN");
-            CountryCodes.Add("489", "HONG KONG");
+            _countryCodes.Add("471", "TAIWAN");
+            _countryCodes.Add("474", "ESTONIA");
+            _countryCodes.Add("475", "LATVIA");
+            _countryCodes.Add("477", "LITHUANIA");
+            _countryCodes.Add("479", "SRI LANKA");
+            _countryCodes.Add("480", "PHILIPPINES");
+            _countryCodes.Add("482", "UKRAINE");
+            _countryCodes.Add("484", "MOLDOVA");
+            _countryCodes.Add("485", "ARMENIA");
+            _countryCodes.Add("486", "GEORGIA");
+            _countryCodes.Add("487", "KAZAKHSTAN");
+            _countryCodes.Add("489", "HONG KONG");
 
-            CountryCodes.Add("520", "GREECE");
-            CountryCodes.Add("528", "LEBANON");
-            CountryCodes.Add("529", "CYPRUS");
-            CountryCodes.Add("531", "MACEDONIA");
-            CountryCodes.Add("535", "MALTA");
-            CountryCodes.Add("539", "IRELAND");
-            CountryCodes.Add("560", "PORTUGAL");
-            CountryCodes.Add("569", "ICELAND");
-            CountryCodes.Add("590", "POLAND");
-            CountryCodes.Add("594", "ROMANIA");
-            CountryCodes.Add("599", "HUNGARY");
+            _countryCodes.Add("520", "GREECE");
+            _countryCodes.Add("528", "LEBANON");
+            _countryCodes.Add("529", "CYPRUS");
+            _countryCodes.Add("531", "MACEDONIA");
+            _countryCodes.Add("535", "MALTA");
+            _countryCodes.Add("539", "IRELAND");
+            _countryCodes.Add("560", "PORTUGAL");
+            _countryCodes.Add("569", "ICELAND");
+            _countryCodes.Add("590", "POLAND");
+            _countryCodes.Add("594", "ROMANIA");
+            _countryCodes.Add("599", "HUNGARY");
 
-            CountryCodes.Add("600", "SOUTH AFRICA");
-            CountryCodes.Add("601", "SOUTH AFRICA");
-            CountryCodes.Add("609", "MAURITIUS");
-            CountryCodes.Add("611", "MOROCCO");
-            CountryCodes.Add("613", "ALGERIA");
-            CountryCodes.Add("619", "TUNISIA");
-            CountryCodes.Add("622", "EGYPT");
-            CountryCodes.Add("625", "JORDAN");
-            CountryCodes.Add("626", "IRAN");
-            CountryCodes.Add("690", "CHINA");
-            CountryCodes.Add("691", "CHINA");
-            CountryCodes.Add("692", "CHINA");
+            _countryCodes.Add("600", "SOUTH AFRICA");
+            _countryCodes.Add("601", "SOUTH AFRICA");
+            _countryCodes.Add("609", "MAURITIUS");
+            _countryCodes.Add("611", "MOROCCO");
+            _countryCodes.Add("613", "ALGERIA");
+            _countryCodes.Add("619", "TUNISIA");
+            _countryCodes.Add("622", "EGYPT");
+            _countryCodes.Add("625", "JORDAN");
+            _countryCodes.Add("626", "IRAN");
+            _countryCodes.Add("690", "CHINA");
+            _countryCodes.Add("691", "CHINA");
+            _countryCodes.Add("692", "CHINA");
 
-            CountryCodes.Add("729", "ISRAEL");
-            CountryCodes.Add("740", "GUATEMALA");
-            CountryCodes.Add("741", "EL SALVADOR");
-            CountryCodes.Add("742", "HONDURAS");
-            CountryCodes.Add("743", "NICARAGUA");
-            CountryCodes.Add("744", "COSTA RICA");
-            CountryCodes.Add("746", "DOMINICAN REPUBLIC");
-            CountryCodes.Add("750", "MEXICO");
-            CountryCodes.Add("759", "VENEZUELA");
-            CountryCodes.Add("770", "COLOMBIA");
-            CountryCodes.Add("773", "URUGUAY");
-            CountryCodes.Add("775", "PERU");
-            CountryCodes.Add("777", "BOLIVIA");
-            CountryCodes.Add("779", "ARGENTINA");
-            CountryCodes.Add("780", "CHILE");
-            CountryCodes.Add("784", "PARAGUAY");
-            CountryCodes.Add("785", "PERU");
-            CountryCodes.Add("786", "ECUADOR");
-            CountryCodes.Add("789", "BRAZIL");
+            _countryCodes.Add("729", "ISRAEL");
+            _countryCodes.Add("740", "GUATEMALA");
+            _countryCodes.Add("741", "EL SALVADOR");
+            _countryCodes.Add("742", "HONDURAS");
+            _countryCodes.Add("743", "NICARAGUA");
+            _countryCodes.Add("744", "COSTA RICA");
+            _countryCodes.Add("746", "DOMINICAN REPUBLIC");
+            _countryCodes.Add("750", "MEXICO");
+            _countryCodes.Add("759", "VENEZUELA");
+            _countryCodes.Add("770", "COLOMBIA");
+            _countryCodes.Add("773", "URUGUAY");
+            _countryCodes.Add("775", "PERU");
+            _countryCodes.Add("777", "BOLIVIA");
+            _countryCodes.Add("779", "ARGENTINA");
+            _countryCodes.Add("780", "CHILE");
+            _countryCodes.Add("784", "PARAGUAY");
+            _countryCodes.Add("785", "PERU");
+            _countryCodes.Add("786", "ECUADOR");
+            _countryCodes.Add("789", "BRAZIL");
 
-            CountryCodes.Add("850", "CUBA");
-            CountryCodes.Add("858", "SLOVAKIA");
-            CountryCodes.Add("859", "CZECH REPUBLIC");
-            CountryCodes.Add("860", "YUGLOSLAVIA");
-            CountryCodes.Add("869", "TURKEY");
-            CountryCodes.Add("880", "SOUTH KOREA");
-            CountryCodes.Add("885", "THAILAND");
-            CountryCodes.Add("888", "SINGAPORE");
-            CountryCodes.Add("890", "INDIA");
-            CountryCodes.Add("893", "VIETNAM");
-            CountryCodes.Add("899", "INDONESIA");
+            _countryCodes.Add("850", "CUBA");
+            _countryCodes.Add("858", "SLOVAKIA");
+            _countryCodes.Add("859", "CZECH REPUBLIC");
+            _countryCodes.Add("860", "YUGLOSLAVIA");
+            _countryCodes.Add("869", "TURKEY");
+            _countryCodes.Add("880", "SOUTH KOREA");
+            _countryCodes.Add("885", "THAILAND");
+            _countryCodes.Add("888", "SINGAPORE");
+            _countryCodes.Add("890", "INDIA");
+            _countryCodes.Add("893", "VIETNAM");
+            _countryCodes.Add("899", "INDONESIA");
 
-            CountryCodes.Add("955", "MALAYSIA");
-            CountryCodes.Add("977", "INTERNATIONAL STANDARD SERIAL NUMBER FOR PERIODICALS (ISSN)");
-            CountryCodes.Add("978", "INTERNATIONAL STANDARD BOOK NUMBERING (ISBN)");
-            CountryCodes.Add("979", "INTERNATIONAL STANDARD MUSIC NUMBER (ISMN)");
-            CountryCodes.Add("980", "REFUND RECEIPTS");
-            CountryCodes.Add("981", "COMMON CURRENCY COUPONS");
-            CountryCodes.Add("982", "COMMON CURRENCY COUPONS");
+            _countryCodes.Add("955", "MALAYSIA");
+            _countryCodes.Add("977", "INTERNATIONAL STANDARD SERIAL NUMBER FOR PERIODICALS (ISSN)");
+            _countryCodes.Add("978", "INTERNATIONAL STANDARD BOOK NUMBERING (ISBN)");
+            _countryCodes.Add("979", "INTERNATIONAL STANDARD MUSIC NUMBER (ISMN)");
+            _countryCodes.Add("980", "REFUND RECEIPTS");
+            _countryCodes.Add("981", "COMMON CURRENCY COUPONS");
+            _countryCodes.Add("982", "COMMON CURRENCY COUPONS");
         }//init_CountryCodes
         private void CheckDigit()
         {
             try
             {
-                string RawDataHolder = Raw_Data.Substring(0, 11);
+                var rawDataHolder = Raw_Data.Substring(0, 11);
 
                 //calculate check digit
-                int even = 0;
-                int odd = 0;
+                var even = 0;
+                var odd = 0;
 
-                for (int i = 0; i < RawDataHolder.Length; i++)
+                for (var i = 0; i < rawDataHolder.Length; i++)
                 {
                     if (i % 2 == 0)
-                        odd += Int32.Parse(RawDataHolder.Substring(i, 1)) * 3;
+                        odd += Int32.Parse(rawDataHolder.Substring(i, 1)) * 3;
                     else
-                        even += Int32.Parse(RawDataHolder.Substring(i, 1));
+                        even += Int32.Parse(rawDataHolder.Substring(i, 1));
                 }//for
 
-                int total = even + odd;
-                int cs = total % 10;
+                var total = even + odd;
+                var cs = total % 10;
                 cs = 10 - cs;
                 if (cs == 10)
                     cs = 0;
 
-                Raw_Data = RawDataHolder + cs.ToString()[0];
+                Raw_Data = rawDataHolder + cs.ToString()[0];
             }//try
             catch
             {
@@ -259,10 +259,7 @@ namespace BarcodeLib.Symbologies
 
         #region IBarcode Members
 
-        public string Encoded_Value
-        {
-            get { return this.Encode_UPCA(); }
-        }
+        public string Encoded_Value => Encode_UPCA();
 
         #endregion
     }
