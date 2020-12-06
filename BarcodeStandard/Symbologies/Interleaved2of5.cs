@@ -34,14 +34,14 @@ namespace BarcodeLib.Symbologies
             for (int i = 0; i < data.Length; i += 2)
             {
                 var bars = true;
-                var patternbars = _i25Code[Int32.Parse(data[i].ToString())];
-                var patternspaces = _i25Code[Int32.Parse(data[i + 1].ToString())];
+                var patternbars = _i25Code[(int)char.GetNumericValue(data, i)];
+                var patternspaces = _i25Code[(int)char.GetNumericValue(data, i + 1)];
                 var patternmixed = "";
 
                 //interleave
                 while (patternbars.Length > 0)
                 {
-                    patternmixed += patternbars[0] + patternspaces[0];
+                    patternmixed += patternbars[0].ToString() + patternspaces[0].ToString();
                     patternbars = patternbars.Substring(1);
                     patternspaces = patternspaces.Substring(1);
                 }//while
