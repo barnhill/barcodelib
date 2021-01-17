@@ -1,5 +1,7 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.2.10.0
+- Fix Standard 2 of 5 encoding bug
 2.2.9.0
 - Fix Interleaved 2 of 5 encoding bug
 2.2.8.0

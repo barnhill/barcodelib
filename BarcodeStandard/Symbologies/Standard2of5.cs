@@ -27,10 +27,10 @@ namespace BarcodeLib.Symbologies
 
             var result = "11011010";
 
-            foreach (var c in Raw_Data)
+            for (int i = 0; i < Raw_Data.Length; i++)
             {
-                result += S25_Code[(int)char.GetNumericValue(c)];
-            }//foreach
+                result += S25_Code[(int)char.GetNumericValue(Raw_Data, i)];
+            }
 
             result += _encodedType == TYPE.Standard2of5_Mod10 ? S25_Code[CalculateMod10CheckDigit()] : "";
 
