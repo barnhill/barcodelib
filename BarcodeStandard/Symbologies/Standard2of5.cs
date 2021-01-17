@@ -29,7 +29,7 @@ namespace BarcodeLib.Symbologies
 
             foreach (var c in Raw_Data)
             {
-                result += S25_Code[Int32.Parse(c.ToString())];
+                result += S25_Code[(int)char.GetNumericValue(c)];
             }//foreach
 
             result += _encodedType == TYPE.Standard2of5_Mod10 ? S25_Code[CalculateMod10CheckDigit()] : "";
