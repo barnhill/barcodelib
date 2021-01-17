@@ -19,15 +19,15 @@ namespace BarcodeLib
             get { return this._Errors; }
         }
 
-        public void Error(string ErrorMessage)
+        public void Error(string errorMessage)
         {
-            this._Errors.Add(ErrorMessage);
-            throw new Exception(ErrorMessage);
+            this._Errors.Add(errorMessage);
+            throw new Exception(errorMessage);
         }
 
-        internal static bool CheckNumericOnly(string Data)
+        internal static bool CheckNumericOnly(string data)
         {
-            return Regex.IsMatch(Data, @"^\d+$", RegexOptions.Compiled);
+            return Regex.IsMatch(data, @"^\d+$", RegexOptions.Compiled);
         }
     }//BarcodeVariables abstract class
 }//namespace
