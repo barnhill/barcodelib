@@ -215,6 +215,46 @@ namespace BarcodeStandardExample
             }//using
         }//btnBackColor_Click
 
+        private void btnSaveJSON_Click(object sender, EventArgs e)
+        {
+            btnEncode_Click(sender, e);
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "JSON Files|*.json";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                    {
+                        sw.Write(b.ToJSON(chkIncludeImageInSavedData.Checked));
+                    }//using
+                }//if
+            }//using
+        }
+
+        private void btnLoadJSON_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Multiselect = false;
+                ofd.Filter = "JSON Files|*.json";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    string fileContents = File.ReadAllText(ofd.FileName);
+                    using (BarcodeStandard.SaveData savedData = Barcode.FromJSON(ofd.OpenFile()))
+                    {
+                        LoadFromSaveData(savedData);
+                    }//using
+                }//if
+            }//using
+
+            //populate the local object
+            btnEncode_Click(sender, e);
+
+            //reposition the barcode image to the middle
+            barcode.Location = new Point((this.barcode.Location.X + this.barcode.Width / 2) - barcode.Width / 2, (this.barcode.Location.Y + this.barcode.Height / 2) - barcode.Height / 2);
+        }
+
         private void btnSaveXML_Click(object sender, EventArgs e)
         {
             btnEncode_Click(sender, e);
@@ -226,7 +266,7 @@ namespace BarcodeStandardExample
                 {
                     using (StreamWriter sw = new StreamWriter(sfd.FileName))
                     {
-                        sw.Write(b.XML);
+                        sw.Write(b.ToXML(chkIncludeImageInSavedData.Checked));
                     }//using
                 }//if
             }//using
@@ -237,132 +277,142 @@ namespace BarcodeStandardExample
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Multiselect = false;
+                ofd.Filter = "XML Files|*.xml";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     string fileContents = File.ReadAllText(ofd.FileName);
-                    using (BarcodeStandard.SaveData XML = Barcode.GetSaveDataFromFile(fileContents))
+                    using (BarcodeStandard.SaveData savedData = Barcode.FromXML(ofd.OpenFile()))
                     {
-                        //load image from xml
-                        this.barcode.Width = XML.ImageWidth;
-                        this.barcode.Height = XML.ImageHeight;
-                        this.barcode.BackgroundImage = Barcode.GetImageFromXML(fileContents);
-
-                        //populate the screen
-                        this.txtData.Text = XML.RawData;
-                        this.chkGenerateLabel.Checked = XML.IncludeLabel;
-
-                        switch (XML.Type)
-                        {
-                            case "UCC12":
-                            case "UPCA":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC-A");
-                                break;
-                            case "UCC13":
-                            case "EAN13":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("EAN-13");
-                                break;
-                            case "Interleaved2of5_Mod10":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
-                                break;
-                            case "Interleaved2of5":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Interleaved 2 of 5");
-                                break;
-                            case "Standard2of5_Mod10":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Standard 2 of 5 Mod 10");
-                                break;
-                            case "Standard2of5":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Standard 2 of 5");
-                                break;
-                            case "LOGMARS":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("LOGMARS");
-                                break;
-                            case "CODE39":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39");
-                                break;
-                            case "CODE39Extended":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39 Extended");
-                                break;
-                            case "CODE39_Mod43": 
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39 Mod 43");
-                                break;
-                            case "Codabar":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Codabar");
-                                break;
-                            case "PostNet":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("PostNet");
-                                break;
-                            case "ISBN":
-                            case "BOOKLAND":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Bookland/ISBN");
-                                break;
-                            case "JAN13":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("JAN-13");
-                                break;
-                            case "UPC_SUPPLEMENTAL_2DIGIT":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC 2 Digit Ext.");
-                                break;
-                            case "MSI_Mod10":
-                            case "MSI_2Mod10":
-                            case "MSI_Mod11":
-                            case "MSI_Mod11_Mod10":
-                            case "Modified_Plessey":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("MSI");
-                                break;
-                            case "UPC_SUPPLEMENTAL_5DIGIT":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC 5 Digit Ext.");
-                                break;
-                            case "UPCE":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC-E");
-                                break;
-                            case "EAN8":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("EAN-8");
-                                break;
-                            case "USD8":
-                            case "CODE11":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 11");
-                                break;
-                            case "CODE128":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128");
-                                break;
-                            case "CODE128A":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128-A");
-                                break;
-                            case "CODE128B":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128-B");
-                                break;
-                            case "CODE128C":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128-C");
-                                break;
-                            case "ITF14":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("ITF-14");
-                                break;
-                            case "CODE93":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 93");
-                                break;
-                            case "FIM":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("FIM");
-                                break;
-                            case "Pharmacode":
-                                this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Pharmacode");
-                                break;
-
-                            default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");
-                        }//switch
-
-                        this.txtEncoded.Text = XML.EncodedValue;
-                        this.btnForeColor.BackColor = ColorTranslator.FromHtml(XML.Forecolor);
-                        this.btnBackColor.BackColor = ColorTranslator.FromHtml(XML.Backcolor);
-                        this.txtWidth.Text = XML.ImageWidth.ToString();
-                        this.txtHeight.Text = XML.ImageHeight.ToString();
-                        
-                        //populate the local object
-                        btnEncode_Click(sender, e);
-
-                        //reposition the barcode image to the middle
-                        barcode.Location = new Point((this.barcode.Location.X + this.barcode.Width / 2) - barcode.Width / 2, (this.barcode.Location.Y + this.barcode.Height / 2) - barcode.Height / 2);
+                        LoadFromSaveData(savedData);
                     }//using
                 }//if
             }//using
+
+            //populate the local object
+            btnEncode_Click(sender, e);
+
+            //reposition the barcode image to the middle
+            barcode.Location = new Point((this.barcode.Location.X + this.barcode.Width / 2) - barcode.Width / 2, (this.barcode.Location.Y + this.barcode.Height / 2) - barcode.Height / 2);
+        }
+
+        private void LoadFromSaveData(BarcodeStandard.SaveData saveData)
+        {
+            //load image from xml
+            this.barcode.Width = saveData.ImageWidth;
+            this.barcode.Height = saveData.ImageHeight;
+
+            if (saveData.Image != null)
+            {
+                this.barcode.BackgroundImage = Barcode.GetImageFromSaveData(saveData);
+            }
+
+            //populate the screen
+            this.txtData.Text = saveData.RawData;
+            this.chkGenerateLabel.Checked = saveData.IncludeLabel;
+
+            this.txtEncoded.Text = saveData.EncodedValue;
+            this.btnForeColor.BackColor = ColorTranslator.FromHtml(saveData.Forecolor);
+            this.btnBackColor.BackColor = ColorTranslator.FromHtml(saveData.Backcolor);
+            this.txtWidth.Text = saveData.ImageWidth.ToString();
+            this.txtHeight.Text = saveData.ImageHeight.ToString();
+
+            switch (saveData.Type)
+            {
+                case "UCC12":
+                case "UPCA":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC-A");
+                    break;
+                case "UCC13":
+                case "EAN13":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("EAN-13");
+                    break;
+                case "Interleaved2of5_Mod10":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
+                    break;
+                case "Interleaved2of5":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Interleaved 2 of 5");
+                    break;
+                case "Standard2of5_Mod10":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Standard 2 of 5 Mod 10");
+                    break;
+                case "Standard2of5":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Standard 2 of 5");
+                    break;
+                case "LOGMARS":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("LOGMARS");
+                    break;
+                case "CODE39":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39");
+                    break;
+                case "CODE39Extended":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39 Extended");
+                    break;
+                case "CODE39_Mod43":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 39 Mod 43");
+                    break;
+                case "Codabar":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Codabar");
+                    break;
+                case "PostNet":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("PostNet");
+                    break;
+                case "ISBN":
+                case "BOOKLAND":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Bookland/ISBN");
+                    break;
+                case "JAN13":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("JAN-13");
+                    break;
+                case "UPC_SUPPLEMENTAL_2DIGIT":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC 2 Digit Ext.");
+                    break;
+                case "MSI_Mod10":
+                case "MSI_2Mod10":
+                case "MSI_Mod11":
+                case "MSI_Mod11_Mod10":
+                case "Modified_Plessey":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("MSI");
+                    break;
+                case "UPC_SUPPLEMENTAL_5DIGIT":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC 5 Digit Ext.");
+                    break;
+                case "UPCE":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("UPC-E");
+                    break;
+                case "EAN8":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("EAN-8");
+                    break;
+                case "USD8":
+                case "CODE11":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 11");
+                    break;
+                case "CODE128":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128");
+                    break;
+                case "CODE128A":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128-A");
+                    break;
+                case "CODE128B":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128-B");
+                    break;
+                case "CODE128C":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 128-C");
+                    break;
+                case "ITF14":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("ITF-14");
+                    break;
+                case "CODE93":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Code 93");
+                    break;
+                case "FIM":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("FIM");
+                    break;
+                case "Pharmacode":
+                    this.cbEncodeType.SelectedIndex = this.cbEncodeType.FindString("Pharmacode");
+                    break;
+
+                default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");
+            }//switch
         }
 
         private void btnMassGeneration_Click(object sender, EventArgs e)
@@ -370,7 +420,6 @@ namespace BarcodeStandardExample
             int x = 1000;
             double sum = 0;
 
-            progressBar1.Visible = true;
             progressBar1.Value = 0;
             progressBar1.Maximum = x;
 
