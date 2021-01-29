@@ -75,21 +75,28 @@ namespace BarcodeLib.Symbologies
             _countryAssigningManufacturerCode = "N/A";
             var twodigitCode = Raw_Data.Substring(0, 2);
             var threedigitCode = Raw_Data.Substring(0, 3);
-            try
+
+			try
             {
-                _countryAssigningManufacturerCode = _countryCodes[threedigitCode].ToString();
-            }//try
-            catch
-            {
-                try
+				var cc = _countryCodes[threedigitCode];
+				if (cc == null)
                 {
-                    _countryAssigningManufacturerCode = _countryCodes[twodigitCode].ToString();
-                }//try
-                catch
+					cc = _countryCodes[twodigitCode].ToString();
+					if (cc == null)
+                    {
+						Error("EEAN13-3: Country assigning manufacturer code not found.");
+					} 
+					else
+                    {
+						_countryAssigningManufacturerCode = cc.ToString();
+					}
+				} 
+				else
                 {
-                    Error("EEAN13-3: Country assigning manufacturer code not found.");
-                }//catch 
-            }//catch
+					_countryAssigningManufacturerCode = cc.ToString();
+				}
+				
+            }
             finally { _countryCodes.Clear(); }
 
             return result;
