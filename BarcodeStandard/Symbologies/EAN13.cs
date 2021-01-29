@@ -76,30 +76,27 @@ namespace BarcodeLib.Symbologies
             var twodigitCode = Raw_Data.Substring(0, 2);
             var threedigitCode = Raw_Data.Substring(0, 3);
 
-			try
+			var cc = _countryCodes[threedigitCode];
+			if (cc == null)
             {
-				var cc = _countryCodes[threedigitCode];
+				cc = _countryCodes[twodigitCode].ToString();
 				if (cc == null)
                 {
-					cc = _countryCodes[twodigitCode].ToString();
-					if (cc == null)
-                    {
-						Error("EEAN13-3: Country assigning manufacturer code not found.");
-					} 
-					else
-                    {
-						_countryAssigningManufacturerCode = cc.ToString();
-					}
+					Error("EEAN13-3: Country assigning manufacturer code not found.");
 				} 
 				else
                 {
 					_countryAssigningManufacturerCode = cc.ToString();
 				}
-				
-            }
-            finally { _countryCodes.Clear(); }
+			} 
+			else
+            {
+				_countryAssigningManufacturerCode = cc.ToString();
+			}
+			
+			_countryCodes.Clear();
 
-            return result;
+			return result;
         }//Encode_EAN13
 
 		private void Create_CountryCodeRange(int startingNumber, int endingNumber, string countryDescription)
