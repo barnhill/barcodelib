@@ -1,5 +1,8 @@
 Release Notes for BarcodeLib.dll
 ================================
+2.3.0.0
+- Fix EAN13 country code lookup failure
+- Update to System.Drawing.Common 5.0.0
 2.2.10.0
 - Fix Standard 2 of 5 encoding bug
 2.2.9.0
