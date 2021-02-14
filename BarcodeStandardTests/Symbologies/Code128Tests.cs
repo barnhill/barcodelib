@@ -27,23 +27,26 @@ namespace BarcodeStandardTests.Symbologies
             string expectedB,
             string expectedC)
         {
-            string getActualByType(
-                TYPE type)
+            void assertByType(
+                TYPE type,
+                string expected)
             {
                 barcode.EncodedType = type;
+
+                string actual = null;
                 try
                 {
-                    return barcode.GenerateBarcode(data);
+                    actual = barcode.GenerateBarcode(data);
                 }
-                catch
+                catch when (expected == null)
                 {
-                    return null;
                 }
+                Assert.AreEqual(expected, actual, $"{type}");
             }
-            Assert.AreEqual(expectedAuto, getActualByType(TYPE.CODE128), "Auto");
-            Assert.AreEqual(expectedA, getActualByType(TYPE.CODE128A), "A");
-            Assert.AreEqual(expectedB, getActualByType(TYPE.CODE128B), "B");
-            Assert.AreEqual(expectedC, getActualByType(TYPE.CODE128C), "C");
+            assertByType(TYPE.CODE128, expectedAuto);
+            assertByType(TYPE.CODE128A, expectedA);
+            assertByType(TYPE.CODE128B, expectedB);
+            assertByType(TYPE.CODE128C, expectedC);
         }
 
         /// <summary>
