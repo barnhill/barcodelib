@@ -487,8 +487,9 @@ namespace BarcodeLib.Symbologies
             }//foreach
 
             //add the check digit
-            Encoded_Data += CalculateCheckDigit();
-            _EncodedData.Add(CalculateCheckDigit());
+            string checkDigit = CalculateCheckDigit();
+            Encoded_Data += checkDigit;
+            _EncodedData.Add(checkDigit);
 
             //add the stop character
             var stop = C128_ByA("STOP");
