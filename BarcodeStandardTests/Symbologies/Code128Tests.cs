@@ -1,6 +1,7 @@
 ﻿using BarcodeLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace BarcodeStandardTests.Symbologies
 {
@@ -19,6 +20,9 @@ namespace BarcodeStandardTests.Symbologies
         [DataRow("fighting!", "1101001000010110000100100001101001001101000010011000010100111101001000011010011000010100100110100001110101111011001101100100100011001100011101011", null, "11010010000101100001001000011010010011010000100110000101001111010010000110100110000101001001101000011001101100110111001001100011101011", null)]
         [DataRow("파이팅!", null, null, null, null)]
         [DataRow("ファイト！", null, null, null, null)]
+        [DataRow("\u0012", "1101000010010010011110100100111101100011101011", "1101000010010010011110100100111101100011101011", null, null)]
+        [DataRow("\u0014", "1101000010010011110100100111101001100011101011", "1101000010010011110100100111101001100011101011", null, null)]
+        [DataRow("this\u0012is\u0014weird", "110100100001001111010010011000010100001101001011110010011101011110100100111101011110111010000110100101111001001110101111010011110100101111011101111001010010110010000100001101001001001111010000100110101100010001100011101011", null, null, null)]
         [DataTestMethod]
         public void EncodeBarcode(
             string data,
@@ -64,13 +68,23 @@ namespace BarcodeStandardTests.Symbologies
                 "fighting!",
                 "파이팅!",
                 "ファイト！",
+                // See issue #123.
+                "\u0012",
+                "\u0014",
+                "this\u0012is\u0014weird",
             })
             {
                 string represent(
                     string s)
                 {
                     if (s == null) return "null";
-                    return $"\"{s.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
+                    return "\"" + string.Concat(s.Select(c =>
+                    {
+                        if (c == '\\') return "\\\\";
+                        if (c == '"') return "\\\"";
+                        if (c < 32) return $"\\u{(int)c:x04}";
+                        return c.ToString();
+                    })) + "\"";
                 }
                 string tryByType(
                     TYPE type)
