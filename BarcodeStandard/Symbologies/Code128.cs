@@ -46,7 +46,6 @@ namespace BarcodeLib.Symbologies
 
         Code128Entry C128_ByA(string a) => C128_Code[C128_CodeIndexByA[a]];
         Code128Entry C128_ByB(string b) => C128_Code[C128_CodeIndexByB[b]];
-        Code128Entry C128_ByC(string c) => C128_Code[C128_CodeIndexByC[c]];
 
         Code128Entry? C128_TryByLookup(Dictionary<string, int> lookup, string value) => lookup.TryGetValue(value, out var index) ? C128_Code[index] : new Code128Entry?();
         Code128Entry? C128_TryByA(string a) => C128_TryByLookup(C128_CodeIndexByA, a);
@@ -250,7 +249,6 @@ namespace BarcodeLib.Symbologies
         }
         private string CalculateCheckDigit()
         {
-            var currentStartChar = _FormattedData[0];
             uint checkSum = 0;
 
             for (uint i = 0; i < _FormattedData.Count; i++)
@@ -351,7 +349,6 @@ namespace BarcodeLib.Symbologies
             if (temp != "")
             {
                 _FormattedData.Add(temp);
-                temp = "";
             }//if
         }
         private void InsertStartandCodeCharacters()
@@ -444,8 +441,6 @@ namespace BarcodeLib.Symbologies
 
             //insert the start characters
             InsertStartandCodeCharacters();
-
-            var CheckDigit = CalculateCheckDigit();
 
             var Encoded_Data = "";
             foreach (var s in _FormattedData)
