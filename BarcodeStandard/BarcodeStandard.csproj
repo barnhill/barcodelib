@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.10</Version>
+    <Version>2.3.0</Version>
     <PackageId>BarcodeLib</PackageId>
     <Company>Pnuema Productions</Company>
     <Product>BarcodeLib</Product>
@@ -19,8 +19,8 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIcon>upca.jpg</PackageIcon>
     <PackageIconUrl />
-    <AssemblyVersion>2.2.10.0</AssemblyVersion>
-    <FileVersion>2.2.10.0</FileVersion>
+    <AssemblyVersion>2.3.0.0</AssemblyVersion>
+    <FileVersion>2.3.0.0</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
@@ -28,7 +28,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
