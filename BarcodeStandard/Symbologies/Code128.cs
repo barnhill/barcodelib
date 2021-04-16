@@ -338,7 +338,7 @@ namespace BarcodeLib.Symbologies
 
         private void AddNumericSequenceToFormattedData(string sequence)
         {
-            //In order to optimize the encoded data length, only numeric sequences with length 3 or more must be encoded in mode A or B. Shorter sequences must be encoded in mode A or B.
+            //In order to optimize the encoded data length, only numeric sequences with length 3 or more must be encoded in mode C. Shorter sequences must be encoded in mode A or B.
             if (sequence.Length < 3)
             {
                 foreach (var charcter in sequence)
