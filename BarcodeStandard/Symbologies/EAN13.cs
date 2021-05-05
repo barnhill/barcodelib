@@ -26,7 +26,7 @@ namespace BarcodeLib.Symbologies
 		/// <summary>
 		/// Disables EAN13 invalid country code exception.
 		/// </summary>
-		private bool DisableCountryException { get; set; } = false;
+		public bool DisableCountryException { get; set; } = false;
 
 		/// <summary>
 		/// Encode the raw data using the EAN-13 algorithm. (Can include the checksum already.  If it doesnt exist in the data then it will calculate it for you.  Accepted data lengths are 12 + 1 checksum or just the 12 data digits)

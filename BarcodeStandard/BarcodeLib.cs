@@ -304,7 +304,7 @@ namespace BarcodeLib
         /// <summary>
         /// Disables EAN13 invalid country code exception.
         /// </summary>
-        private bool DisableEAN13CountryException { get; set; } = false;
+        public bool DisableEAN13CountryException { get; set; } = false;
         #endregion
 
         /// <summary>
