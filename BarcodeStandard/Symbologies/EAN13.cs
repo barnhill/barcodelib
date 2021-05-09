@@ -15,16 +15,23 @@ namespace BarcodeLib.Symbologies
         private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
         private string _countryAssigningManufacturerCode = "N/A";
 
-        public EAN13(string input)
+        public EAN13(string input, bool disableCountryException = false)
         {
             Raw_Data = input;
+			DisableCountryException = disableCountryException;
 
-            CheckDigit();
+			CheckDigit();
         }
-        /// <summary>
-        /// Encode the raw data using the EAN-13 algorithm. (Can include the checksum already.  If it doesnt exist in the data then it will calculate it for you.  Accepted data lengths are 12 + 1 checksum or just the 12 data digits)
-        /// </summary>
-        private string Encode_EAN13()
+
+		/// <summary>
+		/// Disables EAN13 invalid country code exception.
+		/// </summary>
+		public bool DisableCountryException { get; set; } = false;
+
+		/// <summary>
+		/// Encode the raw data using the EAN-13 algorithm. (Can include the checksum already.  If it doesnt exist in the data then it will calculate it for you.  Accepted data lengths are 12 + 1 checksum or just the 12 data digits)
+		/// </summary>
+		private string Encode_EAN13()
         {
             //check length of input
             if (Raw_Data.Length < 12 || Raw_Data.Length > 13)
@@ -82,7 +89,10 @@ namespace BarcodeLib.Symbologies
 				cc = _countryCodes[twodigitCode].ToString();
 				if (cc == null)
                 {
-					Error("EEAN13-3: Country assigning manufacturer code not found.");
+					if (!DisableCountryException)
+					{
+						Error("EEAN13-3: Country assigning manufacturer code not found.");
+					}
 				} 
 				else
                 {
