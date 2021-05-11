@@ -15,16 +15,25 @@ namespace BarcodeLib.Symbologies
         private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
         private string _countryAssigningManufacturerCode = "N/A";
 
-        public EAN13(string input)
+		public string CountryAssigningManufacturerCode { get => _countryAssigningManufacturerCode; set => _countryAssigningManufacturerCode = value; }
+
+		public EAN13(string input, bool disableCountryCode = false)
         {
             Raw_Data = input;
+			DisableCountryCode = disableCountryCode;
 
-            CheckDigit();
+			CheckDigit();
         }
-        /// <summary>
-        /// Encode the raw data using the EAN-13 algorithm. (Can include the checksum already.  If it doesnt exist in the data then it will calculate it for you.  Accepted data lengths are 12 + 1 checksum or just the 12 data digits)
-        /// </summary>
-        private string Encode_EAN13()
+
+		/// <summary>
+		/// Disables EAN13 country code parsing
+		/// </summary>
+		public bool DisableCountryCode { get; set; } = false;
+
+		/// <summary>
+		/// Encode the raw data using the EAN-13 algorithm. (Can include the checksum already.  If it doesnt exist in the data then it will calculate it for you.  Accepted data lengths are 12 + 1 checksum or just the 12 data digits)
+		/// </summary>
+		private string Encode_EAN13()
         {
             //check length of input
             if (Raw_Data.Length < 12 || Raw_Data.Length > 13)
@@ -70,34 +79,42 @@ namespace BarcodeLib.Symbologies
             //add ending bars
             result += "101";
 
-            //get the manufacturer assigning country
-            Init_CountryCodes();
-            _countryAssigningManufacturerCode = "N/A";
-            var twodigitCode = Raw_Data.Substring(0, 2);
-            var threedigitCode = Raw_Data.Substring(0, 3);
-
-			var cc = _countryCodes[threedigitCode];
-			if (cc == null)
-            {
-				cc = _countryCodes[twodigitCode].ToString();
-				if (cc == null)
-                {
-					Error("EEAN13-3: Country assigning manufacturer code not found.");
-				} 
-				else
-                {
-					_countryAssigningManufacturerCode = cc.ToString();
-				}
-			} 
-			else
-            {
-				_countryAssigningManufacturerCode = cc.ToString();
+			if (!DisableCountryCode)
+			{
+				ParseCountryCode();
 			}
-			
-			_countryCodes.Clear();
 
 			return result;
         }//Encode_EAN13
+
+		private void ParseCountryCode()
+        {
+			//get the manufacturer assigning country
+			Init_CountryCodes();
+			CountryAssigningManufacturerCode = "N/A";
+			var twodigitCode = Raw_Data.Substring(0, 2);
+			var threedigitCode = Raw_Data.Substring(0, 3);
+
+			var cc = _countryCodes[threedigitCode];
+			if (cc == null)
+			{
+				cc = _countryCodes[twodigitCode].ToString();
+				if (cc == null)
+				{
+					Error("EEAN13-3: Country assigning manufacturer code not found.");
+				}
+				else
+				{
+					CountryAssigningManufacturerCode = cc.ToString();
+				}
+			}
+			else
+			{
+				CountryAssigningManufacturerCode = cc.ToString();
+			}
+
+			_countryCodes.Clear();
+		}
 
 		private void Create_CountryCodeRange(int startingNumber, int endingNumber, string countryDescription)
 		{

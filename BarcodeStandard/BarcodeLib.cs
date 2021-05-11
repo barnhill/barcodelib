@@ -301,6 +301,10 @@ namespace BarcodeLib
         {
             get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version; }
         }
+        /// <summary>
+        /// Disables EAN13 invalid country code exception.
+        /// </summary>
+        public bool DisableEAN13CountryException { get; set; } = false;
         #endregion
 
         /// <summary>
@@ -440,7 +444,7 @@ namespace BarcodeLib
                     break;
                 case TYPE.UCC13:
                 case TYPE.EAN13: //Encode_EAN13();
-                    ibarcode = new EAN13(Raw_Data);
+                    ibarcode = new EAN13(Raw_Data, DisableEAN13CountryException);
                     break;
                 case TYPE.Interleaved2of5_Mod10:
                 case TYPE.Interleaved2of5: //Encode_Interleaved2of5();
