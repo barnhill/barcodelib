@@ -271,7 +271,7 @@ namespace BarcodeLib.Symbologies
         }
         private void BreakUpDataForEncoding()
         {
-            var temp = "";
+            var numericSequence = "";
             var tempRawData = Raw_Data;
 
             //breaking the raw data up for code A and code B will mess up the encoding
@@ -316,35 +316,58 @@ namespace BarcodeLib.Symbologies
             {
                 if (Char.IsNumber(c))
                 {
-                    if (temp == "")
-                    {
-                        temp += c;
-                    }//if
-                    else
-                    {
-                        temp += c;
-                        _FormattedData.Add(temp);
-                        temp = "";
-                    }//else
+                    numericSequence += c;
                 }//if
                 else
                 {
-                    if (temp != "")
+                    if (numericSequence != "")
                     {
-                        _FormattedData.Add(temp);
-                        temp = "";
+                        AddNumericSequenceToFormattedData(numericSequence);
+                        numericSequence = "";
                     }//if
                     _FormattedData.Add(c.ToString());
                 }//else
             }//foreach
 
             //if something is still in temp go ahead and push it onto the queue
-            if (temp != "")
+            if (numericSequence != "")
             {
-                _FormattedData.Add(temp);
-                temp = "";
+                AddNumericSequenceToFormattedData(numericSequence);
             }//if
         }
+
+        private void AddNumericSequenceToFormattedData(string sequence)
+        {
+            //In order to optimize the encoded data length, only numeric sequences with length 3 or more must be encoded in mode C. Shorter sequences must be encoded in mode A or B.
+            if (sequence.Length < 3)
+            {
+                foreach (var charcter in sequence)
+                {
+                    _FormattedData.Add(charcter.ToString());
+                }
+            }
+            else
+            {
+                int i;
+
+                //If the sequence length is odd, it is more optimize to encode the first number in mode A or B (not the last number. Because encoding the last number will need another mode switching)
+                if (sequence.Length % 2 == 0)
+                {
+                    i = 0;
+                }
+                else
+                {
+                    _FormattedData.Add(sequence[0].ToString());
+                    i = 1;
+                }
+
+                for (; i < sequence.Length; i += 2)
+                {
+                    _FormattedData.Add(sequence.Substring(i, 2));
+                }
+            }
+        }
+
         private void InsertStartandCodeCharacters()
         {
             DataRow CurrentCodeSet = null;
