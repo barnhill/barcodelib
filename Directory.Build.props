@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Project>
+  <PropertyGroup>
+    <!-- Default new nuget package references to use PackageReference instead of old style packages.config -->
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+</Project>
