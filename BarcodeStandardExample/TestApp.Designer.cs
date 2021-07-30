@@ -37,11 +37,18 @@ namespace BarcodeStandardExample
             this.barcode = new System.Windows.Forms.GroupBox();
             this.btnMassGeneration = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnSaveJSON = new System.Windows.Forms.Button();
-            this.btnLoadJSON = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lblAverageGenerationTime = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkIncludeImageInSavedData = new System.Windows.Forms.CheckBox();
+            this.btnSaveJSON = new System.Windows.Forms.Button();
+            this.btnLoadXML = new System.Windows.Forms.Button();
+            this.btnLoadJSON = new System.Windows.Forms.Button();
+            this.btnSaveXML = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnEncode = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBoxAspectRatio = new System.Windows.Forms.TextBox();
             this.textBoxBarWidth = new System.Windows.Forms.TextBox();
@@ -60,11 +67,7 @@ namespace BarcodeStandardExample
             this.lblLabelLocation = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.cbRotateFlip = new System.Windows.Forms.ComboBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnSaveXML = new System.Windows.Forms.Button();
-            this.btnLoadXML = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.btnEncode = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtEncoded = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -78,19 +81,16 @@ namespace BarcodeStandardExample
             this.txtData = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.chkIncludeImageInSavedData = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -193,6 +193,71 @@ namespace BarcodeStandardExample
             this.splitContainer1.TabIndex = 37;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.progressBar1);
+            this.groupBox2.Controls.Add(this.btnMassGeneration);
+            this.groupBox2.Controls.Add(this.lblAverageGenerationTime);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Location = new System.Drawing.Point(12, 783);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(434, 122);
+            this.groupBox2.TabIndex = 85;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Bulk Operations";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(8, 84);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(419, 8);
+            this.progressBar1.TabIndex = 79;
+            // 
+            // lblAverageGenerationTime
+            // 
+            this.lblAverageGenerationTime.AutoSize = true;
+            this.lblAverageGenerationTime.Location = new System.Drawing.Point(204, 97);
+            this.lblAverageGenerationTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAverageGenerationTime.Name = "lblAverageGenerationTime";
+            this.lblAverageGenerationTime.Size = new System.Drawing.Size(0, 20);
+            this.lblAverageGenerationTime.TabIndex = 81;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(5, 97);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(198, 20);
+            this.label14.TabIndex = 80;
+            this.label14.Text = "Average Generation Time: ";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.chkIncludeImageInSavedData);
+            this.groupBox1.Controls.Add(this.btnSaveJSON);
+            this.groupBox1.Controls.Add(this.btnLoadXML);
+            this.groupBox1.Controls.Add(this.btnLoadJSON);
+            this.groupBox1.Controls.Add(this.btnSaveXML);
+            this.groupBox1.Controls.Add(this.btnSave);
+            this.groupBox1.Controls.Add(this.btnEncode);
+            this.groupBox1.Location = new System.Drawing.Point(12, 638);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(423, 139);
+            this.groupBox1.TabIndex = 84;
+            this.groupBox1.TabStop = false;
+            // 
+            // chkIncludeImageInSavedData
+            // 
+            this.chkIncludeImageInSavedData.AutoSize = true;
+            this.chkIncludeImageInSavedData.Location = new System.Drawing.Point(279, 108);
+            this.chkIncludeImageInSavedData.Name = "chkIncludeImageInSavedData";
+            this.chkIncludeImageInSavedData.Size = new System.Drawing.Size(136, 24);
+            this.chkIncludeImageInSavedData.TabIndex = 0;
+            this.chkIncludeImageInSavedData.Text = "Include Image";
+            this.chkIncludeImageInSavedData.UseVisualStyleBackColor = true;
+            // 
             // btnSaveJSON
             // 
             this.btnSaveJSON.Location = new System.Drawing.Point(302, 16);
@@ -203,6 +268,17 @@ namespace BarcodeStandardExample
             this.btnSaveJSON.Text = "Save &JSON";
             this.btnSaveJSON.UseVisualStyleBackColor = true;
             this.btnSaveJSON.Click += new System.EventHandler(this.btnSaveJSON_Click);
+            // 
+            // btnLoadXML
+            // 
+            this.btnLoadXML.Location = new System.Drawing.Point(173, 61);
+            this.btnLoadXML.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnLoadXML.Name = "btnLoadXML";
+            this.btnLoadXML.Size = new System.Drawing.Size(118, 35);
+            this.btnLoadXML.TabIndex = 72;
+            this.btnLoadXML.Text = "Load XML";
+            this.btnLoadXML.UseVisualStyleBackColor = true;
+            this.btnLoadXML.Click += new System.EventHandler(this.btnLoadXML_Click);
             // 
             // btnLoadJSON
             // 
@@ -215,32 +291,38 @@ namespace BarcodeStandardExample
             this.btnLoadJSON.UseVisualStyleBackColor = true;
             this.btnLoadJSON.Click += new System.EventHandler(this.btnLoadJSON_Click);
             // 
-            // lblAverageGenerationTime
+            // btnSaveXML
             // 
-            this.lblAverageGenerationTime.AutoSize = true;
-            this.lblAverageGenerationTime.Location = new System.Drawing.Point(196, 101);
-            this.lblAverageGenerationTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblAverageGenerationTime.Name = "lblAverageGenerationTime";
-            this.lblAverageGenerationTime.Size = new System.Drawing.Size(0, 20);
-            this.lblAverageGenerationTime.TabIndex = 81;
+            this.btnSaveXML.Location = new System.Drawing.Point(173, 16);
+            this.btnSaveXML.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSaveXML.Name = "btnSaveXML";
+            this.btnSaveXML.Size = new System.Drawing.Size(118, 35);
+            this.btnSaveXML.TabIndex = 71;
+            this.btnSaveXML.Text = "Save &XML";
+            this.btnSaveXML.UseVisualStyleBackColor = true;
+            this.btnSaveXML.Click += new System.EventHandler(this.btnSaveXML_Click);
             // 
-            // label14
+            // btnSave
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(-2, 101);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(198, 20);
-            this.label14.TabIndex = 80;
-            this.label14.Text = "Average Generation Time: ";
+            this.btnSave.Location = new System.Drawing.Point(7, 81);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(125, 45);
+            this.btnSave.TabIndex = 61;
+            this.btnSave.Text = "&Save As";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // progressBar1
+            // btnEncode
             // 
-            this.progressBar1.Location = new System.Drawing.Point(8, 84);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(419, 8);
-            this.progressBar1.TabIndex = 79;
+            this.btnEncode.Location = new System.Drawing.Point(7, 16);
+            this.btnEncode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnEncode.Name = "btnEncode";
+            this.btnEncode.Size = new System.Drawing.Size(125, 55);
+            this.btnEncode.TabIndex = 60;
+            this.btnEncode.Text = "&Encode";
+            this.btnEncode.UseVisualStyleBackColor = true;
+            this.btnEncode.Click += new System.EventHandler(this.btnEncode_Click);
             // 
             // groupBox4
             // 
@@ -440,39 +522,6 @@ namespace BarcodeStandardExample
             this.cbRotateFlip.Size = new System.Drawing.Size(188, 28);
             this.cbRotateFlip.TabIndex = 75;
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(7, 81);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(125, 45);
-            this.btnSave.TabIndex = 61;
-            this.btnSave.Text = "&Save As";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnSaveXML
-            // 
-            this.btnSaveXML.Location = new System.Drawing.Point(173, 16);
-            this.btnSaveXML.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnSaveXML.Name = "btnSaveXML";
-            this.btnSaveXML.Size = new System.Drawing.Size(118, 35);
-            this.btnSaveXML.TabIndex = 71;
-            this.btnSaveXML.Text = "Save &XML";
-            this.btnSaveXML.UseVisualStyleBackColor = true;
-            this.btnSaveXML.Click += new System.EventHandler(this.btnSaveXML_Click);
-            // 
-            // btnLoadXML
-            // 
-            this.btnLoadXML.Location = new System.Drawing.Point(173, 61);
-            this.btnLoadXML.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnLoadXML.Name = "btnLoadXML";
-            this.btnLoadXML.Size = new System.Drawing.Size(118, 35);
-            this.btnLoadXML.TabIndex = 72;
-            this.btnLoadXML.Text = "Load XML";
-            this.btnLoadXML.UseVisualStyleBackColor = true;
-            this.btnLoadXML.Click += new System.EventHandler(this.btnLoadXML_Click);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -482,17 +531,6 @@ namespace BarcodeStandardExample
             this.label8.Size = new System.Drawing.Size(80, 20);
             this.label8.TabIndex = 74;
             this.label8.Text = "Alignment";
-            // 
-            // btnEncode
-            // 
-            this.btnEncode.Location = new System.Drawing.Point(7, 16);
-            this.btnEncode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnEncode.Name = "btnEncode";
-            this.btnEncode.Size = new System.Drawing.Size(125, 55);
-            this.btnEncode.TabIndex = 60;
-            this.btnEncode.Text = "&Encode";
-            this.btnEncode.UseVisualStyleBackColor = true;
-            this.btnEncode.Click += new System.EventHandler(this.btnEncode_Click);
             // 
             // label4
             // 
@@ -655,44 +693,6 @@ namespace BarcodeStandardExample
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // chkIncludeImageInSavedData
-            // 
-            this.chkIncludeImageInSavedData.AutoSize = true;
-            this.chkIncludeImageInSavedData.Location = new System.Drawing.Point(279, 108);
-            this.chkIncludeImageInSavedData.Name = "chkIncludeImageInSavedData";
-            this.chkIncludeImageInSavedData.Size = new System.Drawing.Size(136, 24);
-            this.chkIncludeImageInSavedData.TabIndex = 0;
-            this.chkIncludeImageInSavedData.Text = "Include Image";
-            this.chkIncludeImageInSavedData.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.chkIncludeImageInSavedData);
-            this.groupBox1.Controls.Add(this.btnSaveJSON);
-            this.groupBox1.Controls.Add(this.btnLoadXML);
-            this.groupBox1.Controls.Add(this.btnLoadJSON);
-            this.groupBox1.Controls.Add(this.btnSaveXML);
-            this.groupBox1.Controls.Add(this.btnSave);
-            this.groupBox1.Controls.Add(this.btnEncode);
-            this.groupBox1.Location = new System.Drawing.Point(12, 638);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(423, 139);
-            this.groupBox1.TabIndex = 84;
-            this.groupBox1.TabStop = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.progressBar1);
-            this.groupBox2.Controls.Add(this.btnMassGeneration);
-            this.groupBox2.Controls.Add(this.lblAverageGenerationTime);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Location = new System.Drawing.Point(12, 783);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(434, 122);
-            this.groupBox2.TabIndex = 85;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Bulk Operations";
-            // 
             // TestApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -715,15 +715,15 @@ namespace BarcodeStandardExample
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
