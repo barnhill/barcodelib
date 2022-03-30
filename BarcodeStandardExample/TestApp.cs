@@ -170,17 +170,18 @@ namespace BarcodeStandardExample
             sfd.AddExtension = true;
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                SaveTypes savetype = SaveTypes.UNSPECIFIED;
+                ImageFormat savetype = null;
                 switch (sfd.FilterIndex)
                 {
-                    case 1: /* BMP */  savetype = SaveTypes.BMP; break;
-                    case 2: /* GIF */  savetype = SaveTypes.GIF; break;
-                    case 3: /* JPG */  savetype = SaveTypes.JPG; break;
-                    case 4: /* PNG */  savetype = SaveTypes.PNG; break;
-                    case 5: /* TIFF */ savetype = SaveTypes.TIFF; break;
-                    default: break;
+                    case 1: /* BMP */  savetype = ImageFormat.Bmp; break;
+                    case 2: /* GIF */  savetype = ImageFormat.Gif; break;
+                    case 3: /* JPG */  savetype = ImageFormat.Jpeg; break;
+                    case 4: /* PNG */  savetype = ImageFormat.Png; break;
+                    case 5: /* TIFF */ savetype = ImageFormat.Tiff; break;
+                    default: savetype = b.ImageFormat; break;
                 }//switch
-                b.SaveImage(sfd.FileName, savetype);
+
+                barcode.BackgroundImage?.Save(sfd.FileName, savetype);
             }//if
         }//btnSave_Click
 

@@ -27,7 +27,7 @@ If you decide to create an instance with parameters, the parameters are as follo
 
 ### Example ###
 ```csharp
-BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+using BarcodeLib.Barcode b = new BarcodeLib.Barcode();
 Image img = b.Encode(BarcodeLib.TYPE.UPCA, "038000356216", Color.Black, Color.White, 290, 120);
 ```
 

@@ -11,6 +11,7 @@ using System.Security;
 using System.Xml;
 using System.Text;
 using System.Text.Json;
+using BarcodeStandard.Extensions;
 
 /* 
  * ***************************************************
@@ -44,7 +45,6 @@ namespace BarcodeLib
         private string Encoded_Value = "";
         private string _Country_Assigning_Manufacturer_Code = "N/A";
         private TYPE Encoded_Type = TYPE.UNSPECIFIED;
-        private Image _Encoded_Image = null;
         private Color _ForeColor = Color.Black;
         private Color _BackColor = Color.White;
         private int _Width = 300;
@@ -129,16 +129,8 @@ namespace BarcodeLib
             set { Encoded_Type = value; }
             get { return Encoded_Type; }
         }//EncodedType
-        /// <summary>
-        /// Gets the Image of the generated barcode.
-        /// </summary>
-        public Image EncodedImage
-        {
-            get
-            {
-                return _Encoded_Image;
-            }
-        }//EncodedImage
+
+        //EncodedImage
         /// <summary>
         /// Gets or sets the color of the bars. (Default is black)
         /// </summary>
@@ -277,23 +269,7 @@ namespace BarcodeLib
             get;
             set;
         }//Alignment
-        /// <summary>
-        /// Gets a byte array representation of the encoded image. (Used for Crystal Reports)
-        /// </summary>
-        public byte[] Encoded_Image_Bytes
-        {
-            get
-            {
-                if (_Encoded_Image == null)
-                    return null;
 
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    _Encoded_Image.Save(ms, _ImageFormat);
-                    return ms.ToArray();
-                }//using
-            }
-        }
         /// <summary>
         /// Gets the assembly version information.
         /// </summary>
@@ -401,13 +377,13 @@ namespace BarcodeLib
             this.Encoded_Value = GenerateBarcode();
             this.Raw_Data = ibarcode.RawData;
 
-            _Encoded_Image = (Image)Generate_Image();
+            var encodedImage = (Image)Generate_Image();
 
-            this.EncodedImage.RotateFlip(this.RotateFlipType);
+            encodedImage.RotateFlip(this.RotateFlipType);
 
             this.EncodingTime = ((TimeSpan)(DateTime.Now - dtStartTime)).TotalMilliseconds;
 
-            return EncodedImage;
+            return encodedImage;
         }//Encode
 
         /// <summary>
@@ -930,8 +906,6 @@ namespace BarcodeLib
                     }//switch
             }//switch
 
-            _Encoded_Image = (Image)bitmap;
-
             this.EncodingTime += ((TimeSpan)(DateTime.Now - dtStartTime)).TotalMilliseconds;
 
             return bitmap;
@@ -941,115 +915,19 @@ namespace BarcodeLib
         /// </summary>
         /// <param name="savetype">File type to put the data in before returning the bytes.</param>
         /// <returns>Bytes representing the encoded image.</returns>
-        public byte[] GetImageData(SaveTypes savetype)
+        public byte[] GetImageData(ImageFormat imageFormat)
         {
-            byte[] imageData = null;
-
             try
             {
-                if (_Encoded_Image != null)
+                using (var image = Encode())
                 {
-                    //Save the image to a memory stream so that we can get a byte array!      
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        SaveImage(ms, savetype);
-                        imageData = ms.ToArray();
-                        ms.Flush();
-                        ms.Close();
-                    }//using
-                }//if
+                    return image.EncodedImageBytes(imageFormat);
+                }
             }//try
             catch (Exception ex)
             {
                 throw new Exception("EGETIMAGEDATA-1: Could not retrieve image data. " + ex.Message);
             }//catch  
-            return imageData;
-        }
-        /// <summary>
-        /// Saves an encoded image to a specified file and type.
-        /// </summary>
-        /// <param name="Filename">Filename to save to.</param>
-        /// <param name="FileType">Format to use.</param>
-        public void SaveImage(string Filename, SaveTypes FileType)
-        {
-            try
-            {
-                if (_Encoded_Image != null)
-                {
-                    ImageFormat imageformat;
-                    switch (FileType)
-                    {
-                        case SaveTypes.BMP: imageformat = ImageFormat.Bmp; break;
-                        case SaveTypes.GIF: imageformat = ImageFormat.Gif; break;
-                        case SaveTypes.JPG: imageformat = ImageFormat.Jpeg; break;
-                        case SaveTypes.PNG: imageformat = ImageFormat.Png; break;
-                        case SaveTypes.TIFF: imageformat = ImageFormat.Tiff; break;
-                        default: imageformat = ImageFormat; break;
-                    }//switch
-                    ((Bitmap)_Encoded_Image).Save(Filename, imageformat);
-                }//if
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("ESAVEIMAGE-1: Could not save image.\n\n=======================\n\n" + ex.Message);
-            }//catch
-        }//SaveImage(string, SaveTypes)
-        /// <summary>
-        /// Saves an encoded image to a specified stream.
-        /// </summary>
-        /// <param name="stream">Stream to write image to.</param>
-        /// <param name="FileType">Format to use.</param>
-        public void SaveImage(Stream stream, SaveTypes FileType)
-        {
-            try
-            {
-                if (_Encoded_Image != null)
-                {
-                    ImageFormat imageformat;
-                    switch (FileType)
-                    {
-                        case SaveTypes.BMP: imageformat = ImageFormat.Bmp; break;
-                        case SaveTypes.GIF: imageformat = ImageFormat.Gif; break;
-                        case SaveTypes.JPG: imageformat = ImageFormat.Jpeg; break;
-                        case SaveTypes.PNG: imageformat = ImageFormat.Png; break;
-                        case SaveTypes.TIFF: imageformat = ImageFormat.Tiff; break;
-                        default: imageformat = ImageFormat; break;
-                    }//switch
-                    ((Bitmap)_Encoded_Image).Save(stream, imageformat);
-                }//if
-            }//try
-            catch (Exception ex)
-            {
-                throw new Exception("ESAVEIMAGE-2: Could not save image.\n\n=======================\n\n" + ex.Message);
-            }//catch
-        }//SaveImage(Stream, SaveTypes)
-
-        /// <summary>
-        /// Returns the size of the EncodedImage in real world coordinates (millimeters or inches).
-        /// </summary>
-        /// <param name="Metric">Millimeters if true, otherwise Inches.</param>
-        /// <returns></returns>
-        public ImageSize GetSizeOfImage(bool Metric)
-        {
-            double Width = 0;
-            double Height = 0;
-            if (this.EncodedImage != null && this.EncodedImage.Width > 0 && this.EncodedImage.Height > 0)
-            {
-                double MillimetersPerInch = 25.4;
-                using (Graphics g = Graphics.FromImage(this.EncodedImage))
-                {
-                    Width = this.EncodedImage.Width / g.DpiX;
-                    Height = this.EncodedImage.Height / g.DpiY;
-
-                    if (Metric)
-                    {
-                        Width *= MillimetersPerInch;
-                        Height *= MillimetersPerInch;
-                    }//if
-                }//using
-            }//if
-
-            return new ImageSize(Width, Height, Metric);
         }
         #endregion
 
@@ -1077,10 +955,9 @@ namespace BarcodeLib
             //get image in base 64
             if (includeImage)
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (var image = Encode())
                 {
-                    EncodedImage.Save(ms, ImageFormat);
-                    saveData.Image = Convert.ToBase64String(ms.ToArray(), Base64FormattingOptions.None);
+                    saveData.Image = Convert.ToBase64String(image.EncodedImageBytes(this.ImageFormat), Base64FormattingOptions.None);
                 }//using
             }
             return saveData;
@@ -1310,9 +1187,6 @@ namespace BarcodeLib
                 disposedValue = true;
                 LabelFont?.Dispose();
                 LabelFont = null;
-
-                _Encoded_Image?.Dispose();
-                _Encoded_Image = null;
 
                 Raw_Data = null;
                 Encoded_Value = null;
