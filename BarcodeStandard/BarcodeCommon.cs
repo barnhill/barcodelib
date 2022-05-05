@@ -8,6 +8,7 @@ namespace BarcodeLib
     {
         protected string Raw_Data = "";
         protected List<string> _Errors = new List<string>();
+        private static readonly Regex _NumericOnlyRegex = new Regex(@"^\d+$", RegexOptions.Compiled);
 
         public string RawData
         {
@@ -27,7 +28,7 @@ namespace BarcodeLib
 
         internal static bool CheckNumericOnly(string data)
         {
-            return Regex.IsMatch(data, @"^\d+$", RegexOptions.Compiled);
+            return _NumericOnlyRegex.IsMatch(data);
         }
     }//BarcodeVariables abstract class
 }//namespace
