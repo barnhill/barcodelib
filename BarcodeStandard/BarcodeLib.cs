@@ -1,16 +1,16 @@
+using BarcodeLib.Symbologies;
+using BarcodeStandard;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Drawing.Imaging;
-using BarcodeLib.Symbologies;
-using BarcodeStandard;
-using System.Xml.Serialization;
+using System.IO;
 using System.Security;
-using System.Xml;
 using System.Text;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Serialization;
 
 /* 
  * ***************************************************
@@ -54,6 +54,7 @@ namespace BarcodeLib
         private LabelPositions _LabelPosition = LabelPositions.BOTTOMCENTER;
         private RotateFlipType _RotateFlipType = RotateFlipType.RotateNoneFlipNone;
         private bool _StandardizeLabel = true;
+        private static readonly XmlSerializer _SaveDataXmlSerializer = new XmlSerializer(typeof(SaveData));
         #endregion
 
         #region Constructors
@@ -669,7 +670,7 @@ namespace BarcodeLib
                                 // UPCA standardized label
                                 string defTxt = RawData;
                                 string labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
-                                
+
                                 Font labFont = new Font(this.LabelFont != null ? this.LabelFont.FontFamily.Name : "Arial", Labels.getFontsize(this, Width, Height, labTxt) * DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
                                 if (this.LabelFont != null)
                                 {
@@ -1054,7 +1055,7 @@ namespace BarcodeLib
         #endregion
 
         #region XML Methods
-       
+
         private SaveData GetSaveData(Boolean includeImage = true)
         {
             SaveData saveData = new SaveData();
@@ -1101,10 +1102,9 @@ namespace BarcodeLib
                 {
                     using (SaveData xml = GetSaveData(includeImage))
                     {
-                        XmlSerializer writer = new XmlSerializer(typeof(SaveData));
                         using (Utf8StringWriter sw = new Utf8StringWriter())
                         {
-                            writer.Serialize(sw, xml);
+                            _SaveDataXmlSerializer.Serialize(sw, xml);
                             return sw.ToString();
                         }
                     }//using
@@ -1122,7 +1122,7 @@ namespace BarcodeLib
                 if (jsonStream is MemoryStream)
                 {
                     return JsonSerializer.Deserialize<SaveData>(((MemoryStream)jsonStream).ToArray());
-                } 
+                }
                 else
                 {
                     using (var memoryStream = new MemoryStream())
@@ -1131,17 +1131,16 @@ namespace BarcodeLib
                         return JsonSerializer.Deserialize<SaveData>(memoryStream.ToArray());
                     }
                 }
-                
+
             }
         }
         public static SaveData FromXML(Stream xmlStream)
         {
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(SaveData));
                 using (XmlReader reader = XmlReader.Create(xmlStream))
                 {
-                    return (SaveData)serializer.Deserialize(reader);
+                    return (SaveData)_SaveDataXmlSerializer.Deserialize(reader);
                 }
             }//try
             catch (Exception ex)
