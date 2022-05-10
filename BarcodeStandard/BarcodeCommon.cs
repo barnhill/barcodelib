@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace BarcodeLib
 {
@@ -27,7 +26,14 @@ namespace BarcodeLib
 
         internal static bool CheckNumericOnly(string data)
         {
-            return Regex.IsMatch(data, @"^\d+$", RegexOptions.Compiled);
+            for (var i = 0; i < data.Length; i++)
+            {
+                if (!char.IsDigit(data[i]))
+                {
+                    return false;
+                }
+            }
+            return data.Length > 0;
         }
     }//BarcodeVariables abstract class
 }//namespace
