@@ -607,8 +607,6 @@ namespace BarcodeLib
                             //lines are fBarWidth wide so draw the appropriate color line vertically
                             using (Pen pen = new Pen(ForeColor, iBarWidth))
                             {
-                                pen.Alignment = PenAlignment.Right;
-
                                 while (pos < Encoded_Value.Length)
                                 {
                                     //draw the appropriate color line vertically
@@ -621,7 +619,6 @@ namespace BarcodeLib
                                 //bearer bars
                                 pen.Width = (float)ILHeight / 8;
                                 pen.Color = ForeColor;
-                                pen.Alignment = PenAlignment.Center;
                                 g.DrawLine(pen, new Point(0, 0), new Point(bitmap.Width, 0));//top
                                 g.DrawLine(pen, new Point(0, ILHeight), new Point(bitmap.Width, ILHeight));//bottom
                                 g.DrawLine(pen, new Point(0, 0), new Point(0, ILHeight));//left
