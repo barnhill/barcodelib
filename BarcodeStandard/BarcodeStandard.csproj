@@ -25,6 +25,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02" PrivateAssets="All" />
+    <PackageReference Include="SkiaSharp" Version="2.88.3" />
   </ItemGroup>
   
   <ItemGroup>

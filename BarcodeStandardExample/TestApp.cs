@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using SkiaSharp;
 
 namespace BarcodeStandardExample
 {
@@ -41,8 +42,8 @@ namespace BarcodeStandardExample
             //Show library version
             this.tslblLibraryVersion.Text = "Barcode Library Version: " + Barcode.Version.ToString();
 
-            this.btnBackColor.BackColor = this.b.BackColor;
-            this.btnForeColor.BackColor = this.b.ForeColor;
+            this.btnBackColor.BackColor = ColorTranslator.FromHtml(b.BackColor.ToString());
+            this.btnForeColor.BackColor = ColorTranslator.FromHtml(b.ForeColor.ToString());
         }//Form1_Load
 
         private void btnEncode_Click(object sender, EventArgs e)
@@ -117,7 +118,7 @@ namespace BarcodeStandardExample
                     }
 
                     b.IncludeLabel = this.chkGenerateLabel.Checked;
-                    b.RotateFlipType = (RotateFlipType)Enum.Parse(typeof(RotateFlipType), this.cbRotateFlip.SelectedItem.ToString(), true);
+                    //b.RotateFlipType = (RotateFlipType)Enum.Parse(typeof(RotateFlipType), this.cbRotateFlip.SelectedItem.ToString(), true);
 
                     if (!String.IsNullOrEmpty(this.textBox1.Text.Trim()))
                         b.AlternateLabel = this.textBox1.Text;
@@ -136,7 +137,7 @@ namespace BarcodeStandardExample
                     }//switch
 
                     //===== Encoding performed here =====
-                    barcode.BackgroundImage = b.Encode(type, this.txtData.Text.Trim(), this.btnForeColor.BackColor, this.btnBackColor.BackColor, W, H);
+                    barcode.BackgroundImage = Image.FromStream(b.Encode(type, this.txtData.Text.Trim(), b.ForeColor, b.BackColor, W, H).Encode().AsStream());
                     //===================================
                     
                     //show the encoding time
@@ -165,7 +166,7 @@ namespace BarcodeStandardExample
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|TIFF (*.tif)|*.tif";
+            sfd.Filter = "BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPG (*.jpg)|*.jpg|PNG (*.png)|*.png";
             sfd.FilterIndex = 2;
             sfd.AddExtension = true;
             if (sfd.ShowDialog() == DialogResult.OK)
@@ -177,7 +178,6 @@ namespace BarcodeStandardExample
                     case 2: /* GIF */  savetype = SaveTypes.GIF; break;
                     case 3: /* JPG */  savetype = SaveTypes.JPG; break;
                     case 4: /* PNG */  savetype = SaveTypes.PNG; break;
-                    case 5: /* TIFF */ savetype = SaveTypes.TIFF; break;
                     default: break;
                 }//switch
                 b.SaveImage(sfd.FileName, savetype);
@@ -196,7 +196,7 @@ namespace BarcodeStandardExample
                 cdialog.AnyColor = true;
                 if (cdialog.ShowDialog() == DialogResult.OK)
                 {
-                    this.b.ForeColor = cdialog.Color;
+                    this.b.ForeColor = new SKColor(cdialog.Color.R, cdialog.Color.G, cdialog.Color.B, cdialog.Color.A);
                     this.btnForeColor.BackColor = cdialog.Color;
                 }//if
             }//using
@@ -209,7 +209,7 @@ namespace BarcodeStandardExample
                 cdialog.AnyColor = true;
                 if (cdialog.ShowDialog() == DialogResult.OK)
                 {
-                    this.b.BackColor = cdialog.Color;
+                    this.b.BackColor = new SKColor(cdialog.Color.R, cdialog.Color.G, cdialog.Color.B, cdialog.Color.A);
                     this.btnBackColor.BackColor = cdialog.Color;
                 }//if
             }//using
@@ -303,7 +303,7 @@ namespace BarcodeStandardExample
 
             if (saveData.Image != null)
             {
-                this.barcode.BackgroundImage = Barcode.GetImageFromSaveData(saveData);
+                this.barcode.BackgroundImage = Image.FromStream(Barcode.GetImageFromSaveData(saveData).Encode().AsStream());
             }
 
             //populate the screen
@@ -311,7 +311,7 @@ namespace BarcodeStandardExample
             this.chkGenerateLabel.Checked = saveData.IncludeLabel;
 
             this.txtEncoded.Text = saveData.EncodedValue;
-            this.btnForeColor.BackColor = ColorTranslator.FromHtml(saveData.Forecolor);
+            this.btnForeColor.ForeColor = ColorTranslator.FromHtml(saveData.Forecolor);
             this.btnBackColor.BackColor = ColorTranslator.FromHtml(saveData.Backcolor);
             this.txtWidth.Text = saveData.ImageWidth.ToString();
             this.txtHeight.Text = saveData.ImageHeight.ToString();
@@ -447,11 +447,11 @@ namespace BarcodeStandardExample
                     {
                         barcode.IncludeLabel = true;
                         barcode.Alignment = AlignmentPositions.CENTER;
-                        barcode.LabelFont = new Font(FontFamily.GenericMonospace, FontSize * Barcode.DotsPerPointAt96Dpi, FontStyle.Regular, GraphicsUnit.Pixel);
+                        barcode.LabelFont = new SKFont(SKTypeface.Default, FontSize * Barcode.DotsPerPointAt96Dpi);
 
-                        var barcodeImage = barcode.Encode(TYPE.CODE39, CodeNumber, Color.Black, Color.White, Length, Height);
+                        var barcodeImage = barcode.Encode(TYPE.CODE39, CodeNumber, SKColors.Black, SKColors.White, Length, Height);
 
-                        barcodeImage.Save(ms, ImageFormat.Jpeg);
+                        //barcodeImage.Save(ms, ImageFormat.Jpeg);
 
                         using (BinaryReader reader = new BinaryReader(ms))
                         {
