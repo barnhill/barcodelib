@@ -20,13 +20,7 @@ namespace BarcodeStandardTests.Symbologies
             string data,
             string expected)
         {
-            try
-            {
-                _barcode.Encode(data);
-            }
-            catch when (expected == null)
-            {
-            }
+            _barcode.Encode(data);
             Assert.AreEqual(expected, _barcode.EncodedValue, $"{_barcode.EncodedType}");
         }
     }
