@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -16,7 +17,7 @@ namespace BarcodeLib.Symbologies
 
         public UPCA(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }
         /// <summary>
         /// Encode the raw data using the UPC-A algorithm.
@@ -24,10 +25,10 @@ namespace BarcodeLib.Symbologies
         private string Encode_UPCA()
         {
             //check length of input
-            if (Raw_Data.Length != 11 && Raw_Data.Length != 12)
+            if (RawData.Length != 11 && RawData.Length != 12)
                 Error("EUPCA-1: Data length invalid. (Length must be 11 or 12)");
 
-            if (!CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(RawData))
                 Error("EUPCA-2: Numeric Data Only");
 
             CheckDigit();
@@ -35,13 +36,13 @@ namespace BarcodeLib.Symbologies
             var result = "101"; //start with guard bars
 
             //first number
-            result += UPC_Code_A[Int32.Parse(Raw_Data[0].ToString())];
+            result += UPC_Code_A[Int32.Parse(RawData[0].ToString())];
 
             //second (group) of numbers
             var pos = 0;
             while (pos < 5)
             {
-                result += UPC_Code_A[Int32.Parse(Raw_Data[pos + 1].ToString())];
+                result += UPC_Code_A[Int32.Parse(RawData[pos + 1].ToString())];
                 pos++;
             }//while
 
@@ -52,18 +53,18 @@ namespace BarcodeLib.Symbologies
             pos = 0;
             while (pos < 5)
             {
-                result += UPC_Code_B[Int32.Parse(Raw_Data[(pos++) + 6].ToString())];
+                result += UPC_Code_B[Int32.Parse(RawData[(pos++) + 6].ToString())];
             }//while
 
             //forth
-            result += UPC_Code_B[Int32.Parse(Raw_Data[Raw_Data.Length - 1].ToString())];
+            result += UPC_Code_B[Int32.Parse(RawData[RawData.Length - 1].ToString())];
 
             //add ending guard bars
             result += "101";
 
             //get the manufacturer assigning country
             init_CountryCodes();
-            var twodigitCode = "0" + Raw_Data.Substring(0, 1);
+            var twodigitCode = "0" + RawData.Substring(0, 1);
             try
             {
                 _countryAssigningManufacturerCode = _countryCodes[twodigitCode].ToString();
@@ -229,7 +230,7 @@ namespace BarcodeLib.Symbologies
         {
             try
             {
-                var rawDataHolder = Raw_Data.Substring(0, 11);
+                var rawDataHolder = RawData.Substring(0, 11);
 
                 //calculate check digit
                 var sum = 0;
@@ -245,7 +246,7 @@ namespace BarcodeLib.Symbologies
                 int cs = (10 - sum % 10) % 10;
 
                 //replace checksum if provided by the user and replace with the calculated checksum
-                Raw_Data = rawDataHolder + cs;
+                RawData = rawDataHolder + cs;
             }//try
             catch
             {

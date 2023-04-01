@@ -1,4 +1,6 @@
-﻿namespace BarcodeLib.Symbologies
+﻿using BarcodeStandard;
+
+namespace BarcodeLib.Symbologies
 {
     /// <summary>
     ///  FIM encoding
@@ -16,16 +18,16 @@
             switch (input)
             {
                 case "A":
-                case "a": Raw_Data = FIM_Codes[(int)FIMTypes.FIM_A];
+                case "a": RawData = FIM_Codes[(int)FIMTypes.FIM_A];
                     break;
                 case "B":
-                case "b": Raw_Data = FIM_Codes[(int)FIMTypes.FIM_B];
+                case "b": RawData = FIM_Codes[(int)FIMTypes.FIM_B];
                     break;
                 case "C":
-                case "c": Raw_Data = FIM_Codes[(int)FIMTypes.FIM_C];
+                case "c": RawData = FIM_Codes[(int)FIMTypes.FIM_C];
                     break;
                 case "D":
-                case "d": Raw_Data = FIM_Codes[(int)FIMTypes.FIM_D];
+                case "d": RawData = FIM_Codes[(int)FIMTypes.FIM_D];
                     break;
                 default: Error("EFIM-1: Could not determine encoding type. (Only pass in A, B, C, or D)");
                     break;

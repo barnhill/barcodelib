@@ -1,4 +1,5 @@
 using System;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -16,7 +17,7 @@ namespace BarcodeLib.Symbologies
         /// <param name="input">Data to encode.</param>
         public Code93(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }//Code93
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace BarcodeLib.Symbologies
         {
             init_Code93();
 
-            var formattedData = Add_CheckDigits(Raw_Data);
+            var formattedData = Add_CheckDigits(RawData);
 
             var result = C93_Code.Select("Character = '*'")[0]["Encoding"].ToString();
             foreach (var c in formattedData)

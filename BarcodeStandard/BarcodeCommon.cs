@@ -1,38 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace BarcodeLib
+namespace BarcodeStandard
 {
-    abstract class BarcodeCommon
+    internal abstract class BarcodeCommon
     {
-        protected string Raw_Data = "";
-        protected List<string> _Errors = new List<string>();
+        public string RawData { get; protected set; } = "";
+        public List<string> Errors { get; } = new List<string>();
 
-        public string RawData
+        protected void Error(string errorMessage)
         {
-            get { return this.Raw_Data; }
-        }
-
-        public List<string> Errors
-        {
-            get { return this._Errors; }
-        }
-
-        public void Error(string errorMessage)
-        {
-            this._Errors.Add(errorMessage);
+            Errors.Add(errorMessage);
             throw new Exception(errorMessage);
         }
 
         internal static bool CheckNumericOnly(string data)
         {
-            for (var i = 0; i < data.Length; i++)
-            {
-                if (!char.IsDigit(data[i]))
-                {
-                    return false;
-                }
-            }
+            if (data.Any(c => !char.IsDigit(c))) return false;
             return data.Length > 0;
         }
     }//BarcodeVariables abstract class

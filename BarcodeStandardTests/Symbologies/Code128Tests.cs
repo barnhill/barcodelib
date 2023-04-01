@@ -1,7 +1,8 @@
-﻿using BarcodeLib;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using BarcodeStandard;
+using Type = BarcodeStandard.Type;
 
 namespace BarcodeStandardTests.Symbologies
 {
@@ -10,7 +11,7 @@ namespace BarcodeStandardTests.Symbologies
     {
         readonly Barcode barcode = new Barcode
         {
-            EncodedType = TYPE.CODE128,
+            EncodedType = Type.Code128,
         };
 
         [DataTestMethod]
@@ -32,7 +33,7 @@ namespace BarcodeStandardTests.Symbologies
             string expectedC)
         {
             void assertByType(
-                TYPE type,
+                Type type,
                 string expected)
             {
                 barcode.EncodedType = type;
@@ -47,10 +48,10 @@ namespace BarcodeStandardTests.Symbologies
                 }
                 Assert.AreEqual(expected, actual, $"{type}");
             }
-            assertByType(TYPE.CODE128, expectedAuto);
-            assertByType(TYPE.CODE128A, expectedA);
-            assertByType(TYPE.CODE128B, expectedB);
-            assertByType(TYPE.CODE128C, expectedC);
+            assertByType(Type.Code128, expectedAuto);
+            assertByType(Type.Code128A, expectedA);
+            assertByType(Type.Code128B, expectedB);
+            assertByType(Type.Code128C, expectedC);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace BarcodeStandardTests.Symbologies
                     })) + "\"";
                 }
                 string tryByType(
-                    TYPE type)
+                    Type type)
                 {
                     return represent(new Func<string>(() =>
                     {
@@ -102,7 +103,7 @@ namespace BarcodeStandardTests.Symbologies
                         }
                     })());
                 }
-                Console.WriteLine($"        [DataRow({represent(x)}, {tryByType(TYPE.CODE128)}, {tryByType(TYPE.CODE128A)}, {tryByType(TYPE.CODE128B)}, {tryByType(TYPE.CODE128C)})]");
+                Console.WriteLine($"        [DataRow({represent(x)}, {tryByType(Type.Code128)}, {tryByType(Type.Code128A)}, {tryByType(Type.Code128B)}, {tryByType(Type.Code128C)})]");
             }
         }
     }
