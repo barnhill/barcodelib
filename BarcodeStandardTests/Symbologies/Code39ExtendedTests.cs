@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
-using Type = BarcodeStandard.Type;
 
 namespace BarcodeStandardTests.Symbologies
 {
