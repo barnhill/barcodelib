@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="SkiaSharp" Version="2.88.3" />
     <PackageReference Include="xunit.runner.console" Version="2.4.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
