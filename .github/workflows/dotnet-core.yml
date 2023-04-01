@@ -26,4 +26,4 @@ jobs:
     - name: Build
       run: dotnet build BarcodeStandard/BarcodeStandard.csproj --configuration Release --no-restore
     - name: Test
-      run: dotnet test
+      run: dotnet test --framework netstandard2.0
