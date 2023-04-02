@@ -4,16 +4,22 @@ using BarcodeStandard;
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
-    public class Code11Tests
+    public class FimTests
     {
         private readonly Barcode _barcode = new()
         {
-            EncodedType = Type.Code11,
+            EncodedType = Type.Fim,
         };
 
         [DataTestMethod]
-        [DataRow("123568902", "101100101101011010010110110010101101101010011010110100101101010101011010010110100101101011001")]
-        [DataRow("102849-749", "1011001011010110101011010010110110100101011011011010101011010101001101011011011010101010110100110101011001")]
+        [DataRow("A", "10100000100000101")]
+        [DataRow("B", "10001010001010001")]
+        [DataRow("C", "10100010001000101")]
+        [DataRow("D", "10101000100010101")]
+        [DataRow("a", "10100000100000101")]
+        [DataRow("b", "10001010001010001")]
+        [DataRow("c", "10100010001000101")]
+        [DataRow("d", "10101000100010101")]
         public void EncodeBarcode(string data, string expected)
         {
             _barcode.Encode(data);
