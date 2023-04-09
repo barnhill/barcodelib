@@ -19,48 +19,55 @@ namespace BarcodeLib
             try
             {
                 var font = barcode.LabelFont;
-                float fontHeight;
-                using (var canvas = new SKCanvas(img))
+                var str = barcode.AlternateLabel ?? barcode.RawData;
+                using (var foreBrush = new SKPaint(font))
                 {
-                    //color a box at the bottom of the barcode to hold the string of data
-                    using(var paint = new SKPaint(font)) 
-                    {
-                        paint.FilterQuality = SKFilterQuality.High;
-                        paint.IsAntialias = true;
-                        paint.ColorF = barcode.BackColor;
-                        paint.Style = SKPaintStyle.Fill;
 
-                        fontHeight = paint.MeasureText("A");
+                    SKRect textBounds = new();
+                    foreBrush.MeasureText(str, ref textBounds);
+                    var labelPadding = textBounds.Height / 2f;
+                    var backY = img.Height - textBounds.Height - labelPadding * 2f;
 
-                        var rect = SKRect.Create(0, img.Height - (fontHeight - 2), img.Width, fontHeight);
-                        canvas.DrawRect(rect, paint);
-                    }
-                    
-                    //draw datastring under the barcode image
-                    using (var foreBrush = new SKPaint(font))
+                    using (var canvas = new SKCanvas(img))
                     {
+                        //draw bounding box side overdrawn by label
+                        using (var pen = new SKPaint())
+                        {
+                            pen.FilterQuality = SKFilterQuality.High;
+                            pen.IsAntialias = true;
+                            pen.ColorF = barcode.ForeColor;
+                            pen.StrokeWidth = (float)img.Height / 16;
+
+                            canvas.DrawLine(new SKPoint(0, backY - pen.StrokeWidth / 2f),
+                                new SKPoint(img.Width, backY - pen.StrokeWidth / 2f), pen); //bottom
+                        }
+
+                        //color a box at the bottom of the barcode to hold the string of data
+                        using (var paint = new SKPaint(font))
+                        {
+                            paint.FilterQuality = SKFilterQuality.High;
+                            paint.IsAntialias = true;
+                            paint.ColorF = barcode.BackColor;
+                            paint.Style = SKPaintStyle.Fill;
+
+                            var rect = SKRect.Create(0, backY, img.Width, textBounds.Height + labelPadding * 2f);
+                            canvas.DrawRect(rect, paint);
+                        }
+
+                        //draw datastring under the barcode image
                         foreBrush.FilterQuality = SKFilterQuality.High;
                         foreBrush.IsAntialias = true;
                         foreBrush.ColorF = barcode.ForeColor;
                         foreBrush.TextAlign = SKTextAlign.Center;
 
-                        var str = barcode.AlternateLabel ?? barcode.RawData;
-                        var point = new SKPoint(img.Width / 2f, img.Height - fontHeight + 1);
-                        canvas.DrawText(str, point, foreBrush);
-                    }
+                        var labelX = img.Width / 2f;
+                        var labelY = img.Height - textBounds.Height + labelPadding;
 
-                    using (var pen = new SKPaint())
-                    {
-                        pen.FilterQuality = SKFilterQuality.High;
-                        pen.IsAntialias = true;
-                        pen.ColorF = barcode.ForeColor;
-                        pen.StrokeWidth = (float)img.Height / 16;
+                        canvas.DrawText(str, labelX, labelY, foreBrush);
 
-                        canvas.DrawLine(new SKPoint(0, img.Height - (int)fontHeight - 2), new SKPoint(img.Width, img.Height - (int)fontHeight - 2), pen);//bottom
-                    }
-
-                    canvas.Save();
-                }//using
+                        canvas.Save();
+                    } //using
+                }
 
                 return SKImage.FromBitmap(img);
             }//try
@@ -73,87 +80,65 @@ namespace BarcodeLib
         /// <summary>
         /// Draws Label for Generic barcodes
         /// </summary>
+        /// <param name="barcode">Barcode to draw label for</param>
         /// <param name="img">Image representation of the barcode without the labels</param>
         /// <returns>Image representation of the barcode with labels applied</returns>
-        /*public static SKImage Label_Generic(Barcode Barcode, SKBitmap img)
+        public static SKImage Label_Generic(Barcode barcode, SKBitmap img)
         {
             try
             {
-                SKFont font = Barcode.LabelFont;
+                using var g = new SKCanvas(img);
 
-                using (SKCanvas g = new SKCanvas(img))
-                {
-                    g.DrawImage(SKImage.FromBitmap(img), 0f, 0f);
-
-                    g.SmoothingMode = SmoothingMode.HighQuality;
+                /*g.SmoothingMode = SmoothingMode.HighQuality;
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                    g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;*/
 
-                    StringFormat f = new StringFormat();
-                    f.Alignment = StringAlignment.Near;
-                    f.LineAlignment = StringAlignment.Near;
-                    int LabelX = 0;
-                    int LabelY = 0;
+                var alignmentAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(barcode);
+                var text = barcode.AlternateLabel ?? barcode.RawData;
+                    
+                //draw datastring under the barcode image
+                using var foreBrush = new SKPaint(barcode.LabelFont)
+                {
+                    ColorF = barcode.ForeColor,
+                };
+                foreBrush.IsAntialias = true;
+                foreBrush.IsLinearText = true;
+                foreBrush.IsDither = true;
+                foreBrush.IsAutohinted = true;
+                foreBrush.FilterQuality = SKFilterQuality.High;
 
-                    switch (Barcode.LabelPosition)
-                    {
-                        case LabelPositions.BOTTOMCENTER:
-                            LabelX = img.Width / 2;
-                            LabelY = img.Height - (font.Height);
-                            f.Alignment = StringAlignment.Center;
-                            break;
-                        case LabelPositions.BOTTOMLEFT:
-                            LabelX = 0;
-                            LabelY = img.Height - (font.Height);
-                            f.Alignment = StringAlignment.Near;
-                            break;
-                        case LabelPositions.BOTTOMRIGHT:
-                            LabelX = img.Width;
-                            LabelY = img.Height - (font.Height);
-                            f.Alignment = StringAlignment.Far;
-                            break;
-                        case LabelPositions.TOPCENTER:
-                            LabelX = img.Width / 2;
-                            LabelY = 0;
-                            f.Alignment = StringAlignment.Center;
-                            break;
-                        case LabelPositions.TOPLEFT:
-                            LabelX = img.Width;
-                            LabelY = 0;
-                            f.Alignment = StringAlignment.Near;
-                            break;
-                        case LabelPositions.TOPRIGHT:
-                            LabelX = img.Width;
-                            LabelY = 0;
-                            f.Alignment = StringAlignment.Far;
-                            break;
-                    }//switch
+                SKRect textBounds = new();
+                foreBrush.MeasureText(text, ref textBounds);
+                var labelPadding = textBounds.Height / 2f;
+                    
+                var labelX = img.Width / 2f - textBounds.Width / 2f + alignmentAdjustment;
+                var labelY = img.Height - textBounds.Height + labelPadding;
+                var backY = img.Height - textBounds.Height - labelPadding * 2f;
+                        
+                //color a background color box at the bottom of the barcode to hold the string of data
+                using var backBrush = new SKPaint
+                {
+                    ColorF = barcode.BackColor,
+                    Style = SKPaintStyle.Fill
+                };
+                    
+                g.DrawRect(SKRect.Create(0, backY, img.Width, textBounds.Height + labelPadding * 2f), backBrush);
+                g.DrawText(text, labelX, labelY, foreBrush);
 
-                    //color a background color box at the bottom of the barcode to hold the string of data
-                    using (SolidBrush backBrush = new SolidBrush(Barcode.BackColor))
-                    {
-                        g.FillRectangle(backBrush, new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height));
-                    }
-
-                    //draw datastring under the barcode image
-                    using (SolidBrush foreBrush = new SolidBrush(Barcode.ForeColor))
-                    {
-                        g.DrawString(Barcode.AlternateLabel == null ? Barcode.RawData : Barcode.AlternateLabel, font, foreBrush, new RectangleF((float)0, (float)LabelY, (float)img.Width, (float)font.Height), f);
-                    }
-
-                    g.Save();
-                }//using
-                return img;
+                g.Save();
+                g.Dispose();
+                foreBrush.Dispose();
+                backBrush.Dispose();
+                return SKImage.FromBitmap(img);
             }//try
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_GENERIC-1: " + ex.Message);
             }//catch
-        }//Label_Generic*/
-
-
+        }
+        
         /// <summary>
         /// Draws Label for EAN-13 barcodes
         /// </summary>
@@ -170,7 +155,7 @@ namespace BarcodeLib
 
                 using (var labFont = new SKFont(SKTypeface.Default, GetFontSize(barcode, barcode.Width - barcode.Width % barcode.EncodedValue.Length, img.Height, defTxt)))
                 {
-                    int shiftAdjustment = GetAlignmentShiftAdjustment(barcode);
+                    int shiftAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(barcode);
 
                     using (var g = new SKCanvas(img))
                     {
@@ -248,68 +233,75 @@ namespace BarcodeLib
             try
             {
                 var iBarWidth = barcode.Width / barcode.EncodedValue.Length;
-                var halfBarWidth = (int)(iBarWidth * 0.5);
-                var defTxt = barcode.RawData;
+
+                var shiftAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(barcode);
+
+                barcode.LabelFont.Edging = SKFontEdging.SubpixelAntialias;
+
+                var text = barcode.RawData;
+                var first = text.Substring(0, 1);
+                var second = text.Substring(1, 5);
+                var third = text.Substring(6, 5);
+                var fourth = text.Substring(11);
                 
-                using (var labFont = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal), GetFontSize(barcode, (int)((barcode.Width - barcode.Width % barcode.EncodedValue.Length) * 0.9f), img.Height, defTxt)))
+                using var g = new SKCanvas(img);
+                
+                using var foreBrush = new SKPaint(barcode.LabelFont);
+                SKRect textBounds = new();
+                foreBrush.MeasureText(text, ref textBounds);
+                
+                //Default alignment for UPCA
+
+                float w1 = iBarWidth * 3; //Width of first block
+                float w2 = iBarWidth * 42; //Width of second block
+                float w3 = iBarWidth * 42; //Width of third block
+                float w4 = iBarWidth * 3; //Width of fourth block
+
+                float s1 = shiftAdjustment;
+                var s2 = s1 + w1; //Start position of block 2
+                var s3 = s2 + w2 + iBarWidth * 5; //Start position of block 3
+                var s4 = s3 + w3;
+                
+                SKRect textBounds1 = new();
+                SKRect textBounds2 = new();
+                SKRect textBounds3 = new();
+                SKRect textBounds4 = new();
+                
+                foreBrush.MeasureText(first, ref textBounds1);
+                foreBrush.MeasureText(second, ref textBounds2);
+                foreBrush.MeasureText(third, ref textBounds3);
+                foreBrush.MeasureText(fourth, ref textBounds4);
+
+                //Draw the background rectangles for each block
+                using (var backBrush = new SKPaint())
                 {
-                    int shiftAdjustment = GetAlignmentShiftAdjustment(barcode);
+                    backBrush.ColorF = barcode.BackColor;
+                    backBrush.IsAntialias = true;
+                    
+                    g.DrawRect(new SKRect(s1, img.Height - textBounds1.Height - textBounds1.Height / 4f, s1 + w1, img.Height), backBrush); // first guard bar cover
+                    g.DrawRect(new SKRect(s4, img.Height - textBounds4.Height - textBounds4.Height / 4f, s4 + w4, img.Height), backBrush); // end guard bar cover
+                    g.DrawRect(new SKRect(s3, img.Height - textBounds3.Height * 2f, s3 + w3, img.Height), backBrush); // middle bar cover
+                    
+                    g.DrawRect(new SKRect(s2 + w2, img.Height - textBounds4.Height - textBounds4.Height / 4f, s3, img.Height), backBrush);
+                    g.DrawRect(new SKRect(s2, img.Height - textBounds2.Height * 2f, s2 + w2, img.Height), backBrush);
+                }
 
-                    using (var surface = SKSurface.Create(new SKImageInfo().WithSize(img.Width, img.Height)))
-                    {
-                        surface.Canvas.DrawImage(SKImage.FromBitmap(img), new SKPoint(0, 0));
-                        var g = surface.Canvas;
-                        g.DrawImage(SKImage.FromBitmap(img), 0, 0);
+                foreBrush.ColorF = barcode.ForeColor;
+                foreBrush.IsAntialias = true;
+                foreBrush.IsDither = true;
+                foreBrush.IsLinearText = true;
+                foreBrush.IsAutohinted = true;
+                foreBrush.FilterQuality = SKFilterQuality.High;
 
-                        labFont.GetFontMetrics(out var fontMetrics);
+                g.DrawText(first, s1 + (w1 / 2f - textBounds1.Width / 2f), img.Height, foreBrush);
+                g.DrawText(second, s2 + (w2 / 2f - textBounds2.Width / 2f), img.Height + textBounds2.MidY, foreBrush);
+                g.DrawText(third, s3 + (w3 / 2f - textBounds3.Width / 2f), img.Height + textBounds3.MidY, foreBrush);
+                g.DrawText(fourth, s4 + (w4 / 2f - textBounds4.Width / 2f), img.Height, foreBrush);
 
-                        //Default alignment for UPCA
-                        var labelY = (int)(img.Height - fontMetrics.XHeight);
-
-                        /*f.Alignment = StringAlignment.Near;*/
-                        float w1 = iBarWidth * 4; //Width of first block
-                        float w2 = iBarWidth * 34; //Width of second block
-                        float w3 = iBarWidth * 34; //Width of third block
-
-                        float s1 = shiftAdjustment - iBarWidth;
-                        var s2 = s1 + (iBarWidth * 12); //Start position of block 2
-                        var s3 = s2 + w2 + (iBarWidth * 5); //Start position of block 3
-                        var s4 = s3 + w3 + (iBarWidth * 8) - halfBarWidth;
-                        
-                        //Draw the background rectangles for each block
-                        using (var backBrush = new SKPaint())
-                        {
-                            backBrush.ColorF = barcode.BackColor;
-
-                            g.DrawRect(new SKRect(s2, labelY, w2, fontMetrics.XHeight), backBrush);
-                            g.DrawRect(new SKRect(s3, labelY, w3, fontMetrics.XHeight), backBrush);
-                        }
-
-                        using (var labFontSmall = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal), GetFontSize(barcode, (int)((barcode.Width - barcode.Width % barcode.EncodedValue.Length) * 0.9f * 0.5), img.Height, defTxt)))
-                        {
-                            //draw data string under the barcode image
-                            using (var foreBrushSmall = new SKPaint(labFontSmall))
-                            {
-                                using (var foreBrushLarge = new SKPaint(labFont))
-                                {
-                                    foreBrushLarge.ColorF = barcode.ForeColor;
-                                    foreBrushSmall.ColorF = barcode.ForeColor;
-
-                                    labFontSmall.GetFontMetrics(out fontMetrics);
-
-                                    g.DrawText(defTxt.Substring(0, 1), s1, img.Height - fontMetrics.XHeight, foreBrushSmall);
-                                    g.DrawText(defTxt.Substring(1, 5), s2 - iBarWidth, labelY, foreBrushLarge);
-                                    g.DrawText(defTxt.Substring(6, 5), s3 - iBarWidth, labelY, foreBrushLarge);
-                                    g.DrawText(defTxt.Substring(11), s4, img.Height - fontMetrics.XHeight, foreBrushSmall);
-                                }
-                            }
-                        }
-
-                        g.Save();
-                        
-                        return surface.Snapshot();
-                    } 
-                }//using
+                g.Save();
+                g.Dispose();
+                foreBrush.Dispose();
+                return SKImage.FromBitmap(img);
             }//try
             catch (Exception ex)
             {
@@ -317,21 +309,7 @@ namespace BarcodeLib
             }//catch
         }//Label_UPCA
 
-        private static int GetAlignmentShiftAdjustment(Barcode barcode)
-        {
-            switch (barcode.Alignment)
-            {
-                case AlignmentPositions.Left:
-                    return 0;
-                case AlignmentPositions.Right:
-                    return (barcode.Width % barcode.EncodedValue.Length);
-                case AlignmentPositions.Center:
-                default:
-                    return (barcode.Width % barcode.EncodedValue.Length) / 2;
-            }//switch
-        }
-
-        public static int GetFontSize(Barcode barcode, int wid, int hgt, string lbl)
+        private static int GetFontSize(Barcode barcode, int wid, int hgt, string lbl)
         {
             //Returns the optimal font size for the specified dimensions
             var fontSize = 10;

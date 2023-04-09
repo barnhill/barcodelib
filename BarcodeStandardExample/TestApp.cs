@@ -27,7 +27,6 @@ namespace BarcodeStandardExample
         {
             cbEncodeType.SelectedIndex = 0;
             cbBarcodeAlign.SelectedIndex = 0;
-            cbLabelLocation.SelectedIndex = 0;
 
             //Show library version
             tslblLibraryVersion.Text = @"Barcode Library Version: " + Barcode.Version;
@@ -59,7 +58,7 @@ namespace BarcodeStandardExample
                 {
                     try
                     {
-                        _b.BarWidth = textBoxBarWidth.Text.Trim().Length < 1 ? null : (int?)Convert.ToInt32(textBoxBarWidth.Text.Trim());
+                        _b.BarWidth = textBoxBarWidth.Text.Trim().Length < 1 ? null : Convert.ToInt32(textBoxBarWidth.Text.Trim());
                     }
                     catch (Exception ex)
                     {
@@ -67,7 +66,7 @@ namespace BarcodeStandardExample
                     }
                     try
                     {
-                        _b.AspectRatio = textBoxAspectRatio.Text.Trim().Length < 1 ? null : (double?)Convert.ToDouble(textBoxAspectRatio.Text.Trim());
+                        _b.AspectRatio = textBoxAspectRatio.Text.Trim().Length < 1 ? null : Convert.ToDouble(textBoxAspectRatio.Text.Trim());
                     }
                     catch (Exception ex)
                     {
@@ -78,19 +77,7 @@ namespace BarcodeStandardExample
 
                     if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
                         _b.AlternateLabel = textBox1.Text;
-                    else
-                        _b.AlternateLabel = txtData.Text;
-
-                    //label alignment and position
-                    switch (cbLabelLocation.SelectedItem.ToString().Trim().ToUpper())
-                    {
-                        case @"BOTTOMLEFT":  _b.LabelPosition = LabelPositions.BottomLeft; break;
-                        case @"BOTTOMRIGHT": _b.LabelPosition = LabelPositions.BottomRight; break;
-                        case @"TOPCENTER": _b.LabelPosition = LabelPositions.TopCenter; break;
-                        case @"TOPLEFT": _b.LabelPosition = LabelPositions.TopLeft; break;
-                        case @"TOPRIGHT": _b.LabelPosition = LabelPositions.TopRight; break;
-                        default: _b.LabelPosition = LabelPositions.BottomCenter; break;
-                    }//switch
+                    else _b.AlternateLabel = null;
 
                     //===== Encoding performed here =====
                     barcode.BackgroundImage = Image.FromStream(_b.Encode(type, txtData.Text.Trim(), _b.ForeColor, _b.BackColor, w, h).Encode().AsStream());
@@ -418,7 +405,7 @@ namespace BarcodeStandardExample
             {
                 for (var i = 0; i < x; i++)
                 {
-                    data = txtData.Text.Aggregate("", (current, c) => current + random.Next(0, 9));
+                    data = txtData.Text.Aggregate("", (current, _) => current + random.Next(0, 9));
 
                     var dtStartTime = DateTime.Now;
                     var bitmap = GetBarCode(b, data, GetTypeSelected());

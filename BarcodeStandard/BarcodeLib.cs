@@ -32,9 +32,6 @@ namespace BarcodeStandard
     { Jpg, Bmp, Png, Webp, Unspecified }
     public enum AlignmentPositions
     { Center, Left, Right }
-    [Flags]
-    public enum LabelPositions
-    { TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight }
     #endregion
     /// <summary>
     /// Generates a barcode image of a specified symbology from a string of data.
@@ -107,11 +104,7 @@ namespace BarcodeStandard
         /// <summary>
         /// Gets or sets the label font. (Default is Microsoft Sans Serif, 10pt, Bold)
         /// </summary>
-        public SKFont LabelFont { get; set; } = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold), 10); //LabelFont
-        /// <summary>
-        /// Gets or sets the location of the label in relation to the barcode. (BOTTOMCENTER is default)
-        /// </summary>
-        public LabelPositions LabelPosition { get; set; } = LabelPositions.BottomCenter; //LabelPosition
+        public SKFont LabelFont { get; set; } = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold), 28); //LabelFont
         /// <summary>
         /// Gets or sets the width of the image to be drawn. (Default is 300 pixels)
         /// </summary>
@@ -147,11 +140,6 @@ namespace BarcodeStandard
         /// Alternate label to be displayed.  (IncludeLabel must be set to true as well)
         /// </summary>
         public String AlternateLabel { get; set; }
-
-        /// <summary>
-        /// Try to standardize the label format. (Valid only for EAN13 and empty AlternateLabel, default is true)
-        /// </summary>
-        public bool StandardizeLabel { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the amount of time in milliseconds that it took to encode and draw the barcode.
@@ -523,50 +511,10 @@ namespace BarcodeStandard
                         var ilHeight = Height;
                         var topLabelAdjustment = 0;
 
-                        int shiftAdjustment;
                         var iBarWidth = Width / EncodedValue.Length;
 
                         //set alignment
-                        switch (Alignment)
-                        {
-                            case AlignmentPositions.Left:
-                                shiftAdjustment = 0;
-                                break;
-                            case AlignmentPositions.Right:
-                                shiftAdjustment = (Width % EncodedValue.Length);
-                                break;
-                            case AlignmentPositions.Center:
-                            default:
-                                shiftAdjustment = (Width % EncodedValue.Length) / 2;
-                                break;
-                        }//switch
-
-                        if (IncludeLabel)
-                        {
-                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && StandardizeLabel)
-                            {
-                                // UPCA standardized label
-                                var defTxt = RawData;
-                                var labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
-
-                                var labFont = new SKFont(LabelFont.Typeface, Labels.GetFontSize(this, Width, Height, labTxt));
-                                
-                                using (LabelFont)
-                                {
-                                    LabelFont = labFont;
-                                    ilHeight -= Utils.GetFontHeight(labTxt, LabelFont) / 2;
-                                }
-                                iBarWidth = Width / EncodedValue.Length;
-                            }
-                            else
-                            {
-                                // Shift drawing down if top label.
-                                if ((LabelPosition & (LabelPositions.TopCenter | LabelPositions.TopLeft | LabelPositions.TopRight)) > 0)
-                                    topLabelAdjustment = Utils.GetFontHeight(RawData, LabelFont);
-
-                                ilHeight -= Utils.GetFontHeight(RawData, LabelFont);
-                            }
-                        }
+                        var shiftAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(this);
 
                         bitmap = new SKBitmap(Width, Height);
                         if (iBarWidth <= 0)
@@ -602,14 +550,7 @@ namespace BarcodeStandard
                        
                         if (IncludeLabel)
                         {
-                            if ((AlternateLabel == null || RawData.StartsWith(AlternateLabel)) && StandardizeLabel)
-                            {
-                                Labels.Label_UPCA(this, bitmap);
-                            }
-                            else
-                            {
-                                //Labels.Label_Generic(this, bitmap);
-                            }
+                            Labels.Label_UPCA(this, bitmap);
                         }
 
                         break;
@@ -625,49 +566,15 @@ namespace BarcodeStandard
                         var ilHeight = Height;
                         var topLabelAdjustment = 0;
 
-                        int shiftAdjustment;
-
                         //set alignment
-                        switch (Alignment)
-                        {
-                            case AlignmentPositions.Left:
-                                shiftAdjustment = 0;
-                                break;
-                            case AlignmentPositions.Right:
-                                shiftAdjustment = (Width % EncodedValue.Length);
-                                break;
-                            case AlignmentPositions.Center:
-                            default:
-                                shiftAdjustment = (Width % EncodedValue.Length) / 2;
-                                break;
-                        }//switch
+                        var shiftAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(this);
 
                         if (IncludeLabel)
                         {
-                            if (((AlternateLabel == null) || RawData.StartsWith(AlternateLabel)) && StandardizeLabel)
+                            // Shift drawing down if top label.
+                            if (AlternateLabel != null)
                             {
-                                // EAN13 standardized label
-                                var defTxt = RawData;
-                                var labTxt = defTxt.Substring(0, 1) + "--" + defTxt.Substring(1, 6) + "--" + defTxt.Substring(7);
-
-                                var font = LabelFont;
-                                var labFont = new SKFont(font.Typeface, Labels.GetFontSize(this, Width, Height, labTxt));
-
-                                if (font != null)
-                                {
-                                    LabelFont.Dispose();
-                                }
-
-                                LabelFont = labFont;
-
-                                ilHeight -= Utils.GetFontHeight(RawData, labFont) / 2;
-                            }
-                            else
-                            {
-                                // Shift drawing down if top label.
-                                if ((LabelPosition & (LabelPositions.TopCenter | LabelPositions.TopLeft | LabelPositions.TopRight)) > 0)
-                                    topLabelAdjustment = Utils.GetFontHeight(RawData, LabelFont);
-
+                                topLabelAdjustment = Utils.GetFontHeight(RawData, LabelFont);
                                 ilHeight -= Utils.GetFontHeight(RawData, LabelFont);
                             }
                         }
@@ -704,14 +611,7 @@ namespace BarcodeStandard
 
                         if (IncludeLabel)
                         {
-                            if (((AlternateLabel == null) || RawData.StartsWith(AlternateLabel)) && StandardizeLabel)
-                            {
-                                Labels.Label_EAN13(this, bitmap);
-                            }
-                            else
-                            {
-                                //Labels.Label_Generic(this, bitmap);
-                            }
+                            Labels.Label_EAN13(this, bitmap);
                         }
 
                         break;
@@ -725,39 +625,16 @@ namespace BarcodeStandard
                         Height = (int?)(Width / AspectRatio) ?? Height;
 
                         var ilHeight = Height;
-                        var topLabelAdjustment = 0;
 
-                        if (IncludeLabel)
-                        {
-                            // Shift drawing down if top label.
-                            if ((LabelPosition & (LabelPositions.TopCenter | LabelPositions.TopLeft | LabelPositions.TopRight)) > 0)
-                                topLabelAdjustment = Utils.GetFontHeight(RawData, LabelFont);
-
-                            ilHeight -= Utils.GetFontHeight(RawData, LabelFont);
-                        }
-                        
                         bitmap = new SKBitmap(Width, Height);
                         var iBarWidth = Width / EncodedValue.Length;
-                        int shiftAdjustment;
                         var iBarWidthModifier = 1;
 
                         if (EncodedType == Type.PostNet)
                             iBarWidthModifier = 2;
 
                         //set alignment
-                        switch (Alignment)
-                        {
-                            case AlignmentPositions.Left:
-                                shiftAdjustment = 0;
-                                break;
-                            case AlignmentPositions.Right:
-                                shiftAdjustment = (Width % EncodedValue.Length);
-                                break;
-                            case AlignmentPositions.Center:
-                            default:
-                                shiftAdjustment = (Width % EncodedValue.Length) / 2;
-                                break;
-                        }//switch
+                        var shiftAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(this);
 
                         if (iBarWidth <= 0)
                             throw new Exception("EGENERATE_IMAGE-2: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel)");
@@ -787,15 +664,16 @@ namespace BarcodeStandard
                                         if (EncodedType == Type.PostNet)
                                         {
                                             //draw half bars in postnet
+                                            var y = 0f;
                                             if (EncodedValue[pos] == '0')
-                                                canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, (ilHeight / 2) + topLabelAdjustment), forePaint);
-                                            else
-                                                canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), forePaint);
+                                                y = ilHeight / 2f;
+                                            
+                                            canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, y), forePaint);
                                         }//if
                                         else
                                         {
                                             if (EncodedValue[pos] == '1')
-                                                canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), forePaint);
+                                                canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0f), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), forePaint);
                                         }
                                         pos++;
                                     }//while
@@ -804,7 +682,7 @@ namespace BarcodeStandard
                         }//using
                         if (IncludeLabel)
                         {
-                           // Labels.Label_Generic(this, bitmap);
+                           Labels.Label_Generic(this, bitmap);
                         }//if
 
                         break;
@@ -916,7 +794,6 @@ namespace BarcodeStandard
             saveData.CountryAssigningManufacturingCode = CountryAssigningManufacturerCode;
             saveData.ImageWidth = Width;
             saveData.ImageHeight = Height;
-            saveData.LabelPosition = (int)LabelPosition;
             saveData.LabelFont = LabelFont.ToString();
             saveData.ImageFormat = ImageFormat.ToString();
             saveData.Alignment = (int)Alignment;
