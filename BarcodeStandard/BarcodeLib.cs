@@ -781,6 +781,7 @@ namespace BarcodeLib
                                 LabelFont = labFont;
 
                                 ILHeight -= (labFont.Height / 2);
+                                shiftAdjustment = (Width % Encoded_Value.Length);
                             }
                             else
                             {
