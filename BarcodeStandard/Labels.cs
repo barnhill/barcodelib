@@ -113,7 +113,7 @@ namespace BarcodeLib
                 foreBrush.MeasureText(text, ref textBounds);
                 var labelPadding = textBounds.Height / 2f;
                     
-                var labelX = img.Width / 2f - textBounds.Width / 2f + alignmentAdjustment;
+                var labelX = img.Width / 2f - textBounds.Width / 2f;
                 var labelY = img.Height - textBounds.Height + labelPadding;
                 var backY = img.Height - textBounds.Height - labelPadding * 2f;
                         
