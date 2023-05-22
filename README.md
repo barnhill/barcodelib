@@ -28,6 +28,7 @@ If you decide to create an instance with parameters, the parameters are as follo
 ### Example ###
 ```csharp
 BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+b.IncludeLabel = true;
 Image img = b.Encode(BarcodeLib.TYPE.UPCA, "038000356216", Color.Black, Color.White, 290, 120);
 ```
 
@@ -38,4 +39,4 @@ If you find this or any of my software useful and decide its worth supporting.  
 
 ### Copyright and license ###
 
-Copyright 2007-2022 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
+Copyright 2007-2023 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
