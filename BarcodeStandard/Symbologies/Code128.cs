@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -30,7 +31,7 @@ namespace BarcodeLib.Symbologies
         /// <param name="input">Data to encode.</param>
         public Code128(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }//Code128
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace BarcodeLib.Symbologies
         public Code128(string input, TYPES type)
         {
             this.type = type;
-            Raw_Data = input;
+            RawData = input;
         }//Code128
 
         string C128_ByA(string a) => C128_Code[C128_CodeIndexByA[a]];
@@ -248,7 +249,7 @@ namespace BarcodeLib.Symbologies
                 //try to find value in the B column
                     || C128_CodeIndexByB.TryGetValue(s, out index)
                 //try to find value in the C column
-                    || C128_CodeIndexByC.TryGetValue(s, out index) ? (uint)index : throw new InvalidOperationException($"Unable to find character ì{s}î");
+                    || C128_CodeIndexByC.TryGetValue(s, out index) ? (uint)index : throw new InvalidOperationException($"Unable to find character ‚Äú{s}‚Äù");
 
                 var addition = value * ((i == 0) ? 1 : i);
                 checkSum += addition;
@@ -260,7 +261,7 @@ namespace BarcodeLib.Symbologies
         private void BreakUpDataForEncoding()
         {
             var temp = "";
-            var tempRawData = Raw_Data;
+            var tempRawData = RawData;
 
             //breaking the raw data up for code A and code B will mess up the encoding
             switch (type)
@@ -268,7 +269,7 @@ namespace BarcodeLib.Symbologies
                 case TYPES.A:
                 case TYPES.B:
                     {
-                        foreach (var c in Raw_Data)
+                        foreach (var c in RawData)
                             _FormattedData.Add(c.ToString());
                         return;
                     }

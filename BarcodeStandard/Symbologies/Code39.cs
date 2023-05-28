@@ -1,4 +1,5 @@
 using System;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -19,7 +20,7 @@ namespace BarcodeLib.Symbologies
         /// <param name="input">Data to encode.</param>
         public Code39(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }//Code39
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace BarcodeLib.Symbologies
         /// <param name="allowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
         public Code39(string input, bool allowExtended)
         {
-            Raw_Data = input;
+            RawData = input;
             _allowExtended = allowExtended;
         }
 
@@ -41,7 +42,7 @@ namespace BarcodeLib.Symbologies
         /// <param name="enableChecksum">Whether to calculate the Mod 43 checksum and encode it into the barcode</param>
         public Code39(string input, bool allowExtended, bool enableChecksum)
         {
-            Raw_Data = input;
+            RawData = input;
             _allowExtended = allowExtended;
             _enableChecksum = enableChecksum;
         }
@@ -54,7 +55,7 @@ namespace BarcodeLib.Symbologies
             init_Code39();
             init_ExtendedCode39();
 
-            var strNoAstr = Raw_Data.Replace("*", "");
+            var strNoAstr = RawData.Replace("*", "");
             var strFormattedData = "*" + strNoAstr + (_enableChecksum ? GetChecksumChar(strNoAstr).ToString() : String.Empty) + "*";
 
             if (_allowExtended)

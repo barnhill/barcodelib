@@ -1,4 +1,6 @@
 using System;
+using BarcodeStandard;
+using Type = BarcodeStandard.Type;
 
 namespace BarcodeLib.Symbologies
 {
@@ -9,12 +11,12 @@ namespace BarcodeLib.Symbologies
         ///  Written by: Brad Barnhill
         /// </summary>
         private readonly string[] MSI_Code = { "100100100100", "100100100110", "100100110100", "100100110110", "100110100100", "100110100110", "100110110100", "100110110110", "110100100100", "110100100110" };
-        private TYPE Encoded_Type = TYPE.UNSPECIFIED;
+        private Type Encoded_Type = Type.Unspecified;
 
-        public MSI(string input, TYPE encodedType)
+        public MSI(string input, Type encodedType)
         {
             Encoded_Type = encodedType;
-            Raw_Data = input;
+            RawData = input;
         }//MSI
 
         /// <summary>
@@ -23,13 +25,13 @@ namespace BarcodeLib.Symbologies
         private string Encode_MSI()
         {
             //check for non-numeric chars
-            if (!CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(RawData))
                 Error("EMSI-1: Numeric Data Only");
 
-            var preEncoded = Raw_Data;
+            var preEncoded = RawData;
 
             //get checksum
-            if (Encoded_Type == TYPE.MSI_Mod10 || Encoded_Type == TYPE.MSI_2Mod10)
+            if (Encoded_Type == Type.MsiMod10 || Encoded_Type == Type.Msi2Mod10)
             {
                 var odds = "";
                 var evens = "";
@@ -54,7 +56,7 @@ namespace BarcodeLib.Symbologies
                 preEncoded += checksum.ToString();
             }//if
 
-            if (Encoded_Type == TYPE.MSI_Mod11 || Encoded_Type == TYPE.MSI_Mod11_Mod10)
+            if (Encoded_Type == Type.MsiMod11 || Encoded_Type == Type.MsiMod11Mod10)
             {
                 var sum = 0;
                 var weight = 2;
@@ -69,7 +71,7 @@ namespace BarcodeLib.Symbologies
                 preEncoded += checksum.ToString();
             }//else
 
-            if (Encoded_Type == TYPE.MSI_2Mod10 || Encoded_Type == TYPE.MSI_Mod11_Mod10)
+            if (Encoded_Type == Type.Msi2Mod10 || Encoded_Type == Type.MsiMod11Mod10)
             {
                 //get second check digit if 2 mod 10 was selected or Mod11/Mod10
                 var odds = "";

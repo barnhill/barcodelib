@@ -1,4 +1,5 @@
 using System;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -14,7 +15,7 @@ namespace BarcodeLib.Symbologies
 
         public UPCSupplement2(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }
 
         /// <summary>
@@ -22,16 +23,16 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_UPCSupplemental_2()
         {
-            if (Raw_Data.Length != 2) Error("EUPC-SUP2-1: Invalid data length. (Length = 2 required)");
+            if (RawData.Length != 2) Error("EUPC-SUP2-1: Invalid data length. (Length = 2 required)");
 
-            if (!CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(RawData))
                 Error("EUPC-SUP2-2: Numeric Data Only");
 
             string pattern = "";
 
             try
             {
-                pattern = this.UPC_SUPP_2[Int32.Parse(Raw_Data.Trim()) % 4];
+                pattern = this.UPC_SUPP_2[Int32.Parse(RawData.Trim()) % 4];
             }//try
             catch { Error("EUPC-SUP2-3: Invalid Data. (Numeric only)"); }
 
@@ -43,12 +44,12 @@ namespace BarcodeLib.Symbologies
                 if (c == 'a')
                 {
                     //encode using odd parity
-                    result += EAN_CodeA[Int32.Parse(Raw_Data[pos].ToString())];
+                    result += EAN_CodeA[Int32.Parse(RawData[pos].ToString())];
                 }//if
                 else if (c == 'b')
                 {
                     //encode using even parity
-                    result += EAN_CodeB[Int32.Parse(Raw_Data[pos].ToString())];
+                    result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())];
                 }//else if
 
                 if (pos++ == 0) result += "01"; //Inter-character separator

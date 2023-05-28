@@ -1,5 +1,8 @@
 Release Notes for BarcodeLib.dll
 ================================
+3.0.0.0
+- BREAK CHANGE: Update to SkiaSharp drawing lib for cross platform support
+- Labels rewrite
 2.3.0.0
 - Fix EAN13 country code lookup failure
 - Update to System.Drawing.Common 5.0.0

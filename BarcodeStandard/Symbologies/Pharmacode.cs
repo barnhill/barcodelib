@@ -1,4 +1,5 @@
 ﻿using System;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -18,13 +19,13 @@ namespace BarcodeLib.Symbologies
         /// <param name="input">Data to encode.</param>
         public Pharmacode(string input)
         {
-            Raw_Data = input;
+            RawData = input;
 
-            if (!CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(RawData))
             {
                 Error("EPHARM-1: Data contains invalid  characters (non-numeric).");
             }//if
-            else if (Raw_Data.Length > 6)
+            else if (RawData.Length > 6)
             {
                 Error("EPHARM-2: Data too long (invalid data input length).");
             }//if
@@ -37,7 +38,7 @@ namespace BarcodeLib.Symbologies
         {
             int num;
 
-            if (!Int32.TryParse(Raw_Data, out num))
+            if (!Int32.TryParse(RawData, out num))
             {
                 Error("EPHARM-3: Input is unparseable.");
             }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using BarcodeStandard;
+
 namespace BarcodeLib.Symbologies
 {
     /// <summary>
@@ -19,7 +21,7 @@ namespace BarcodeLib.Symbologies
 
 		public EAN13(string input, bool disableCountryCode = false)
         {
-            Raw_Data = input;
+            RawData = input;
 			DisableCountryCode = disableCountryCode;
 
 			CheckDigit();
@@ -36,13 +38,13 @@ namespace BarcodeLib.Symbologies
 		private string Encode_EAN13()
         {
             //check length of input
-            if (Raw_Data.Length < 12 || Raw_Data.Length > 13)
+            if (RawData.Length < 12 || RawData.Length > 13)
                 Error("EEAN13-1: Data length invalid. (Length must be 12 or 13)");
 
-            if (!CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(RawData))
                 Error("EEAN13-2: Numeric Data Only");
 
-            var patterncode = EAN_Pattern[Int32.Parse(Raw_Data[0].ToString())];
+            var patterncode = EAN_Pattern[Int32.Parse(RawData[0].ToString())];
             var result = "101";
 
             //first
@@ -53,9 +55,9 @@ namespace BarcodeLib.Symbologies
             while (pos < 6)
             {
                 if (patterncode[pos] == 'a')
-                    result += EAN_CodeA[Int32.Parse(Raw_Data[pos + 1].ToString())];
+                    result += EAN_CodeA[Int32.Parse(RawData[pos + 1].ToString())];
                 if (patterncode[pos] == 'b')
-                    result += EAN_CodeB[Int32.Parse(Raw_Data[pos + 1].ToString())];
+                    result += EAN_CodeB[Int32.Parse(RawData[pos + 1].ToString())];
                 pos++;
             }//while
 
@@ -67,11 +69,11 @@ namespace BarcodeLib.Symbologies
             pos = 1;
             while (pos <= 5)
             {
-                result += EAN_CodeC[Int32.Parse(Raw_Data[(pos++) + 6].ToString())];
+                result += EAN_CodeC[Int32.Parse(RawData[(pos++) + 6].ToString())];
             }//while
 
             //checksum digit
-            var cs = Int32.Parse(Raw_Data[Raw_Data.Length - 1].ToString());
+            var cs = Int32.Parse(RawData[RawData.Length - 1].ToString());
 
             //add checksum
             result += EAN_CodeC[cs];
@@ -92,8 +94,8 @@ namespace BarcodeLib.Symbologies
 			//get the manufacturer assigning country
 			Init_CountryCodes();
 			CountryAssigningManufacturerCode = "N/A";
-			var twodigitCode = Raw_Data.Substring(0, 2);
-			var threedigitCode = Raw_Data.Substring(0, 3);
+			var twodigitCode = RawData.Substring(0, 2);
+			var threedigitCode = RawData.Substring(0, 3);
 
 			var cc = _countryCodes[threedigitCode];
 			if (cc == null)
@@ -264,7 +266,7 @@ namespace BarcodeLib.Symbologies
         {
             try
             {
-                var rawDataHolder = Raw_Data.Substring(0, 12);
+                var rawDataHolder = RawData.Substring(0, 12);
 
                 var even = 0;
                 var odd = 0;
@@ -283,7 +285,7 @@ namespace BarcodeLib.Symbologies
                 if (cs == 10)
                     cs = 0;
 
-                Raw_Data = rawDataHolder + cs.ToString()[0];
+                RawData = rawDataHolder + cs.ToString()[0];
             }//try
             catch
             {

@@ -1,3 +1,5 @@
+using BarcodeStandard;
+
 namespace BarcodeLib.Symbologies
 {
     /// <summary>
@@ -10,7 +12,7 @@ namespace BarcodeLib.Symbologies
         
         public Codabar(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }//Codabar
 
         /// <summary>
@@ -18,10 +20,10 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Codabar()
         {
-            if (Raw_Data.Length < 2) Error("ECODABAR-1: Data format invalid. (Invalid length)");
+            if (RawData.Length < 2) Error("ECODABAR-1: Data format invalid. (Invalid length)");
 
             //check first char to make sure its a start/stop char
-            switch (Raw_Data[0].ToString().ToUpper().Trim())
+            switch (RawData[0].ToString().ToUpper().Trim())
             {
                 case "A": break;
                 case "B": break;
@@ -32,7 +34,7 @@ namespace BarcodeLib.Symbologies
             }//switch
 
             //check the ending char to make sure its a start/stop char
-            switch (Raw_Data[Raw_Data.Trim().Length - 1].ToString().ToUpper().Trim())
+            switch (RawData[RawData.Trim().Length - 1].ToString().ToUpper().Trim())
             {
                 case "A": break;
                 case "B": break;
@@ -46,7 +48,7 @@ namespace BarcodeLib.Symbologies
             init_Codabar();
 
             //replace non-numeric VALID chars with empty strings before checking for all numerics
-            var temp = Raw_Data;
+            var temp = RawData;
 
             foreach (char c in Codabar_Code.Keys)
             {
@@ -62,7 +64,7 @@ namespace BarcodeLib.Symbologies
 
             var result = "";
 
-            foreach (var c in Raw_Data)
+            foreach (var c in RawData)
             {
                 result += Codabar_Code[c].ToString();
                 result += "0"; //inter-character space
@@ -75,7 +77,7 @@ namespace BarcodeLib.Symbologies
             Codabar_Code.Clear();
 
             //change the Raw_Data to strip out the start stop chars for label purposes
-            Raw_Data = Raw_Data.Trim().Substring(1, RawData.Trim().Length - 2);
+            RawData = RawData.Trim().Substring(1, RawData.Trim().Length - 2);
 
             return result;
         }//Encode_Codabar

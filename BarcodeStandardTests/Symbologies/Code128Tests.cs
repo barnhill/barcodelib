@@ -1,16 +1,17 @@
-﻿using BarcodeLib;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using BarcodeStandard;
+using Type = BarcodeStandard.Type;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class Code128Tests
     {
-        readonly Barcode barcode = new Barcode
+        private readonly Barcode _barcode = new()
         {
-            EncodedType = TYPE.CODE128,
+            EncodedType = Type.Code128,
         };
 
         [DataTestMethod]
@@ -31,26 +32,26 @@ namespace BarcodeStandardTests.Symbologies
             string expectedB,
             string expectedC)
         {
-            void assertByType(
-                TYPE type,
+            void AssertByType(
+                Type type,
                 string expected)
             {
-                barcode.EncodedType = type;
+                _barcode.EncodedType = type;
 
                 string actual = null;
                 try
                 {
-                    actual = barcode.GenerateBarcode(data);
+                    actual = _barcode.GenerateBarcode(data);
                 }
                 catch when (expected == null)
                 {
                 }
                 Assert.AreEqual(expected, actual, $"{type}");
             }
-            assertByType(TYPE.CODE128, expectedAuto);
-            assertByType(TYPE.CODE128A, expectedA);
-            assertByType(TYPE.CODE128B, expectedB);
-            assertByType(TYPE.CODE128C, expectedC);
+            AssertByType(Type.Code128, expectedAuto);
+            AssertByType(Type.Code128A, expectedA);
+            AssertByType(Type.Code128B, expectedB);
+            AssertByType(Type.Code128C, expectedC);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace BarcodeStandardTests.Symbologies
                 "this\u0012is\u0014weird",
             })
             {
-                string represent(
+                string Represent(
                     string s)
                 {
                     if (s == null) return "null";
@@ -86,15 +87,15 @@ namespace BarcodeStandardTests.Symbologies
                         return c.ToString();
                     })) + "\"";
                 }
-                string tryByType(
-                    TYPE type)
+                string TryByType(
+                    Type type)
                 {
-                    return represent(new Func<string>(() =>
+                    return Represent(new Func<string>(() =>
                     {
                         try
                         {
-                            barcode.EncodedType = type;
-                            return barcode.GenerateBarcode(x);
+                            _barcode.EncodedType = type;
+                            return _barcode.GenerateBarcode(x);
                         }
                         catch
                         {
@@ -102,7 +103,7 @@ namespace BarcodeStandardTests.Symbologies
                         }
                     })());
                 }
-                Console.WriteLine($"        [DataRow({represent(x)}, {tryByType(TYPE.CODE128)}, {tryByType(TYPE.CODE128A)}, {tryByType(TYPE.CODE128B)}, {tryByType(TYPE.CODE128C)})]");
+                Console.WriteLine($"        [DataRow({Represent(x)}, {TryByType(Type.Code128)}, {TryByType(Type.Code128A)}, {TryByType(Type.Code128B)}, {TryByType(Type.Code128C)})]");
             }
         }
     }

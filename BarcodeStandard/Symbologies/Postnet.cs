@@ -1,4 +1,5 @@
 using System;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -12,7 +13,7 @@ namespace BarcodeLib.Symbologies
 
         public Postnet(string input)
         {
-            Raw_Data = input;
+            RawData = input;
         }//Postnet
 
         /// <summary>
@@ -21,9 +22,9 @@ namespace BarcodeLib.Symbologies
         private string Encode_Postnet()
         {
             //remove dashes if present
-            Raw_Data = Raw_Data.Replace("-", "");
+            RawData = RawData.Replace("-", "");
 
-            switch (Raw_Data.Length)
+            switch (RawData.Length)
             {
                 case 5:
                 case 6:
@@ -38,7 +39,7 @@ namespace BarcodeLib.Symbologies
             var result = "1";
             var checkdigitsum = 0;
 
-            foreach (var c in Raw_Data)
+            foreach (var c in RawData)
             {
                 try
                 {

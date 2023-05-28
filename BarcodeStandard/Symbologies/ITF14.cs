@@ -1,4 +1,5 @@
 using System;
+using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
 {
@@ -12,7 +13,7 @@ namespace BarcodeLib.Symbologies
 
         public ITF14(string input)
         {
-            Raw_Data = input;
+            RawData = input;
 
             CheckDigit();
         }
@@ -22,19 +23,19 @@ namespace BarcodeLib.Symbologies
         private string Encode_ITF14()
         {
             //check length of input
-            if (Raw_Data.Length > 14 || Raw_Data.Length < 13)
+            if (RawData.Length > 14 || RawData.Length < 13)
                 Error("EITF14-1: Data length invalid. (Length must be 13 or 14)");
 
-            if (!CheckNumericOnly(Raw_Data))
+            if (!CheckNumericOnly(RawData))
                 Error("EITF14-2: Numeric data only.");
 
             var result = "1010";
 
-            for (var i = 0; i < Raw_Data.Length; i += 2)
+            for (var i = 0; i < RawData.Length; i += 2)
             {
                 var bars = true;
-                var patternbars = ITF14_Code[Int32.Parse(Raw_Data[i].ToString())];
-                var patternspaces = ITF14_Code[Int32.Parse(Raw_Data[i + 1].ToString())];
+                var patternbars = ITF14_Code[Int32.Parse(RawData[i].ToString())];
+                var patternspaces = ITF14_Code[Int32.Parse(RawData[i + 1].ToString())];
                 var patternmixed = "";
 
                 //interleave
@@ -72,13 +73,13 @@ namespace BarcodeLib.Symbologies
         private void CheckDigit()
         {
             //calculate and include checksum if it is necessary
-            if (Raw_Data.Length == 13)
+            if (RawData.Length == 13)
             {
                 var total = 0;
 
-                for (var i = 0; i <= Raw_Data.Length-1; i++)
+                for (var i = 0; i <= RawData.Length-1; i++)
                 {
-                    var temp = Int32.Parse(Raw_Data.Substring(i, 1));
+                    var temp = Int32.Parse(RawData.Substring(i, 1));
                     total += temp * ((i == 0 || i % 2 == 0) ? 3 : 1);
                 }//for
 
@@ -87,7 +88,7 @@ namespace BarcodeLib.Symbologies
                 if (cs == 10)
                     cs = 0;
 
-                this.Raw_Data += cs.ToString();
+                this.RawData += cs.ToString();
             }//if
         }
 

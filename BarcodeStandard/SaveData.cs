@@ -19,8 +19,6 @@ namespace BarcodeStandard
         public int ImageWidth { get; set; }
         public int ImageHeight { get; set; }
         public string Image { get; set; }
-        public System.Drawing.RotateFlipType RotateFlipType { get; set; }
-        public int LabelPosition { get; set; }
         public int Alignment { get; set; }
         public string LabelFont { get; set; }
         public string ImageFormat { get; set; }

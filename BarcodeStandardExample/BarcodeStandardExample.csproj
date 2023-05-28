@@ -8,11 +8,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>BarcodeStandardExample</RootNamespace>
     <AssemblyName>BarcodeStandardExample</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <ApplicationIcon>Barcode.ico</ApplicationIcon>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +25,14 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateResourceMSBuildArchitecture>
+      CurrentArchitecture
+    </GenerateResourceMSBuildArchitecture>
+    <GenerateResourceMSBuildRuntime>
+      CurrentRuntime
+    </GenerateResourceMSBuildRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -91,6 +101,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Barcode.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp">
+      <Version>2.88.3</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Desktop.Common">
+      <Version>2.88.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.Resources.Extensions">
+      <Version>7.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
