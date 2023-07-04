@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
-using BarcodeStandard;
+﻿using BarcodeStandard;
+using System;
+using System.Collections.Generic;
 
 namespace BarcodeLib.Symbologies
 {
@@ -10,7 +10,6 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class Telepen: BarcodeCommon, IBarcode
     {
-        private static readonly Hashtable Telepen_Code = new Hashtable();
         private enum StartStopCode : int { START1, STOP1, START2, STOP2, START3, STOP3 };
         private StartStopCode _startCode = StartStopCode.START1;
         private StartStopCode _stopCode = StartStopCode.STOP1;
@@ -31,17 +30,13 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Telepen()
         {
-            //only init if needed
-            if (Telepen_Code.Count == 0)
-                Init_Telepen();
-
             _iCheckSum = 0;
             var result = "";
 
             SetEncodingSequence();
 
             //include the Start sequence pattern
-            result = Telepen_Code[_startCode].ToString();
+            result = Lookup.Telepen_Code[_startCode].ToString();
 
             switch (_startCode)
             { 
@@ -68,10 +63,10 @@ namespace BarcodeLib.Symbologies
             }//switch
 
             //checksum
-            result += Telepen_Code[Calculate_Checksum(_iCheckSum)];
+            result += Lookup.Telepen_Code[Calculate_Checksum(_iCheckSum)];
 
             //stop character
-            result += Telepen_Code[_stopCode];
+            result += Lookup.Telepen_Code[_stopCode];
 
             return result;
         }//Encode_Telepen
@@ -82,7 +77,7 @@ namespace BarcodeLib.Symbologies
             {
                 foreach (var c in input)
                 {
-                    output += Telepen_Code[c];
+                    output += Lookup.Telepen_Code[c];
                     _iCheckSum += Convert.ToInt32(c);
                 }//foreach
             }//try
@@ -100,7 +95,7 @@ namespace BarcodeLib.Symbologies
 
                 for (var i = 0; i < input.Length; i += 2)
                 {
-                    output += Telepen_Code[Convert.ToChar(Int32.Parse(input.Substring(i, 2)) + 27)];
+                    output += Lookup.Telepen_Code[Convert.ToChar(Int32.Parse(input.Substring(i, 2)) + 27)];
                     _iCheckSum += Int32.Parse(input.Substring(i, 2)) + 27;
                 }//for
             }//try
@@ -113,7 +108,7 @@ namespace BarcodeLib.Symbologies
         {
             //ASCII code DLE is used to switch modes
             _iCheckSum += 16;
-            output += Telepen_Code[Convert.ToChar(16)];
+            output += Lookup.Telepen_Code[Convert.ToChar(16)];
         }
 
         private char Calculate_Checksum(int iCheckSum)
@@ -180,142 +175,150 @@ namespace BarcodeLib.Symbologies
             }//else
         }//SetEncodingSequence
 
-        private void Init_Telepen()
+        private static class Lookup
         {
-            Telepen_Code.Add(Convert.ToChar(0), "1110111011101110");
-            Telepen_Code.Add(Convert.ToChar(1), "1011101110111010");
-            Telepen_Code.Add(Convert.ToChar(2), "1110001110111010");
-            Telepen_Code.Add(Convert.ToChar(3), "1010111011101110");
-            Telepen_Code.Add(Convert.ToChar(4), "1110101110111010");
-            Telepen_Code.Add(Convert.ToChar(5), "1011100011101110");
-            Telepen_Code.Add(Convert.ToChar(6), "1000100011101110");
-            Telepen_Code.Add(Convert.ToChar(7), "1010101110111010");
-            Telepen_Code.Add(Convert.ToChar(8), "1110111000111010");
-            Telepen_Code.Add(Convert.ToChar(9), "1011101011101110");
-            Telepen_Code.Add(Convert.ToChar(10), "1110001011101110");
-            Telepen_Code.Add(Convert.ToChar(11), "1010111000111010");
-            Telepen_Code.Add(Convert.ToChar(12), "1110101011101110");
-            Telepen_Code.Add(Convert.ToChar(13), "1010001000111010");
-            Telepen_Code.Add(Convert.ToChar(14), "1000101000111010");
-            Telepen_Code.Add(Convert.ToChar(15), "1010101011101110");
-            Telepen_Code.Add(Convert.ToChar(16), "1110111010111010");
-            Telepen_Code.Add(Convert.ToChar(17), "1011101110001110");
-            Telepen_Code.Add(Convert.ToChar(18), "1110001110001110");
-            Telepen_Code.Add(Convert.ToChar(19), "1010111010111010");
-            Telepen_Code.Add(Convert.ToChar(20), "1110101110001110");
-            Telepen_Code.Add(Convert.ToChar(21), "1011100010111010");
-            Telepen_Code.Add(Convert.ToChar(22), "1000100010111010");
-            Telepen_Code.Add(Convert.ToChar(23), "1010101110001110");
-            Telepen_Code.Add(Convert.ToChar(24), "1110100010001110");
-            Telepen_Code.Add(Convert.ToChar(25), "1011101010111010");
-            Telepen_Code.Add(Convert.ToChar(26), "1110001010111010");
-            Telepen_Code.Add(Convert.ToChar(27), "1010100010001110");
-            Telepen_Code.Add(Convert.ToChar(28), "1110101010111010");
-            Telepen_Code.Add(Convert.ToChar(29), "1010001010001110");
-            Telepen_Code.Add(Convert.ToChar(30), "1000101010001110");
-            Telepen_Code.Add(Convert.ToChar(31), "1010101010111010");
-            Telepen_Code.Add(' ', "1110111011100010");
-            Telepen_Code.Add('!', "1011101110101110");
-            Telepen_Code.Add('"', "1110001110101110");
-            Telepen_Code.Add('#', "1010111011100010");
-            Telepen_Code.Add('$', "1110101110101110");
-            Telepen_Code.Add('%', "1011100011100010");
-            Telepen_Code.Add('&', "1000100011100010");
-            Telepen_Code.Add('\'', "1010101110101110");
-            Telepen_Code.Add('(', "1110111000101110");
-            Telepen_Code.Add(')', "1011101011100010");
-            Telepen_Code.Add('*', "1110001011100010");
-            Telepen_Code.Add('+', "1010111000101110");
-            Telepen_Code.Add(',', "1110101011100010");
-            Telepen_Code.Add('-', "1010001000101110");
-            Telepen_Code.Add('.', "1000101000101110");
-            Telepen_Code.Add('/', "1010101011100010");
-            Telepen_Code.Add('0', "1110111010101110");
-            Telepen_Code.Add('1', "1011101000100010");
-            Telepen_Code.Add('2', "1110001000100010");
-            Telepen_Code.Add('3', "1010111010101110");
-            Telepen_Code.Add('4', "1110101000100010");
-            Telepen_Code.Add('5', "1011100010101110");
-            Telepen_Code.Add('6', "1000100010101110");
-            Telepen_Code.Add('7', "1010101000100010");
-            Telepen_Code.Add('8', "1110100010100010");
-            Telepen_Code.Add('9', "1011101010101110");
-            Telepen_Code.Add(':', "1110001010101110");
-            Telepen_Code.Add(';', "1010100010100010");
-            Telepen_Code.Add('<', "1110101010101110");
-            Telepen_Code.Add('=', "1010001010100010");
-            Telepen_Code.Add('>', "1000101010100010");
-            Telepen_Code.Add('?', "1010101010101110");
-            Telepen_Code.Add('@', "1110111011101010");
-            Telepen_Code.Add('A', "1011101110111000");
-            Telepen_Code.Add('B', "1110001110111000");
-            Telepen_Code.Add('C', "1010111011101010");
-            Telepen_Code.Add('D', "1110101110111000");
-            Telepen_Code.Add('E', "1011100011101010");
-            Telepen_Code.Add('F', "1000100011101010");
-            Telepen_Code.Add('G', "1010101110111000");
-            Telepen_Code.Add('H', "1110111000111000");
-            Telepen_Code.Add('I', "1011101011101010");
-            Telepen_Code.Add('J', "1110001011101010");
-            Telepen_Code.Add('K', "1010111000111000");
-            Telepen_Code.Add('L', "1110101011101010");
-            Telepen_Code.Add('M', "1010001000111000");
-            Telepen_Code.Add('N', "1000101000111000");
-            Telepen_Code.Add('O', "1010101011101010");
-            Telepen_Code.Add('P', "1110111010111000");
-            Telepen_Code.Add('Q', "1011101110001010");
-            Telepen_Code.Add('R', "1110001110001010");
-            Telepen_Code.Add('S', "1010111010111000");
-            Telepen_Code.Add('T', "1110101110001010");
-            Telepen_Code.Add('U', "1011100010111000");
-            Telepen_Code.Add('V', "1000100010111000");
-            Telepen_Code.Add('W', "1010101110001010");
-            Telepen_Code.Add('X', "1110100010001010");
-            Telepen_Code.Add('Y', "1011101010111000");
-            Telepen_Code.Add('Z', "1110001010111000");
-            Telepen_Code.Add('[', "1010100010001010");
-            Telepen_Code.Add('\\', "1110101010111000");
-            Telepen_Code.Add(']', "1010001010001010");
-            Telepen_Code.Add('^', "1000101010001010");
-            Telepen_Code.Add('_', "1010101010111000");
-            Telepen_Code.Add('`', "1110111010001000");
-            Telepen_Code.Add('a', "1011101110101010");
-            Telepen_Code.Add('b', "1110001110101010");
-            Telepen_Code.Add('c', "1010111010001000");
-            Telepen_Code.Add('d', "1110101110101010");
-            Telepen_Code.Add('e', "1011100010001000");
-            Telepen_Code.Add('f', "1000100010001000");
-            Telepen_Code.Add('g', "1010101110101010");
-            Telepen_Code.Add('h', "1110111000101010");
-            Telepen_Code.Add('i', "1011101010001000");
-            Telepen_Code.Add('j', "1110001010001000");
-            Telepen_Code.Add('k', "1010111000101010");
-            Telepen_Code.Add('l', "1110101010001000");
-            Telepen_Code.Add('m', "1010001000101010");
-            Telepen_Code.Add('n', "1000101000101010");
-            Telepen_Code.Add('o', "1010101010001000");
-            Telepen_Code.Add('p', "1110111010101010");
-            Telepen_Code.Add('q', "1011101000101000");
-            Telepen_Code.Add('r', "1110001000101000");
-            Telepen_Code.Add('s', "1010111010101010");
-            Telepen_Code.Add('t', "1110101000101000");
-            Telepen_Code.Add('u', "1011100010101010");
-            Telepen_Code.Add('v', "1000100010101010");
-            Telepen_Code.Add('w', "1010101000101000");
-            Telepen_Code.Add('x', "1110100010101000");
-            Telepen_Code.Add('y', "1011101010101010");
-            Telepen_Code.Add('z', "1110001010101010");
-            Telepen_Code.Add('{', "1010100010101000");
-            Telepen_Code.Add('|', "1110101010101010");
-            Telepen_Code.Add('}', "1010001010101000");
-            Telepen_Code.Add('~', "1000101010101000");
-            Telepen_Code.Add(Convert.ToChar(127), "1010101010101010");
-            Telepen_Code.Add(StartStopCode.START1, "1010101010111000");
-            Telepen_Code.Add(StartStopCode.STOP1, "1110001010101010");
-            Telepen_Code.Add(StartStopCode.START2, "1010101011101000");
-            Telepen_Code.Add(StartStopCode.STOP2, "1110100010101010");
-            Telepen_Code.Add(StartStopCode.START3, "1010101110101000");
-            Telepen_Code.Add(StartStopCode.STOP3, "1110101000101010");
+            // Declaring this in a separate class ensures that this will only be initialized if it's used
+            public static readonly IReadOnlyDictionary<object, string> Telepen_Code;
+            static Lookup()
+            {
+                Telepen_Code = new Dictionary<object, string>
+                {
+                    { Convert.ToChar(0), "1110111011101110" },
+                    { Convert.ToChar(1), "1011101110111010" },
+                    { Convert.ToChar(2), "1110001110111010" },
+                    { Convert.ToChar(3), "1010111011101110" },
+                    { Convert.ToChar(4), "1110101110111010" },
+                    { Convert.ToChar(5), "1011100011101110" },
+                    { Convert.ToChar(6), "1000100011101110" },
+                    { Convert.ToChar(7), "1010101110111010" },
+                    { Convert.ToChar(8), "1110111000111010" },
+                    { Convert.ToChar(9), "1011101011101110" },
+                    { Convert.ToChar(10), "1110001011101110" },
+                    { Convert.ToChar(11), "1010111000111010" },
+                    { Convert.ToChar(12), "1110101011101110" },
+                    { Convert.ToChar(13), "1010001000111010" },
+                    { Convert.ToChar(14), "1000101000111010" },
+                    { Convert.ToChar(15), "1010101011101110" },
+                    { Convert.ToChar(16), "1110111010111010" },
+                    { Convert.ToChar(17), "1011101110001110" },
+                    { Convert.ToChar(18), "1110001110001110" },
+                    { Convert.ToChar(19), "1010111010111010" },
+                    { Convert.ToChar(20), "1110101110001110" },
+                    { Convert.ToChar(21), "1011100010111010" },
+                    { Convert.ToChar(22), "1000100010111010" },
+                    { Convert.ToChar(23), "1010101110001110" },
+                    { Convert.ToChar(24), "1110100010001110" },
+                    { Convert.ToChar(25), "1011101010111010" },
+                    { Convert.ToChar(26), "1110001010111010" },
+                    { Convert.ToChar(27), "1010100010001110" },
+                    { Convert.ToChar(28), "1110101010111010" },
+                    { Convert.ToChar(29), "1010001010001110" },
+                    { Convert.ToChar(30), "1000101010001110" },
+                    { Convert.ToChar(31), "1010101010111010" },
+                    { ' ', "1110111011100010" },
+                    { '!', "1011101110101110" },
+                    { '"', "1110001110101110" },
+                    { '#', "1010111011100010" },
+                    { '$', "1110101110101110" },
+                    { '%', "1011100011100010" },
+                    { '&', "1000100011100010" },
+                    { '\'', "1010101110101110" },
+                    { '(', "1110111000101110" },
+                    { ')', "1011101011100010" },
+                    { '*', "1110001011100010" },
+                    { '+', "1010111000101110" },
+                    { ',', "1110101011100010" },
+                    { '-', "1010001000101110" },
+                    { '.', "1000101000101110" },
+                    { '/', "1010101011100010" },
+                    { '0', "1110111010101110" },
+                    { '1', "1011101000100010" },
+                    { '2', "1110001000100010" },
+                    { '3', "1010111010101110" },
+                    { '4', "1110101000100010" },
+                    { '5', "1011100010101110" },
+                    { '6', "1000100010101110" },
+                    { '7', "1010101000100010" },
+                    { '8', "1110100010100010" },
+                    { '9', "1011101010101110" },
+                    { ':', "1110001010101110" },
+                    { ';', "1010100010100010" },
+                    { '<', "1110101010101110" },
+                    { '=', "1010001010100010" },
+                    { '>', "1000101010100010" },
+                    { '?', "1010101010101110" },
+                    { '@', "1110111011101010" },
+                    { 'A', "1011101110111000" },
+                    { 'B', "1110001110111000" },
+                    { 'C', "1010111011101010" },
+                    { 'D', "1110101110111000" },
+                    { 'E', "1011100011101010" },
+                    { 'F', "1000100011101010" },
+                    { 'G', "1010101110111000" },
+                    { 'H', "1110111000111000" },
+                    { 'I', "1011101011101010" },
+                    { 'J', "1110001011101010" },
+                    { 'K', "1010111000111000" },
+                    { 'L', "1110101011101010" },
+                    { 'M', "1010001000111000" },
+                    { 'N', "1000101000111000" },
+                    { 'O', "1010101011101010" },
+                    { 'P', "1110111010111000" },
+                    { 'Q', "1011101110001010" },
+                    { 'R', "1110001110001010" },
+                    { 'S', "1010111010111000" },
+                    { 'T', "1110101110001010" },
+                    { 'U', "1011100010111000" },
+                    { 'V', "1000100010111000" },
+                    { 'W', "1010101110001010" },
+                    { 'X', "1110100010001010" },
+                    { 'Y', "1011101010111000" },
+                    { 'Z', "1110001010111000" },
+                    { '[', "1010100010001010" },
+                    { '\\', "1110101010111000" },
+                    { ']', "1010001010001010" },
+                    { '^', "1000101010001010" },
+                    { '_', "1010101010111000" },
+                    { '`', "1110111010001000" },
+                    { 'a', "1011101110101010" },
+                    { 'b', "1110001110101010" },
+                    { 'c', "1010111010001000" },
+                    { 'd', "1110101110101010" },
+                    { 'e', "1011100010001000" },
+                    { 'f', "1000100010001000" },
+                    { 'g', "1010101110101010" },
+                    { 'h', "1110111000101010" },
+                    { 'i', "1011101010001000" },
+                    { 'j', "1110001010001000" },
+                    { 'k', "1010111000101010" },
+                    { 'l', "1110101010001000" },
+                    { 'm', "1010001000101010" },
+                    { 'n', "1000101000101010" },
+                    { 'o', "1010101010001000" },
+                    { 'p', "1110111010101010" },
+                    { 'q', "1011101000101000" },
+                    { 'r', "1110001000101000" },
+                    { 's', "1010111010101010" },
+                    { 't', "1110101000101000" },
+                    { 'u', "1011100010101010" },
+                    { 'v', "1000100010101010" },
+                    { 'w', "1010101000101000" },
+                    { 'x', "1110100010101000" },
+                    { 'y', "1011101010101010" },
+                    { 'z', "1110001010101010" },
+                    { '{', "1010100010101000" },
+                    { '|', "1110101010101010" },
+                    { '}', "1010001010101000" },
+                    { '~', "1000101010101000" },
+                    { Convert.ToChar(127), "1010101010101010" },
+                    { StartStopCode.START1, "1010101010111000" },
+                    { StartStopCode.STOP1, "1110001010101010" },
+                    { StartStopCode.START2, "1010101011101000" },
+                    { StartStopCode.STOP2, "1110100010101010" },
+                    { StartStopCode.START3, "1010101110101000" },
+                    { StartStopCode.STOP3, "1110101000101010" }
+                };
+            }
         }
 
         #region IBarcode Members
