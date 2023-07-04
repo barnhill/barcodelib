@@ -175,7 +175,7 @@ namespace BarcodeLib.Symbologies
             }//else
         }//SetEncodingSequence
 
-        private sealed class Lookup
+        private static class Lookup
         {
             // Declaring this in a separate class ensures that this will only be initialized if it's used
             public static readonly IReadOnlyDictionary<object, string> Telepen_Code;
