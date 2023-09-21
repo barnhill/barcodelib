@@ -84,30 +84,30 @@ namespace BarcodeLib.Symbologies
         private void init_Codabar()
         {
             Codabar_Code.Clear();
-            Codabar_Code.Add('0', "101010011");//"101001101101");
-            Codabar_Code.Add('1', "101011001");//"110100101011");
-            Codabar_Code.Add('2', "101001011");//"101100101011");
-            Codabar_Code.Add('3', "110010101");//"110110010101");
-            Codabar_Code.Add('4', "101101001");//"101001101011");
-            Codabar_Code.Add('5', "110101001");//"110100110101");
-            Codabar_Code.Add('6', "100101011");//"101100110101");
-            Codabar_Code.Add('7', "100101101");//"101001011011");
-            Codabar_Code.Add('8', "100110101");//"110100101101");
-            Codabar_Code.Add('9', "110100101");//"101100101101");
-            Codabar_Code.Add('-', "101001101");//"110101001011");
-            Codabar_Code.Add('$', "101100101");//"101101001011");
-            Codabar_Code.Add(':', "1101011011");//"110110100101");
-            Codabar_Code.Add('/', "1101101011");//"101011001011");
-            Codabar_Code.Add('.', "1101101101");//"110101100101");
-            Codabar_Code.Add('+', "101100110011");//"101101100101");
-            Codabar_Code.Add('A', "1011001001");//"110110100101");
-            Codabar_Code.Add('B', "1010010011");//"101011001011");
-            Codabar_Code.Add('C', "1001001011");//"110101100101");
-            Codabar_Code.Add('D', "1010011001");//"101101100101");
-            Codabar_Code.Add('a', "1011001001");//"110110100101");
-            Codabar_Code.Add('b', "1010010011");//"101011001011");
-            Codabar_Code.Add('c', "1001001011");//"110101100101");
-            Codabar_Code.Add('d', "1010011001");//"101101100101");
+            Codabar_Code.Add('0', "101010011");
+            Codabar_Code.Add('1', "101011001");
+            Codabar_Code.Add('2', "101001011");
+            Codabar_Code.Add('3', "110010101");
+            Codabar_Code.Add('4', "101101001");
+            Codabar_Code.Add('5', "110101001");
+            Codabar_Code.Add('6', "100101011");
+            Codabar_Code.Add('7', "100101101");
+            Codabar_Code.Add('8', "100110101");
+            Codabar_Code.Add('9', "110100101");
+            Codabar_Code.Add('-', "101001101");
+            Codabar_Code.Add('$', "101100101");
+            Codabar_Code.Add(':', "1101011011");
+            Codabar_Code.Add('/', "1101101011");
+            Codabar_Code.Add('.', "1101101101");
+            Codabar_Code.Add('+', "1011011011");
+            Codabar_Code.Add('A', "1011001001");
+            Codabar_Code.Add('B', "1010010011");
+            Codabar_Code.Add('C', "1001001011");
+            Codabar_Code.Add('D', "1010011001");
+            Codabar_Code.Add('a', "1011001001");
+            Codabar_Code.Add('b', "1010010011");
+            Codabar_Code.Add('c', "1001001011");
+            Codabar_Code.Add('d', "1010011001");
         }//init_Codeabar
 
         #region IBarcode Members
