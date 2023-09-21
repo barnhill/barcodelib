@@ -32,9 +32,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="2.88.6" />
-    <PackageReference Include="System.Resources.Extensions" Version="8.0.0-rc.1.23419.4" />
-    <PackageReference Include="System.Text.Json" Version="8.0.0-rc.1.23419.4" />
+    <PackageReference Include="SkiaSharp" Version="2.88.5" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.5" />
+    <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>
