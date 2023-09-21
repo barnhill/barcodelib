@@ -32,9 +32,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="2.88.3" />
-    <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
-    <PackageReference Include="System.Text.Json" Version="7.0.2" />
+    <PackageReference Include="SkiaSharp" Version="2.88.6" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0-rc.1.23419.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0-rc.1.23419.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
     <None Update="BarcodeLib.nuspec">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>BarcodeLib.Designer.cs</LastGenOutput>
