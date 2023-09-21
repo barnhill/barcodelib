@@ -104,13 +104,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp">
-      <Version>2.88.5</Version>
+      <Version>2.88.6</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies">
-      <Version>2.88.5</Version>
+      <Version>2.88.6</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views.Desktop.Common">
-      <Version>2.88.5</Version>
+      <Version>2.88.6</Version>
     </PackageReference>
     <PackageReference Include="System.Resources.Extensions">
       <Version>8.0.0-rc.1.23419.4</Version>
