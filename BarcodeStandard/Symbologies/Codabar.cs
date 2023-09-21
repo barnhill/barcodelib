@@ -101,8 +101,8 @@ namespace BarcodeLib.Symbologies
             Codabar_Code.Add('.', "1101101101");
             Codabar_Code.Add('+', "1011011011");
             Codabar_Code.Add('A', "1011001001");
-            Codabar_Code.Add('B', "1010010011");
-            Codabar_Code.Add('C', "1001001011");
+            Codabar_Code.Add('B', "1001001011");
+            Codabar_Code.Add('C', "1010010011");
             Codabar_Code.Add('D', "1010011001");
             Codabar_Code.Add('a', "1011001001");
             Codabar_Code.Add('b', "1010010011");
