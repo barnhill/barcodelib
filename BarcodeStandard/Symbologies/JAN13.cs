@@ -21,7 +21,7 @@ namespace BarcodeLib.Symbologies
             if (!CheckNumericOnly(RawData))
                 Error("EJAN13-2: Numeric Data Only");
 
-            EAN13 ean13 = new EAN13(RawData);
+            var ean13 = new EAN13(RawData);
             return ean13.Encoded_Value;
         }//Encode_JAN13
 
