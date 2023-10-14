@@ -68,7 +68,6 @@ namespace BarcodeLib.Symbologies
 
         private static void InitCodabar()
         {
-            //Codabar_Code.Clear();
             Codabar_Code['0'] = "101010011";
             Codabar_Code['1'] = "101011001";
             Codabar_Code['2'] = "101001011";
