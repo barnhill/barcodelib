@@ -666,7 +666,7 @@ namespace BarcodeStandard
                                             //draw half bars in postnet
                                             var y = 0f;
                                             if (EncodedValue[pos] == '0')
-                                                y = ilHeight / 2f;
+                                                y = ilHeight - ilHeight * 0.4f;
                                             
                                             canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, y), forePaint);
                                         }//if
