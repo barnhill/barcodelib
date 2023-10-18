@@ -8,8 +8,8 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     class FIM: BarcodeCommon, IBarcode
     {
-        private readonly string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111" };
-        public enum FIMTypes {FIM_A = 0, FIM_B, FIM_C, FIM_D};
+        private readonly string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111", "101000101" };
+        public enum FIMTypes {FIM_A = 0, FIM_B, FIM_C, FIM_D, FIM_E};
 
         public FIM(string input)
         {
@@ -29,7 +29,10 @@ namespace BarcodeLib.Symbologies
                 case "D":
                 case "d": RawData = FIM_Codes[(int)FIMTypes.FIM_D];
                     break;
-                default: Error("EFIM-1: Could not determine encoding type. (Only pass in A, B, C, or D)");
+                case "E":
+                case "e": RawData = FIM_Codes[(int)FIMTypes.FIM_E];
+                    break;
+                default: Error("EFIM-1: Could not determine encoding type. (Only pass in A, B, C, D, or E)");
                     break;
             }//switch
         }
