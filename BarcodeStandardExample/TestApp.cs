@@ -146,7 +146,10 @@ namespace BarcodeStandardExample
                 case "Code 39 Mod 43": type = Type.Code39Mod43; break;
                 case "Code 93": type = Type.Code93; break;
                 case "LOGMARS": type = Type.Logmars; break;
-                case "MSI": type = Type.MsiMod10; break;
+                case "MSI Mod 10": type = Type.MsiMod10; break;
+                case "MSI Mod 11": type = Type.MsiMod11; break;
+                case "MSI 2 Mod 10": type = Type.Msi2Mod10; break;
+                case "MSI Mod 11 Mod 10": type = Type.MsiMod11Mod10; break;
                 case "Interleaved 2 of 5": type = Type.Interleaved2Of5; break;
                 case "Interleaved 2 of 5 Mod 10": type = Type.Interleaved2Of5Mod10; break;
                 case "Standard 2 of 5": type = Type.Standard2Of5; break;

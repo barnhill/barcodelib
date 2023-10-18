@@ -28,76 +28,21 @@ namespace BarcodeLib.Symbologies
             if (!CheckNumericOnly(RawData))
                 Error("EMSI-1: Numeric Data Only");
 
-            var preEncoded = RawData;
-
             //get checksum
-            if (Encoded_Type == Type.MsiMod10 || Encoded_Type == Type.Msi2Mod10)
+            string withChecksum = Encoded_Type switch
             {
-                var odds = "";
-                var evens = "";
-                for (var i = preEncoded.Length - 1; i >= 0; i -= 2)
-                {
-                    odds = preEncoded[i] + odds;
-                    if (i - 1 >= 0)
-                        evens = preEncoded[i - 1] + evens;
-                }//for
+                Type.MsiMod10 => Mod10(RawData),
+                Type.Msi2Mod10 => Mod10(Mod10(RawData)),
+                Type.MsiMod11 => Mod11(RawData),
+                Type.MsiMod11Mod10 => Mod10(Mod11(RawData)),
+                _ => null,
+            };
 
-                //multiply odds by 2
-                odds = Convert.ToString((Int32.Parse(odds) * 2));
-
-                var evensum = 0;
-                var oddsum = 0;
-                foreach (var c in evens)
-                    evensum += Int32.Parse(c.ToString());
-                foreach (var c in odds)
-                    oddsum += Int32.Parse(c.ToString());
-                var mod = (oddsum + evensum) % 10;
-                var checksum = mod == 0 ? 0 : 10 - mod;
-                preEncoded += checksum.ToString();
-            }//if
-
-            if (Encoded_Type == Type.MsiMod11 || Encoded_Type == Type.MsiMod11Mod10)
-            {
-                var sum = 0;
-                var weight = 2;
-                for (var i = preEncoded.Length - 1; i >= 0; i--)
-                {
-                    if (weight > 7) weight = 2;
-                    sum += Int32.Parse(preEncoded[i].ToString()) * weight++;
-                }//foreach
-                var mod = sum % 11;
-                var checksum = mod == 0 ? 0 : 11 - mod;
-
-                preEncoded += checksum.ToString();
-            }//else
-
-            if (Encoded_Type == Type.Msi2Mod10 || Encoded_Type == Type.MsiMod11Mod10)
-            {
-                //get second check digit if 2 mod 10 was selected or Mod11/Mod10
-                var odds = "";
-                var evens = "";
-                for (var i = preEncoded.Length - 1; i >= 0; i -= 2)
-                {
-                    odds = preEncoded[i] + odds;
-                    if (i - 1 >= 0)
-                        evens = preEncoded[i - 1] + evens;
-                }//for
-
-                //multiply odds by 2
-                odds = Convert.ToString((Int32.Parse(odds) * 2));
-
-                var evensum = 0;
-                var oddsum = 0;
-                foreach (var c in evens)
-                    evensum += Int32.Parse(c.ToString());
-                foreach (var c in odds)
-                    oddsum += Int32.Parse(c.ToString());
-                var checksum = 10 - ((oddsum + evensum) % 10);
-                preEncoded += checksum.ToString();
-            }//if
+            if (String.IsNullOrEmpty(withChecksum)) 
+                Error("EMSI-2: Invalid MSI encoding type");
 
             var result = "110";
-            foreach (var c in preEncoded)
+            foreach (var c in withChecksum)
             {
                 result += MSI_Code[Int32.Parse(c.ToString())];
             }//foreach
@@ -107,6 +52,46 @@ namespace BarcodeLib.Symbologies
 
             return result;
         }//Encode_MSI
+
+        private string Mod10(string code)
+        {
+            var odds = "";
+            var evens = "";
+            for (var i = code.Length - 1; i >= 0; i -= 2)
+            {
+                odds = code[i] + odds;
+                if (i - 1 >= 0)
+                    evens = code[i - 1] + evens;
+            }//for
+
+            //multiply odds by 2
+            odds = Convert.ToString((Int32.Parse(odds) * 2));
+
+            var evensum = 0;
+            var oddsum = 0;
+            foreach (var c in evens)
+                evensum += Int32.Parse(c.ToString());
+            foreach (var c in odds)
+                oddsum += Int32.Parse(c.ToString());
+            var mod = (oddsum + evensum) % 10;
+            var checksum = mod == 0 ? 0 : 10 - mod;
+            return code + checksum.ToString();
+        }
+
+        private string Mod11(string code)
+        {
+            var sum = 0;
+            var weight = 2;
+            for (var i = code.Length - 1; i >= 0; i--)
+            {
+                if (weight > 7) weight = 2;
+                sum += Int32.Parse(code[i].ToString()) * weight++;
+            }//foreach
+            var mod = sum % 11;
+            var checksum = mod == 0 ? 0 : 11 - mod;
+
+            return code + checksum.ToString();
+        }
 
         #region IBarcode Members
 
