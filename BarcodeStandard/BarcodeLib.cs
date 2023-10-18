@@ -29,7 +29,7 @@ namespace BarcodeStandard
     public enum Type
     { Unspecified, UpcA, UpcE, UpcSupplemental2Digit, UpcSupplemental5Digit, Ean13, Ean8, Interleaved2Of5, Interleaved2Of5Mod10, Standard2Of5, Standard2Of5Mod10, Industrial2Of5, Industrial2Of5Mod10, Code39, Code39Extended, Code39Mod43, Codabar, PostNet, Bookland, Isbn, Jan13, MsiMod10, Msi2Mod10, MsiMod11, MsiMod11Mod10, ModifiedPlessey, Code11, Usd8, Ucc12, Ucc13, Logmars, Code128, Code128A, Code128B, Code128C, Itf14, Code93, Telepen, Fim, Pharmacode }
     public enum SaveTypes
-    { Jpg, Bmp, Png, Webp, Unspecified }
+    { Jpg, Png, Webp, Unspecified }
     public enum AlignmentPositions
     { Center, Left, Right }
     #endregion
@@ -768,7 +768,6 @@ namespace BarcodeStandard
         {
             switch (fileType)
             {
-                case SaveTypes.Bmp: return SKEncodedImageFormat.Bmp;
                 case SaveTypes.Jpg: return SKEncodedImageFormat.Jpeg;
                 case SaveTypes.Png: return SKEncodedImageFormat.Png;
                 case SaveTypes.Webp: return SKEncodedImageFormat.Webp;

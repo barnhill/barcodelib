@@ -109,17 +109,16 @@ namespace BarcodeStandardExample
         private void btnSave_Click(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog();
-            sfd.Filter = @"BMP (*.bmp)|*.bmp|JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|WEBP (*.webp)|*.webp";
+            sfd.Filter = @"JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|WEBP (*.webp)|*.webp";
             sfd.FilterIndex = 2;
             sfd.AddExtension = true;
             if (sfd.ShowDialog() != DialogResult.OK) return;
             var type = SaveTypes.Unspecified;
             switch (sfd.FilterIndex)
             {
-                case 1: /* BMP */  type = SaveTypes.Bmp; break;
-                case 2: /* JPG */  type = SaveTypes.Jpg; break;
-                case 3: /* PNG */  type = SaveTypes.Png; break;
-                case 4: /* WEBP*/  type = SaveTypes.Webp; break;
+                case 1: /* JPG */  type = SaveTypes.Jpg; break;
+                case 2: /* PNG */  type = SaveTypes.Png; break;
+                case 3: /* WEBP*/  type = SaveTypes.Webp; break;
             }//switch
             _b.SaveImage(sfd.FileName, type);
         }//btnSave_Click
