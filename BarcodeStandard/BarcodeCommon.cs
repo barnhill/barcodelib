@@ -17,8 +17,13 @@ namespace BarcodeStandard
 
         internal static bool CheckNumericOnly(string data)
         {
-            if (data.Any(c => !char.IsDigit(c))) return false;
-            return data.Length > 0;
+            char c;
+            for (int i = 0; i < data.Length; i++)
+            {
+                c = data[i];
+                if (c < '0' && c > '9') return false;
+            }
+            return true;
         }
         
         internal static int GetAlignmentShiftAdjustment(Barcode barcode)
