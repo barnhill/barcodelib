@@ -16,7 +16,7 @@ This library was designed to give an easy class for developers to use when they 
 
 ## Usage
 
-The library contains a class called BarcodeLib with three constructors:
+The library contains a class called `Barcode` with three constructors:
 
 ```csharp
 Barcode();
@@ -24,7 +24,7 @@ Barcode(string);
 Barcode(string, Type);
 ```
 
-If you decide to create an instance with parameters, the parameters are as follows: the string is the data to be encoded into the barcode, and BarcodeLib.TYPE is the symbology to encode the data with. If you do not choose to specify the data and type at the time the instance is created, you may specify them through the appropriate property later on (but before you encode).
+If you decide to create an instance with parameters, the parameters are as follows: the string is the data to be encoded into the barcode, and `Type` is the symbology to encode the data with. If you do not choose to specify the data and type at the time the instance is created, you may specify them through the appropriate property later on (but before you encode).
 
 ## Example
 
