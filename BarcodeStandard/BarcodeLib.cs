@@ -860,20 +860,22 @@ namespace BarcodeStandard
 
         private SaveData GetSaveData(bool includeImage = true)
         {
-            var saveData = new SaveData();
-            saveData.Type = EncodedType.ToString();
-            saveData.RawData = RawData;
-            saveData.EncodedValue = EncodedValue;
-            saveData.EncodingTime = EncodingTime;
-            saveData.IncludeLabel = IncludeLabel;
-            saveData.Forecolor = ForeColor.ToString();
-            saveData.Backcolor = BackColor.ToString();
-            saveData.CountryAssigningManufacturingCode = CountryAssigningManufacturerCode;
-            saveData.ImageWidth = Width;
-            saveData.ImageHeight = Height;
-            saveData.LabelFont = LabelFont.ToString();
-            saveData.ImageFormat = ImageFormat.ToString();
-            saveData.Alignment = (int)Alignment;
+            var saveData = new SaveData
+            {
+                Type = EncodedType.ToString(),
+                RawData = RawData,
+                EncodedValue = EncodedValue,
+                EncodingTime = EncodingTime,
+                IncludeLabel = IncludeLabel,
+                Forecolor = ForeColor.ToString(),
+                Backcolor = BackColor.ToString(),
+                CountryAssigningManufacturingCode = CountryAssigningManufacturerCode,
+                ImageWidth = Width,
+                ImageHeight = Height,
+                LabelFont = LabelFont.ToString(),
+                ImageFormat = ImageFormat.ToString(),
+                Alignment = (int)Alignment
+            };
 
             //get image in base 64
             if (!includeImage) return saveData;

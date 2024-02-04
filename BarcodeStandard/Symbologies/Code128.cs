@@ -27,10 +27,10 @@ namespace BarcodeLib.Symbologies
         private readonly Dictionary<string, int> C128_CodeIndexByA = new Dictionary<string, int>();
         private readonly Dictionary<string, int> C128_CodeIndexByB = new Dictionary<string, int>();
         private readonly Dictionary<string, int> C128_CodeIndexByC = new Dictionary<string, int>();
-        private List<string> _FormattedData = new List<string>();
-        private List<string> _EncodedData = new List<string>();
+        private readonly List<string> _FormattedData = new List<string>();
+        private readonly List<string> _EncodedData = new List<string>();
         private int? _startCharacterIndex;
-        private TYPES type = TYPES.DYNAMIC;
+        private readonly TYPES type = TYPES.DYNAMIC;
 
         /// <summary>
         /// Encodes data in Code128 format.

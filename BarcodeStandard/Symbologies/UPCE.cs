@@ -84,7 +84,7 @@ namespace BarcodeLib.Symbologies
             } //if
 
             //get encoding pattern
-            var pattern = "";
+            string pattern;
 
             if (numberSystem == 0) pattern = UPC_E_Code0[CheckDigit];
             else pattern = UPC_E_Code1[CheckDigit];

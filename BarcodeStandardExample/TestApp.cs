@@ -108,10 +108,12 @@ namespace BarcodeStandardExample
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var sfd = new SaveFileDialog();
-            sfd.Filter = @"JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|WEBP (*.webp)|*.webp";
-            sfd.FilterIndex = 2;
-            sfd.AddExtension = true;
+            var sfd = new SaveFileDialog
+            {
+                Filter = @"JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|WEBP (*.webp)|*.webp",
+                FilterIndex = 2,
+                AddExtension = true
+            };
             if (sfd.ShowDialog() != DialogResult.OK) return;
             var type = SaveTypes.Unspecified;
             switch (sfd.FilterIndex)

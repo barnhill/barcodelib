@@ -46,7 +46,7 @@ namespace BarcodeLib.Symbologies
                 Init_Telepen();
 
             _iCheckSum = 0;
-            var result = "";
+            string result;
 
             SetEncodingSequence();
 

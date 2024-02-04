@@ -12,7 +12,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private readonly string[] MSI_Code = { "100100100100", "100100100110", "100100110100", "100100110110", "100110100100", "100110100110", "100110110100", "100110110110", "110100100100", "110100100110" };
 
-        private Type Encoded_Type = Type.Unspecified;
+        private readonly Type Encoded_Type = Type.Unspecified;
 
         public MSI(string input, Type encodedType)
         {

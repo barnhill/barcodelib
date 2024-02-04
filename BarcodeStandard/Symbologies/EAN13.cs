@@ -64,7 +64,6 @@ namespace BarcodeLib.Symbologies
                 pos++;
             } //while
 
-
             //add divider bars
             result += "01010";
 
