@@ -1,41 +1,41 @@
 using System;
 using System.Collections.Generic;
 
-namespace BarcodeStandard
+namespace BarcodeStandard;
+
+internal abstract class BarcodeCommon
 {
-    internal abstract class BarcodeCommon
+    public string RawData { get; protected set; } = "";
+    public List<string> Errors { get; } = new List<string>();
+
+    protected void Error(string errorMessage)
     {
-        public string RawData { get; protected set; } = "";
-        public List<string> Errors { get; } = new List<string>();
+        Errors.Add(errorMessage);
+        throw new Exception(errorMessage);
+    }
 
-        protected void Error(string errorMessage)
+    internal static bool CheckNumericOnly(string data)
+    {
+        foreach (var c in data)
         {
-            Errors.Add(errorMessage);
-            throw new Exception(errorMessage);
+            if (c < '0' && c > '9') return false;
         }
 
-        internal static bool CheckNumericOnly(string data)
-        {
-            foreach (var c in data)
-            {
-                if (c < '0' && c > '9') return false;
-            }
+        return true;
+    }
 
-            return true;
-        }
-
-        internal static int GetAlignmentShiftAdjustment(Barcode barcode)
+    internal static int GetAlignmentShiftAdjustment(Barcode barcode)
+    {
+        switch (barcode.Alignment)
         {
-            switch (barcode.Alignment)
-            {
-                case AlignmentPositions.Left:
-                    return 0;
-                case AlignmentPositions.Right:
-                    return (barcode.Width % barcode.EncodedValue.Length);
-                case AlignmentPositions.Center:
-                default:
-                    return (barcode.Width % barcode.EncodedValue.Length) / 2;
-            }//switch
-        }
-    }//BarcodeVariables abstract class
-}//namespace
+            case AlignmentPositions.Left:
+                return 0;
+            case AlignmentPositions.Right:
+                return (barcode.Width % barcode.EncodedValue.Length);
+            case AlignmentPositions.Center:
+            default:
+                return (barcode.Width % barcode.EncodedValue.Length) / 2;
+        }//switch
+    }
+}//BarcodeVariables abstract class
+//namespace

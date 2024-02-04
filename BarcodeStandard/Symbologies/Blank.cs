@@ -1,22 +1,21 @@
-﻿using System;
+using System;
 using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeLib.Symbologies;
+
+/// <summary>
+///  Blank encoding template
+///  Written by: Brad Barnhill
+/// </summary>
+class Blank : BarcodeCommon, IBarcode
 {
-    /// <summary>
-    ///  Blank encoding template
-    ///  Written by: Brad Barnhill
-    /// </summary>
-    class Blank: BarcodeCommon, IBarcode
+
+    #region IBarcode Members
+
+    public string Encoded_Value
     {
-        
-        #region IBarcode Members
-
-        public string Encoded_Value
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
+        get { throw new NotImplementedException(); }
     }
+
+    #endregion
 }

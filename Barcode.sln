@@ -1,7 +1,6 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcodeStandard", "BarcodeStandard\BarcodeStandard.csproj", "{24B824A4-A4F1-4C31-A935-7EA11304B48B}"
 EndProject
@@ -10,7 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeStandardExample", "B
 		{24B824A4-A4F1-4C31-A935-7EA11304B48B} = {24B824A4-A4F1-4C31-A935-7EA11304B48B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeStandardTests", "BarcodeStandardTests\BarcodeStandardTests.csproj", "{C588CDB4-B0C9-4EC0-B790-F6F3ED443644}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcodeStandardTests", "BarcodeStandardTests\BarcodeStandardTests.csproj", "{C588CDB4-B0C9-4EC0-B790-F6F3ED443644}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F1674B4-F941-4F0C-A01A-1BD4D2E56045}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +34,6 @@ Global
 		{C588CDB4-B0C9-4EC0-B790-F6F3ED443644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C588CDB4-B0C9-4EC0-B790-F6F3ED443644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C588CDB4-B0C9-4EC0-B790-F6F3ED443644}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8CE6356-01AA-4215-99E7-D861325592B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8CE6356-01AA-4215-99E7-D861325592B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8CE6356-01AA-4215-99E7-D861325592B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8CE6356-01AA-4215-99E7-D861325592B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
