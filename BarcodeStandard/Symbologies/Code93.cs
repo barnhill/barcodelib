@@ -154,11 +154,10 @@ class Code93 : BarcodeCommon, IBarcode
 
         return input;
     }//Calculate_CheckDigits
-    
+
     #region IBarcode Members
 
     public string Encoded_Value => Encode_Code93();
 
     #endregion
 }//class
-//namespace

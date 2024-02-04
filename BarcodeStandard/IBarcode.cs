@@ -24,4 +24,3 @@ interface IBarcode
     }//Errors
 
 }//interface
-//namespace

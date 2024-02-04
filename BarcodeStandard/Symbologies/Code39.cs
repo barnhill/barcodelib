@@ -80,7 +80,7 @@ class Code39 : BarcodeCommon, IBarcode
         }//foreach
 
         result = result.Substring(0, result.Length-1);
-        
+
         //clear the hashtable so it no longer takes up memory
         C39_Code.Clear();
 
@@ -225,7 +225,7 @@ class Code39 : BarcodeCommon, IBarcode
         ExtC39_Translation.Add("x", "+X");
         ExtC39_Translation.Add("y", "+Y");
         ExtC39_Translation.Add("z", "+Z");
-        ExtC39_Translation.Add(Convert.ToChar(127).ToString(), "%T"); //also %X, %Y, %Z 
+        ExtC39_Translation.Add(Convert.ToChar(127).ToString(), "%T"); //also %X, %Y, %Z
     }
     private void InsertExtendedCharsIfNeeded(ref string formattedData)
     {
@@ -237,8 +237,8 @@ class Code39 : BarcodeCommon, IBarcode
                 var s = C39_Code[c].ToString();
                 output += c;
             }//try
-            catch 
-            { 
+            catch
+            {
                 //insert extended substitution
                 var oTrans = ExtC39_Translation[c.ToString()];
                 output += oTrans.ToString();
@@ -247,7 +247,7 @@ class Code39 : BarcodeCommon, IBarcode
 
         formattedData = output;
     }
-    private char GetChecksumChar(string strNoAstr) 
+    private char GetChecksumChar(string strNoAstr)
     {
         //checksum
         var Code39_Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
@@ -269,4 +269,3 @@ class Code39 : BarcodeCommon, IBarcode
 
     #endregion
 }//class
-//namespace

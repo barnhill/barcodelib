@@ -496,4 +496,3 @@ class Code128 : BarcodeCommon, IBarcode
 
     #endregion
 }//class
-//namespace

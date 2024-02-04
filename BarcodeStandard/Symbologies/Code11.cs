@@ -81,7 +81,7 @@ class Code11 : BarcodeCommon, IBarcode
         result += C11_Code[11];
 
         return result;
-    }//Encode_Code11 
+    }//Encode_Code11
 
     #region IBarcode Members
 
@@ -89,4 +89,3 @@ class Code11 : BarcodeCommon, IBarcode
 
     #endregion
 }//class
-//namespace

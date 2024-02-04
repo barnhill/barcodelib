@@ -9,7 +9,7 @@ namespace BarcodeLib.Symbologies;
 class Codabar: BarcodeCommon, IBarcode
 {
     private readonly System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
-    
+
     public Codabar(string input)
     {
         RawData = input;
@@ -117,4 +117,3 @@ class Codabar: BarcodeCommon, IBarcode
     #endregion
 
 }//class
-//namespace

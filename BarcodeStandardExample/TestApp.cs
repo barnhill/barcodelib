@@ -11,13 +11,13 @@ namespace BarcodeStandardExample;
 
 /// <summary>
 /// This form is a test form to show what all you can do with the Barcode Library.
-/// Only one call is actually needed to do the encoding and return the image of the 
+/// Only one call is actually needed to do the encoding and return the image of the
 /// barcode but the rest is just flare and user interface ... stuff.
 /// </summary>
 public partial class TestApp : Form
 {
     Barcode _b = new Barcode();
-    
+
     public TestApp()
     {
         InitializeComponent();
@@ -82,10 +82,10 @@ public partial class TestApp : Form
                 //===== Encoding performed here =====
                 barcode.BackgroundImage = Image.FromStream(_b.Encode(type, txtData.Text.Trim(), _b.ForeColor, _b.BackColor, w, h).Encode().AsStream());
                 //===================================
-                
+
                 //show the encoding time
                 lblEncodingTime.Text = @"(" + Math.Round(_b.EncodingTime, 0, MidpointRounding.AwayFromZero) + @"ms)";
-                
+
                 txtEncoded.Text = _b.EncodedValue;
 
                 tsslEncodedType.Text = @"Encoding Type: " + _b.EncodedType;
@@ -446,4 +446,3 @@ public partial class TestApp : Form
         }
     }
 }//class
-//namespace

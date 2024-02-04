@@ -30,7 +30,7 @@ class Postnet : BarcodeCommon, IBarcode
             case 6:
             case 9:
             case 11: break;
-            default: Error("EPOSTNET-2: Invalid data length. (5, 6, 9, or 11 digits only)"); 
+            default: Error("EPOSTNET-2: Invalid data length. (5, 6, 9, or 11 digits only)");
                 break;
         }//switch
 
@@ -71,4 +71,3 @@ class Postnet : BarcodeCommon, IBarcode
 
     #endregion
 }//class
-//namespace

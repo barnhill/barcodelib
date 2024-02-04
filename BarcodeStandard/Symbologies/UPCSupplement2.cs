@@ -63,4 +63,3 @@ class UPCSupplement2 : BarcodeCommon, IBarcode
 
     #endregion
 }//class
-//namespace

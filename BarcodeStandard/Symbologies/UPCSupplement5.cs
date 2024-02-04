@@ -66,7 +66,7 @@ class UPCSupplement5 : BarcodeCommon, IBarcode
                     break;
                 case 'b':
                     //encode using even parity
-                    result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())]; //else if  
+                    result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())]; //else if
                     break;
             }
             pos++;
@@ -80,4 +80,3 @@ class UPCSupplement5 : BarcodeCommon, IBarcode
 
     #endregion
 }//class
-//namespace

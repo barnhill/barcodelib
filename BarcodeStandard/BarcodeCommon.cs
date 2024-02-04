@@ -38,4 +38,3 @@ internal abstract class BarcodeCommon
         }//switch
     }
 }//BarcodeVariables abstract class
-//namespace
