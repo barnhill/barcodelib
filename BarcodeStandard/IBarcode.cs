@@ -1,27 +1,26 @@
 using System.Collections.Generic;
 
-namespace BarcodeLib
+namespace BarcodeLib;
+
+/// <summary>
+///  Barcode interface for symbology layout.
+///  Written by: Brad Barnhill
+/// </summary>
+interface IBarcode
 {
-    /// <summary>
-    ///  Barcode interface for symbology layout.
-    ///  Written by: Brad Barnhill
-    /// </summary>
-    interface IBarcode
+    string Encoded_Value
     {
-        string Encoded_Value
-        {
-            get;
-        }//Encoded_Value
+        get;
+    }//Encoded_Value
 
-        string RawData
-        {
-            get;
-        }//Raw_Data
+    string RawData
+    {
+        get;
+    }//Raw_Data
 
-        List<string> Errors
-        {
-            get;
-        }//Errors
+    List<string> Errors
+    {
+        get;
+    }//Errors
 
-    }//interface
-}//namespace
+}//interface

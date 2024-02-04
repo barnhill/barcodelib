@@ -2,30 +2,30 @@ using System;
 using System.Collections;
 using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeLib.Symbologies;
+
+/// <summary>
+///  EAN-13 encoding
+///  Written by: Brad Barnhill
+/// </summary>
+class EAN13 : BarcodeCommon, IBarcode
 {
-    /// <summary>
-    ///  EAN-13 encoding
-    ///  Written by: Brad Barnhill
-    /// </summary>
-    class EAN13 : BarcodeCommon, IBarcode
-    {
-        private readonly string[] EAN_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private readonly string[] EAN_CodeB = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
-        private readonly string[] EAN_CodeC = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
-        private readonly string[] EAN_Pattern = { "aaaaaa", "aababb", "aabbab", "aabbba", "abaabb", "abbaab", "abbbaa", "ababab", "ababba", "abbaba" };
-        private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
-        private string _countryAssigningManufacturerCode = "N/A";
+    private readonly string[] EAN_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
+    private readonly string[] EAN_CodeB = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
+    private readonly string[] EAN_CodeC = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
+    private readonly string[] EAN_Pattern = { "aaaaaa", "aababb", "aabbab", "aabbba", "abaabb", "abbaab", "abbbaa", "ababab", "ababba", "abbaba" };
+    private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
+    private string _countryAssigningManufacturerCode = "N/A";
 
 		public string CountryAssigningManufacturerCode { get => _countryAssigningManufacturerCode; set => _countryAssigningManufacturerCode = value; }
 
 		public EAN13(string input, bool disableCountryCode = false)
-        {
-            RawData = input;
+    {
+        RawData = input;
 			DisableCountryCode = disableCountryCode;
 
 			CheckDigit();
-        }
+    }
 
 		/// <summary>
 		/// Disables EAN13 country code parsing
@@ -36,50 +36,50 @@ namespace BarcodeLib.Symbologies
 		/// Encode the raw data using the EAN-13 algorithm. (Can include the checksum already.  If it doesnt exist in the data then it will calculate it for you.  Accepted data lengths are 12 + 1 checksum or just the 12 data digits)
 		/// </summary>
 		private string Encode_EAN13()
+    {
+        //check length of input
+        if (RawData.Length < 12 || RawData.Length > 13)
+            Error("EEAN13-1: Data length invalid. (Length must be 12 or 13)");
+
+        if (!CheckNumericOnly(RawData))
+            Error("EEAN13-2: Numeric Data Only");
+
+        var patterncode = EAN_Pattern[Int32.Parse(RawData[0].ToString())];
+        var result = "101";
+
+        //first
+        //result += EAN_CodeA[Int32.Parse(RawData[0].ToString())];
+
+        //second
+        var pos = 0;
+        while (pos < 6)
         {
-            //check length of input
-            if (RawData.Length < 12 || RawData.Length > 13)
-                Error("EEAN13-1: Data length invalid. (Length must be 12 or 13)");
-
-            if (!CheckNumericOnly(RawData))
-                Error("EEAN13-2: Numeric Data Only");
-
-            var patterncode = EAN_Pattern[Int32.Parse(RawData[0].ToString())];
-            var result = "101";
-
-            //first
-            //result += EAN_CodeA[Int32.Parse(RawData[0].ToString())];
-
-            //second
-            var pos = 0;
-            while (pos < 6)
-            {
-                if (patterncode[pos] == 'a')
-                    result += EAN_CodeA[Int32.Parse(RawData[pos + 1].ToString())];
-                if (patterncode[pos] == 'b')
-                    result += EAN_CodeB[Int32.Parse(RawData[pos + 1].ToString())];
-                pos++;
-            }//while
+            if (patterncode[pos] == 'a')
+                result += EAN_CodeA[Int32.Parse(RawData[pos + 1].ToString())];
+            if (patterncode[pos] == 'b')
+                result += EAN_CodeB[Int32.Parse(RawData[pos + 1].ToString())];
+            pos++;
+        }//while
 
 
-            //add divider bars
-            result += "01010";
+        //add divider bars
+        result += "01010";
 
-            //get the third
-            pos = 1;
-            while (pos <= 5)
-            {
-                result += EAN_CodeC[Int32.Parse(RawData[(pos++) + 6].ToString())];
-            }//while
+        //get the third
+        pos = 1;
+        while (pos <= 5)
+        {
+            result += EAN_CodeC[Int32.Parse(RawData[(pos++) + 6].ToString())];
+        }//while
 
-            //checksum digit
-            var cs = Int32.Parse(RawData[RawData.Length - 1].ToString());
+        //checksum digit
+        var cs = Int32.Parse(RawData[RawData.Length - 1].ToString());
 
-            //add checksum
-            result += EAN_CodeC[cs];
+        //add checksum
+        result += EAN_CodeC[cs];
 
-            //add ending bars
-            result += "101";
+        //add ending bars
+        result += "101";
 
 			if (!DisableCountryCode)
 			{
@@ -87,10 +87,10 @@ namespace BarcodeLib.Symbologies
 			}
 
 			return result;
-        }//Encode_EAN13
+    }//Encode_EAN13
 
 		private void ParseCountryCode()
-        {
+    {
 			//get the manufacturer assigning country
 			Init_CountryCodes();
 			CountryAssigningManufacturerCode = "N/A";
@@ -127,8 +127,8 @@ namespace BarcodeLib.Symbologies
 		}   // create_CountryCodeRange
 
 		private void Init_CountryCodes()
-        {
-            _countryCodes.Clear();
+    {
+        _countryCodes.Clear();
 
 			// Source: https://en.wikipedia.org/wiki/List_of_GS1_country_codes
 			Create_CountryCodeRange(0, 19, "US / CANADA");
@@ -261,42 +261,41 @@ namespace BarcodeLib.Symbologies
 			Create_CountryCodeRange(980, 980, "REFUND RECEIPTS");
 			Create_CountryCodeRange(981, 984, "GS1 COUPON IDENTIFICATION FOR COMMON CURRENCY AREAS");
 			Create_CountryCodeRange(990, 999, "GS1 COUPON IDENTIFICATION");
-        }//init_CountryCodes
-        private void CheckDigit()
+    }//init_CountryCodes
+    private void CheckDigit()
+    {
+        try
         {
-            try
+            var rawDataHolder = RawData.Substring(0, 12);
+
+            var even = 0;
+            var odd = 0;
+
+            for (var i = 0; i < rawDataHolder.Length; i++)
             {
-                var rawDataHolder = RawData.Substring(0, 12);
+                if (i % 2 == 0)
+                    odd += Int32.Parse(rawDataHolder.Substring(i, 1));
+                else
+                    even += Int32.Parse(rawDataHolder.Substring(i, 1)) * 3;
+            }//for
 
-                var even = 0;
-                var odd = 0;
+            var total = even + odd;
+            var cs = total % 10;
+            cs = 10 - cs;
+            if (cs == 10)
+                cs = 0;
 
-                for (var i = 0; i < rawDataHolder.Length; i++)
-                {
-                    if (i % 2 == 0)
-                        odd += Int32.Parse(rawDataHolder.Substring(i, 1));
-                    else
-                        even += Int32.Parse(rawDataHolder.Substring(i, 1)) * 3;
-                }//for
-
-                var total = even + odd;
-                var cs = total % 10;
-                cs = 10 - cs;
-                if (cs == 10)
-                    cs = 0;
-
-                RawData = rawDataHolder + cs.ToString()[0];
-            }//try
-            catch
-            {
-                Error("EEAN13-4: Error calculating check digit.");
-            }//catch
-        }
-
-        #region IBarcode Members
-
-        public string Encoded_Value => Encode_EAN13();
-
-        #endregion
+            RawData = rawDataHolder + cs.ToString()[0];
+        }//try
+        catch
+        {
+            Error("EEAN13-4: Error calculating check digit.");
+        }//catch
     }
+
+    #region IBarcode Members
+
+    public string Encoded_Value => Encode_EAN13();
+
+    #endregion
 }
