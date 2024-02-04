@@ -1,6 +1,6 @@
 ### From: https://github.com/dotnet/aspnetcore/blob/main/.editorconfig
 ### Last sync: b3d1545
-### Disabled: CA1018, CA1305, CA1510, CA2007, CA2208, IDE0011, IDE0073, IDE0161
+### Disabled: CA1510, IDE0073
 ; EditorConfig to support per-solution formatting.
 ; Use the EditorConfig VS add-in to make this work.
 ; http://editorconfig.org/
@@ -101,13 +101,13 @@ charset = utf-8-bom
 dotnet_diagnostic.SYSLIB1054.severity = warning
 
 # CA1018: Mark attributes with AttributeUsageAttribute
-#dotnet_diagnostic.CA1018.severity = warning
+dotnet_diagnostic.CA1018.severity = warning
 
 # CA1047: Do not declare protected member in sealed type
 dotnet_diagnostic.CA1047.severity = warning
 
 # CA1305: Specify IFormatProvider
-#dotnet_diagnostic.CA1305.severity = warning
+dotnet_diagnostic.CA1305.severity = warning
 
 # CA1507: Use nameof to express symbol names
 dotnet_diagnostic.CA1507.severity = warning
@@ -235,7 +235,7 @@ dotnet_diagnostic.CA1857.severity = warning
 dotnet_diagnostic.CA1858.severity = warning
 
 # CA2007: Consider calling ConfigureAwait on the awaited task
-#dotnet_diagnostic.CA2007.severity = warning
+dotnet_diagnostic.CA2007.severity = warning
 
 # CA2008: Do not create tasks without passing a TaskScheduler
 dotnet_diagnostic.CA2008.severity = warning
@@ -265,7 +265,7 @@ dotnet_diagnostic.CA2200.severity = warning
 dotnet_diagnostic.CA2201.severity = warning
 
 # CA2208: Instantiate argument exceptions correctly
-#dotnet_diagnostic.CA2208.severity = warning
+dotnet_diagnostic.CA2208.severity = warning
 
 # CA2245: Do not assign a property to itself
 dotnet_diagnostic.CA2245.severity = warning
@@ -280,7 +280,7 @@ dotnet_diagnostic.CA2249.severity = warning
 dotnet_diagnostic.IDE0005.severity = warning
 
 # IDE0011: Curly braces to surround blocks of code
-#dotnet_diagnostic.IDE0011.severity = warning
+dotnet_diagnostic.IDE0011.severity = warning
 
 # IDE0020: Use pattern matching to avoid is check followed by a cast (with variable)
 dotnet_diagnostic.IDE0020.severity = warning
@@ -331,7 +331,7 @@ dotnet_diagnostic.IDE0062.severity = warning
 #file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
 
 # IDE0161: Convert to file-scoped namespace
-#dotnet_diagnostic.IDE0161.severity = warning
+dotnet_diagnostic.IDE0161.severity = warning
 
 # IDE0200: Lambda expression can be removed
 dotnet_diagnostic.IDE0200.severity = warning
