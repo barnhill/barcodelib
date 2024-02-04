@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace BarcodeStandard
 {
@@ -7,7 +7,7 @@ namespace BarcodeStandard
         public SaveData()
         {
         }
-        
+
         public string Type { get; set; }
         public string RawData { get; set; }
         public string EncodedValue { get; set; }

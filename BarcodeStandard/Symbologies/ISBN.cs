@@ -12,6 +12,7 @@ namespace BarcodeLib.Symbologies
         {
             RawData = input;
         }
+
         /// <summary>
         /// Encode the raw data using the Bookland/ISBN algorithm.
         /// </summary>
@@ -45,7 +46,7 @@ namespace BarcodeLib.Symbologies
 
             var ean13 = new EAN13(RawData);
             return ean13.Encoded_Value;
-        }//Encode_ISBN_Bookland
+        } //Encode_ISBN_Bookland
 
         #region IBarcode Members
 

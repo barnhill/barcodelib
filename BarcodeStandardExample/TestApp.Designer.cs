@@ -17,6 +17,7 @@ namespace BarcodeStandardExample
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -687,4 +688,3 @@ namespace BarcodeStandardExample
         private System.Windows.Forms.GroupBox groupBox1;
     }
 }
-

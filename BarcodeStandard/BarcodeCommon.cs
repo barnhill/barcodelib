@@ -35,7 +35,7 @@ namespace BarcodeStandard
                 case AlignmentPositions.Center:
                 default:
                     return (barcode.Width % barcode.EncodedValue.Length) / 2;
-            }//switch
+            } //switch
         }
-    }//BarcodeVariables abstract class
-}//namespace
+    } //BarcodeVariables abstract class
+} //namespace

@@ -21,7 +21,7 @@ namespace BarcodeLib.Symbologies
         public Code39(string input)
         {
             RawData = input;
-        }//Code39
+        } //Code39
 
         /// <summary>
         /// Encodes with Code39.
@@ -56,7 +56,7 @@ namespace BarcodeLib.Symbologies
             init_ExtendedCode39();
 
             var strNoAstr = RawData.Replace("*", "");
-            var strFormattedData = "*" + strNoAstr + (_enableChecksum ? GetChecksumChar(strNoAstr).ToString() : String.Empty) + "*";
+            var strFormattedData = "*" + strNoAstr + (_enableChecksum ? GetChecksumChar(strNoAstr).ToString() : string.Empty) + "*";
 
             if (_allowExtended)
                 InsertExtendedCharsIfNeeded(ref strFormattedData);
@@ -68,24 +68,25 @@ namespace BarcodeLib.Symbologies
                 try
                 {
                     result += C39_Code[c].ToString();
-                    result += "0";//whitespace
-                }//try
+                    result += "0"; //whitespace
+                } //try
                 catch
                 {
                     if (_allowExtended)
                         Error("EC39-1: Invalid data.");
                     else
                         Error("EC39-1: Invalid data. (Try using Extended Code39)");
-                }//catch
-            }//foreach
+                } //catch
+            } //foreach
 
-            result = result.Substring(0, result.Length-1);
-            
+            result = result.Substring(0, result.Length - 1);
+
             //clear the hashtable so it no longer takes up memory
             C39_Code.Clear();
 
             return result;
-        }//Encode_Code39
+        } //Encode_Code39
+
         private void init_Code39()
         {
             C39_Code.Clear();
@@ -133,7 +134,8 @@ namespace BarcodeLib.Symbologies
             C39_Code.Add('+', "100101001001");
             C39_Code.Add('%', "101001001001");
             C39_Code.Add('*', "100101101101");
-        }//init_Code39
+        } //init_Code39
+
         private void init_ExtendedCode39()
         {
             ExtC39_Translation.Clear();
@@ -225,8 +227,9 @@ namespace BarcodeLib.Symbologies
             ExtC39_Translation.Add("x", "+X");
             ExtC39_Translation.Add("y", "+Y");
             ExtC39_Translation.Add("z", "+Z");
-            ExtC39_Translation.Add(Convert.ToChar(127).ToString(), "%T"); //also %X, %Y, %Z 
+            ExtC39_Translation.Add(Convert.ToChar(127).ToString(), "%T"); //also %X, %Y, %Z
         }
+
         private void InsertExtendedCharsIfNeeded(ref string formattedData)
         {
             var output = "";
@@ -236,18 +239,19 @@ namespace BarcodeLib.Symbologies
                 {
                     var s = C39_Code[c].ToString();
                     output += c;
-                }//try
-                catch 
-                { 
+                } //try
+                catch
+                {
                     //insert extended substitution
                     var oTrans = ExtC39_Translation[c.ToString()];
                     output += oTrans.ToString();
-                }//catch
-            }//foreach
+                } //catch
+            } //foreach
 
             formattedData = output;
         }
-        private char GetChecksumChar(string strNoAstr) 
+
+        private char GetChecksumChar(string strNoAstr)
         {
             //checksum
             var Code39_Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
@@ -263,10 +267,11 @@ namespace BarcodeLib.Symbologies
             //return the checksum char
             return Code39_Charset[sum % 43];
         }
+
         #region IBarcode Members
 
         public string Encoded_Value => Encode_Code39();
 
         #endregion
-    }//class
-}//namespace
+    } //class
+} //namespace

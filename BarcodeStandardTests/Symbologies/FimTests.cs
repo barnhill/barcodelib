@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class FimTests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.Fim,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.Fim, };
 
         [DataTestMethod]
         [DataRow("A", "10100000100000101")]

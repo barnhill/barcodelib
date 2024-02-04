@@ -1,7 +1,6 @@
-﻿using SkiaSharp;
 using System;
-using System.Drawing;
 using BarcodeStandard;
+using SkiaSharp;
 
 namespace BarcodeLib
 {
@@ -70,11 +69,11 @@ namespace BarcodeLib
                 }
 
                 return SKImage.FromBitmap(img);
-            }//try
+            } //try
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_ITF14-1: " + ex.Message);
-            }//catch
+            } //catch
         }
 
         /// <summary>
@@ -97,12 +96,9 @@ namespace BarcodeLib
 
                 var alignmentAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(barcode);
                 var text = barcode.AlternateLabel ?? barcode.RawData;
-                    
+
                 //draw datastring under the barcode image
-                using var foreBrush = new SKPaint(barcode.LabelFont)
-                {
-                    ColorF = barcode.ForeColor,
-                };
+                using var foreBrush = new SKPaint(barcode.LabelFont) { ColorF = barcode.ForeColor, };
                 foreBrush.IsAntialias = true;
                 foreBrush.IsLinearText = true;
                 foreBrush.IsDither = true;
@@ -112,18 +108,14 @@ namespace BarcodeLib
                 SKRect textBounds = new();
                 foreBrush.MeasureText(text, ref textBounds);
                 var labelPadding = textBounds.Height / 2f;
-                    
+
                 var labelX = img.Width / 2f - textBounds.Width / 2f;
                 var labelY = img.Height - textBounds.Height + labelPadding;
                 var backY = img.Height - textBounds.Height - labelPadding * 2f;
-                        
+
                 //color a background color box at the bottom of the barcode to hold the string of data
-                using var backBrush = new SKPaint
-                {
-                    ColorF = barcode.BackColor,
-                    Style = SKPaintStyle.Fill
-                };
-                    
+                using var backBrush = new SKPaint { ColorF = barcode.BackColor, Style = SKPaintStyle.Fill };
+
                 g.DrawRect(SKRect.Create(0, backY, img.Width, textBounds.Height + labelPadding * 2f), backBrush);
                 g.DrawText(text, labelX, labelY, foreBrush);
 
@@ -132,13 +124,13 @@ namespace BarcodeLib
                 foreBrush.Dispose();
                 backBrush.Dispose();
                 return SKImage.FromBitmap(img);
-            }//try
+            } //try
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_GENERIC-1: " + ex.Message);
-            }//catch
+            } //catch
         }
-        
+
         /// <summary>
         /// Draws Label for EAN-13 barcodes
         /// </summary>
@@ -160,13 +152,13 @@ namespace BarcodeLib
                 var first = text.Substring(0, 1);
                 var second = text.Substring(1, 6);
                 var third = text.Substring(7, 6);
-                
+
                 using var g = new SKCanvas(img);
-                
+
                 using var foreBrush = new SKPaint(barcode.LabelFont);
                 SKRect textBounds = new();
                 foreBrush.MeasureText(text, ref textBounds);
-                
+
                 //Default alignment for UPCA
 
                 float w1 = iBarWidth * 3; //Width of first block
@@ -177,12 +169,12 @@ namespace BarcodeLib
                 var s2 = s1 + w1; //Start position of block 2
                 var s3 = s2 + w2 + iBarWidth * 5; //Start position of block 3
                 var s4 = s3 + w3;
-                
+
                 SKRect textBounds1 = new();
                 SKRect textBounds2 = new();
                 SKRect textBounds3 = new();
                 SKRect textBounds4 = new();
-                
+
                 foreBrush.MeasureText(first, ref textBounds1);
                 foreBrush.MeasureText(second, ref textBounds2);
                 foreBrush.MeasureText(third, ref textBounds3);
@@ -192,10 +184,10 @@ namespace BarcodeLib
                 {
                     backBrush.ColorF = barcode.BackColor;
                     backBrush.IsAntialias = true;
-                    
+
                     g.DrawRect(new SKRect(s1, img.Height - textBounds1.Height - textBounds1.Height / 4f, s1 + w1, img.Height), backBrush); // first guard bar cover
                     g.DrawRect(new SKRect(s3, img.Height - textBounds3.Height * 2f, s3 + w3, img.Height), backBrush); // middle bar cover
-                    
+
                     g.DrawRect(new SKRect(s2 + w2, img.Height - textBounds4.Height - textBounds4.Height / 4f, s3, img.Height), backBrush);
                     g.DrawRect(new SKRect(s2, img.Height - textBounds2.Height * 2f, s2 + w2, img.Height), backBrush);
                 }
@@ -215,12 +207,12 @@ namespace BarcodeLib
                 g.Dispose();
                 foreBrush.Dispose();
                 return SKImage.FromBitmap(img);
-            }//try
+            } //try
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_EAN13-1: " + ex.Message);
-            }//catch
-        }//Label_EAN13
+            } //catch
+        } //Label_EAN13
 
         /// <summary>
         /// Draws Label for UPC-A barcodes
@@ -244,13 +236,13 @@ namespace BarcodeLib
                 var second = text.Substring(1, 5);
                 var third = text.Substring(6, 5);
                 var fourth = text.Substring(11);
-                
+
                 using var g = new SKCanvas(img);
-                
+
                 using var foreBrush = new SKPaint(barcode.LabelFont);
                 SKRect textBounds = new();
                 foreBrush.MeasureText(text, ref textBounds);
-                
+
                 //Default alignment for UPCA
 
                 float w1 = iBarWidth * 3; //Width of first block
@@ -262,12 +254,12 @@ namespace BarcodeLib
                 var s2 = s1 + w1; //Start position of block 2
                 var s3 = s2 + w2 + iBarWidth * 5; //Start position of block 3
                 var s4 = s3 + w3;
-                
+
                 SKRect textBounds1 = new();
                 SKRect textBounds2 = new();
                 SKRect textBounds3 = new();
                 SKRect textBounds4 = new();
-                
+
                 foreBrush.MeasureText(first, ref textBounds1);
                 foreBrush.MeasureText(second, ref textBounds2);
                 foreBrush.MeasureText(third, ref textBounds3);
@@ -278,11 +270,11 @@ namespace BarcodeLib
                 {
                     backBrush.ColorF = barcode.BackColor;
                     backBrush.IsAntialias = true;
-                    
+
                     g.DrawRect(new SKRect(s1, img.Height - textBounds1.Height - textBounds1.Height / 4f, s1 + w1, img.Height), backBrush); // first guard bar cover
                     g.DrawRect(new SKRect(s4, img.Height - textBounds4.Height - textBounds4.Height / 4f, s4 + w4, img.Height), backBrush); // end guard bar cover
                     g.DrawRect(new SKRect(s3, img.Height - textBounds3.Height * 2f, s3 + w3, img.Height), backBrush); // middle bar cover
-                    
+
                     g.DrawRect(new SKRect(s2 + w2, img.Height - textBounds4.Height - textBounds4.Height / 4f, s3, img.Height), backBrush);
                     g.DrawRect(new SKRect(s2, img.Height - textBounds2.Height * 2f, s2 + w2, img.Height), backBrush);
                 }
@@ -303,40 +295,11 @@ namespace BarcodeLib
                 g.Dispose();
                 foreBrush.Dispose();
                 return SKImage.FromBitmap(img);
-            }//try
+            } //try
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_UPCA-1: " + ex.Message);
-            }//catch
-        }//Label_UPCA
-
-        private static int GetFontSize(Barcode barcode, int wid, int hgt, string lbl)
-        {
-            //Returns the optimal font size for the specified dimensions
-            var fontSize = 10;
-
-            if (lbl.Length > 0)
-            {
-                var bounds = SKRect.Empty;
-                for (var i = 1; i <= 100; i++)
-                {
-                    using (var testFont = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal), i))
-                    {
-                        // Make a Graphics object to measure the text.
-                        using (var gr = new SKPaint(testFont))
-                        {
-                            gr.MeasureText(lbl, ref bounds);
-
-                            if (!(bounds.Width > wid) && !(bounds.Height > hgt)) continue;
-                            fontSize = i - 1;
-                            break;
-                        }
-                    }
-                }
-
-            };
-
-            return fontSize;
-        }
+            } //catch
+        } //Label_UPCA
     }
 }

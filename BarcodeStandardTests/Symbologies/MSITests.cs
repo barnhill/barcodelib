@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
@@ -11,12 +11,9 @@ namespace BarcodeStandardTests.Symbologies
         [DataRow("123456789012644", "1101001001001101001001101001001001101101001101001001001101001101001101101001001101101101101001001001101001001101001001001001001001001101001001101001001101101001001101001001001101001001101001001001001")]
         public void EncodeBarcodeMod10(string data, string expected)
         {
-            Barcode _barcode = new()
-            {
-                EncodedType = Type.MsiMod10
-            };
-            _barcode.Encode(data);
-            Assert.AreEqual(expected, _barcode.EncodedValue, $"{_barcode.EncodedType}");
+            Barcode barcode = new() { EncodedType = Type.MsiMod10 };
+            barcode.Encode(data);
+            Assert.AreEqual(expected, barcode.EncodedValue, $"{barcode.EncodedType}");
         }
 
         [DataTestMethod]
@@ -24,12 +21,9 @@ namespace BarcodeStandardTests.Symbologies
         [DataRow("123456789012644", "1101001001001101001001101001001001101101001101001001001101001101001101101001001101101101101001001001101001001101001001001001001001001101001001101001001101101001001101001001001101001001101001001001001")]
         public void EncodeBarcodeMod11(string data, string expected)
         {
-            Barcode _barcode = new()
-            {
-                EncodedType = Type.MsiMod11
-            };
-            _barcode.Encode(data);
-            Assert.AreEqual(expected, _barcode.EncodedValue, $"{_barcode.EncodedType}");
+            Barcode barcode = new() { EncodedType = Type.MsiMod11 };
+            barcode.Encode(data);
+            Assert.AreEqual(expected, barcode.EncodedValue, $"{barcode.EncodedType}");
         }
 
         [DataTestMethod]
@@ -37,12 +31,9 @@ namespace BarcodeStandardTests.Symbologies
         [DataRow("123456789012644", "1101001001001101001001101001001001101101001101001001001101001101001101101001001101101101101001001001101001001101001001001001001001001101001001101001001101101001001101001001001101001001101001001001001001101101001")]
         public void EncodeBarcode2Mod10(string data, string expected)
         {
-            Barcode _barcode = new()
-            {
-                EncodedType = Type.Msi2Mod10
-            };
-            _barcode.Encode(data);
-            Assert.AreEqual(expected, _barcode.EncodedValue, $"{_barcode.EncodedType}");
+            Barcode barcode = new() { EncodedType = Type.Msi2Mod10 };
+            barcode.Encode(data);
+            Assert.AreEqual(expected, barcode.EncodedValue, $"{barcode.EncodedType}");
         }
 
         [DataTestMethod]
@@ -50,12 +41,9 @@ namespace BarcodeStandardTests.Symbologies
         [DataRow("123456789012644", "1101001001001101001001101001001001101101001101001001001101001101001101101001001101101101101001001001101001001101001001001001001001001101001001101001001101101001001101001001001101001001101001001001001001101101001")]
         public void EncodeBarcodeMod11Mod10(string data, string expected)
         {
-            Barcode _barcode = new()
-            {
-                EncodedType = Type.MsiMod11Mod10
-            };
-            _barcode.Encode(data);
-            Assert.AreEqual(expected, _barcode.EncodedValue, $"{_barcode.EncodedType}");
+            Barcode barcode = new() { EncodedType = Type.MsiMod11Mod10 };
+            barcode.Encode(data);
+            Assert.AreEqual(expected, barcode.EncodedValue, $"{barcode.EncodedType}");
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using BarcodeStandard;
 using Type = BarcodeStandard.Type;
 
@@ -17,7 +16,7 @@ namespace BarcodeLib.Symbologies
         {
             RawData = input;
             _encodedType = encodedType;
-        }//Standard2of5
+        } //Standard2of5
 
         /// <summary>
         /// Encode the raw data using the Standard 2 of 5 algorithm.
@@ -29,7 +28,7 @@ namespace BarcodeLib.Symbologies
 
             var result = "11011010";
 
-            for (int i = 0; i < RawData.Length; i++)
+            for (var i = 0; i < RawData.Length; i++)
             {
                 result += S25_Code[(int)char.GetNumericValue(RawData, i)];
             }
@@ -39,7 +38,7 @@ namespace BarcodeLib.Symbologies
             //add ending bars
             result += "1101011";
             return result;
-        }//Encode_Standard2of5
+        } //Encode_Standard2of5
 
         private int CalculateMod10CheckDigit()
         {

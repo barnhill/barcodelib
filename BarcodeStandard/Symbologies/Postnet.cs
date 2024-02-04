@@ -14,7 +14,7 @@ namespace BarcodeLib.Symbologies
         public Postnet(string input)
         {
             RawData = input;
-        }//Postnet
+        } //Postnet
 
         /// <summary>
         /// Encode the raw data using the PostNet algorithm.
@@ -30,9 +30,10 @@ namespace BarcodeLib.Symbologies
                 case 6:
                 case 9:
                 case 11: break;
-                default: Error("EPOSTNET-2: Invalid data length. (5, 6, 9, or 11 digits only)"); 
+                default:
+                    Error("EPOSTNET-2: Invalid data length. (5, 6, 9, or 11 digits only)");
                     break;
-            }//switch
+            } //switch
 
             //Note: 0 = half bar and 1 = full bar
             //initialize the result with the starting bar
@@ -46,12 +47,12 @@ namespace BarcodeLib.Symbologies
                     var index = Convert.ToInt32(c.ToString());
                     result += POSTNET_Code[index];
                     checkdigitsum += index;
-                }//try
+                } //try
                 catch (Exception ex)
                 {
                     Error("EPOSTNET-2: Invalid data. (Numeric only) --> " + ex.Message);
-                }//catch
-            }//foreach
+                } //catch
+            } //foreach
 
             //calculate and add check digit
             var temp = checkdigitsum % 10;
@@ -63,12 +64,12 @@ namespace BarcodeLib.Symbologies
             result += "1";
 
             return result;
-        }//Encode_PostNet
+        } //Encode_PostNet
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_Postnet();
 
         #endregion
-    }//class
-}//namespace
+    } //class
+} //namespace

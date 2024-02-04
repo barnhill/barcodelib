@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using BarcodeStandard;
 
@@ -19,6 +18,7 @@ namespace BarcodeLib.Symbologies
         {
             RawData = input;
         }
+
         /// <summary>
         /// Encode the raw data using the UPC-A algorithm.
         /// </summary>
@@ -32,19 +32,19 @@ namespace BarcodeLib.Symbologies
                 Error("EUPCA-2: Numeric Data Only");
 
             CheckDigit();
-            
+
             var result = "101"; //start with guard bars
 
             //first number
-            result += UPC_Code_A[Int32.Parse(RawData[0].ToString())];
+            result += UPC_Code_A[int.Parse(RawData[0].ToString())];
 
             //second (group) of numbers
             var pos = 0;
             while (pos < 5)
             {
-                result += UPC_Code_A[Int32.Parse(RawData[pos + 1].ToString())];
+                result += UPC_Code_A[int.Parse(RawData[pos + 1].ToString())];
                 pos++;
-            }//while
+            } //while
 
             //add divider bars
             result += "01010";
@@ -53,11 +53,11 @@ namespace BarcodeLib.Symbologies
             pos = 0;
             while (pos < 5)
             {
-                result += UPC_Code_B[Int32.Parse(RawData[(pos++) + 6].ToString())];
-            }//while
+                result += UPC_Code_B[int.Parse(RawData[(pos++) + 6].ToString())];
+            } //while
 
             //forth
-            result += UPC_Code_B[Int32.Parse(RawData[RawData.Length - 1].ToString())];
+            result += UPC_Code_B[int.Parse(RawData[RawData.Length - 1].ToString())];
 
             //add ending guard bars
             result += "101";
@@ -68,15 +68,19 @@ namespace BarcodeLib.Symbologies
             try
             {
                 _countryAssigningManufacturerCode = _countryCodes[twodigitCode].ToString();
-            }//try
+            } //try
             catch
             {
                 Error("EUPCA-3: Country assigning manufacturer code not found.");
-            }//catch
-            finally { _countryCodes.Clear(); }
+            } //catch
+            finally
+            {
+                _countryCodes.Clear();
+            }
 
             return result;
-        }//Encode_UPCA
+        } //Encode_UPCA
+
         private void init_CountryCodes()
         {
             _countryCodes.Clear();
@@ -225,7 +229,8 @@ namespace BarcodeLib.Symbologies
             _countryCodes.Add("980", "REFUND RECEIPTS");
             _countryCodes.Add("981", "COMMON CURRENCY COUPONS");
             _countryCodes.Add("982", "COMMON CURRENCY COUPONS");
-        }//init_CountryCodes
+        } //init_CountryCodes
+
         private void CheckDigit()
         {
             try
@@ -238,21 +243,21 @@ namespace BarcodeLib.Symbologies
                 for (var i = 0; i < rawDataHolder.Length; i++)
                 {
                     if (i % 2 == 0)
-                        sum += Int32.Parse(rawDataHolder.Substring(i, 1)) * 3;
+                        sum += int.Parse(rawDataHolder.Substring(i, 1)) * 3;
                     else
-                        sum += Int32.Parse(rawDataHolder.Substring(i, 1));
-                }//for
+                        sum += int.Parse(rawDataHolder.Substring(i, 1));
+                } //for
 
-                int cs = (10 - sum % 10) % 10;
+                var cs = (10 - sum % 10) % 10;
 
                 //replace checksum if provided by the user and replace with the calculated checksum
                 RawData = rawDataHolder + cs;
-            }//try
+            } //try
             catch
             {
                 Error("EUPCA-4: Error calculating check digit.");
-            }//catch
-        }//CheckDigit
+            } //catch
+        } //CheckDigit
 
         #region IBarcode Members
 

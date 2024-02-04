@@ -12,6 +12,7 @@ namespace BarcodeLib.Symbologies
         {
             RawData = input;
         }
+
         /// <summary>
         /// Encode the raw data using the JAN-13 algorithm.
         /// </summary>
@@ -21,9 +22,9 @@ namespace BarcodeLib.Symbologies
             if (!CheckNumericOnly(RawData))
                 Error("EJAN13-2: Numeric Data Only");
 
-            EAN13 ean13 = new EAN13(RawData);
+            var ean13 = new EAN13(RawData);
             return ean13.Encoded_Value;
-        }//Encode_JAN13
+        } //Encode_JAN13
 
         #region IBarcode Members
 

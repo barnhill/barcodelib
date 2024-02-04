@@ -1,11 +1,10 @@
-﻿using SkiaSharp;
-using System;
+using SkiaSharp;
 
 namespace BarcodeStandard
 {
     internal static class Utils
     {
-        internal static int GetFontHeight(String text, SKFont font)
+        internal static int GetFontHeight(string text, SKFont font)
         {
             var textBounds = new SKRect();
             using (var textPaint = new SKPaint(font))

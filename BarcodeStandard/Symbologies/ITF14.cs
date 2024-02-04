@@ -1,4 +1,3 @@
-using System;
 using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
@@ -17,6 +16,7 @@ namespace BarcodeLib.Symbologies
 
             CheckDigit();
         }
+
         /// <summary>
         /// Encode the raw data using the ITF-14 algorithm.
         /// </summary>
@@ -34,17 +34,17 @@ namespace BarcodeLib.Symbologies
             for (var i = 0; i < RawData.Length; i += 2)
             {
                 var bars = true;
-                var patternbars = ITF14_Code[Int32.Parse(RawData[i].ToString())];
-                var patternspaces = ITF14_Code[Int32.Parse(RawData[i + 1].ToString())];
+                var patternbars = ITF14_Code[int.Parse(RawData[i].ToString())];
+                var patternspaces = ITF14_Code[int.Parse(RawData[i + 1].ToString())];
                 var patternmixed = "";
 
                 //interleave
                 while (patternbars.Length > 0)
                 {
-                    patternmixed += patternbars[0].ToString() + patternspaces[0].ToString();
+                    patternmixed += patternbars[0] + patternspaces[0].ToString();
                     patternbars = patternbars.Substring(1);
                     patternspaces = patternspaces.Substring(1);
-                }//while
+                } //while
 
                 foreach (var c1 in patternmixed)
                 {
@@ -54,22 +54,24 @@ namespace BarcodeLib.Symbologies
                             result += "1";
                         else
                             result += "11";
-                    }//if
+                    } //if
                     else
                     {
                         if (c1 == 'N')
                             result += "0";
                         else
                             result += "00";
-                    }//else
+                    } //else
+
                     bars = !bars;
-                }//foreach
-            }//foreach
+                } //foreach
+            } //foreach
 
             //add ending bars
             result += "1101";
             return result;
-        }//Encode_ITF14
+        } //Encode_ITF14
+
         private void CheckDigit()
         {
             //calculate and include checksum if it is necessary
@@ -77,19 +79,19 @@ namespace BarcodeLib.Symbologies
             {
                 var total = 0;
 
-                for (var i = 0; i <= RawData.Length-1; i++)
+                for (var i = 0; i <= RawData.Length - 1; i++)
                 {
-                    var temp = Int32.Parse(RawData.Substring(i, 1));
+                    var temp = int.Parse(RawData.Substring(i, 1));
                     total += temp * ((i == 0 || i % 2 == 0) ? 3 : 1);
-                }//for
+                } //for
 
                 var cs = total % 10;
                 cs = 10 - cs;
                 if (cs == 10)
                     cs = 0;
 
-                this.RawData += cs.ToString();
-            }//if
+                RawData += cs.ToString();
+            } //if
         }
 
         #region IBarcode Members

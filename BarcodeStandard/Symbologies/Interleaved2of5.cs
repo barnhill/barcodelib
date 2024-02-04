@@ -1,4 +1,3 @@
-using System;
 using BarcodeStandard;
 using Type = BarcodeStandard.Type;
 
@@ -18,6 +17,7 @@ namespace BarcodeLib.Symbologies
             _encodedType = encodedType;
             RawData = input;
         }
+
         /// <summary>
         /// Encode the raw data using the Interleaved 2 of 5 algorithm.
         /// </summary>
@@ -29,11 +29,11 @@ namespace BarcodeLib.Symbologies
 
             if (!CheckNumericOnly(RawData))
                 Error("EI25-2: Numeric Data Only");
-            
+
             var result = "1010";
             var data = RawData + (_encodedType == Type.Interleaved2Of5Mod10 ? CalculateMod10CheckDigit().ToString() : "");
 
-            for (int i = 0; i < data.Length; i += 2)
+            for (var i = 0; i < data.Length; i += 2)
             {
                 var bars = true;
                 var patternbars = _i25Code[(int)char.GetNumericValue(data, i)];
@@ -43,12 +43,12 @@ namespace BarcodeLib.Symbologies
                 //interleave
                 while (patternbars.Length > 0)
                 {
-                    patternmixed += patternbars[0].ToString() + patternspaces[0].ToString();
+                    patternmixed += patternbars[0] + patternspaces[0].ToString();
                     patternbars = patternbars.Substring(1);
                     patternspaces = patternspaces.Substring(1);
-                }//while
+                } //while
 
-                foreach (char c1 in patternmixed)
+                foreach (var c1 in patternmixed)
                 {
                     if (bars)
                     {
@@ -56,22 +56,23 @@ namespace BarcodeLib.Symbologies
                             result += "1";
                         else
                             result += "11";
-                    }//if
+                    } //if
                     else
                     {
                         if (c1 == 'N')
                             result += "0";
                         else
                             result += "00";
-                    }//else
+                    } //else
+
                     bars = !bars;
-                }//foreach
-            }//foreach
-            
+                } //foreach
+            } //foreach
+
             //add ending bars
             result += "1101";
             return result;
-        }//Encode_Interleaved2of5
+        } //Encode_Interleaved2of5
 
         private int CalculateMod10CheckDigit()
         {
@@ -90,7 +91,7 @@ namespace BarcodeLib.Symbologies
 
         #region IBarcode Members
 
-        public string Encoded_Value => this.Encode_Interleaved2of5();
+        public string Encoded_Value => Encode_Interleaved2of5();
 
         #endregion
     }

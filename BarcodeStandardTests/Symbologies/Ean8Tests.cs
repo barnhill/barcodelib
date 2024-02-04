@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class Ean8Tests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.Ean8,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.Ean8, };
 
         [DataTestMethod]
         [DataRow("7294783", "1010111011001001100010110100011010101000100100100010000101001000101")]

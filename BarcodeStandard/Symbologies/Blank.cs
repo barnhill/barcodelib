@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
@@ -7,9 +7,9 @@ namespace BarcodeLib.Symbologies
     ///  Blank encoding template
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Blank: BarcodeCommon, IBarcode
+    class Blank : BarcodeCommon, IBarcode
     {
-        
+
         #region IBarcode Members
 
         public string Encoded_Value

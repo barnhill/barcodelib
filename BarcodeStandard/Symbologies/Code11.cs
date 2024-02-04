@@ -1,4 +1,3 @@
-using System;
 using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
@@ -14,7 +13,8 @@ namespace BarcodeLib.Symbologies
         public Code11(string input)
         {
             RawData = input;
-        }//Code11
+        } //Code11
+
         /// <summary>
         /// Encode the raw data using the Code 11 algorithm.
         /// </summary>
@@ -35,10 +35,11 @@ namespace BarcodeLib.Symbologies
                 if (weight == 10) weight = 1;
 
                 if (RawData[i] != '-')
-                    cTotal += Int32.Parse(RawData[i].ToString()) * weight++;
+                    cTotal += int.Parse(RawData[i].ToString()) * weight++;
                 else
                     cTotal += 10 * weight++;
-            }//for
+            } //for
+
             var checksumC = cTotal % 11;
 
             dataToEncodeWithChecksums += checksumC.ToString();
@@ -56,37 +57,38 @@ namespace BarcodeLib.Symbologies
                     if (weight == 9) weight = 1;
 
                     if (dataToEncodeWithChecksums[i] != '-')
-                        kTotal += Int32.Parse(dataToEncodeWithChecksums[i].ToString()) * weight++;
+                        kTotal += int.Parse(dataToEncodeWithChecksums[i].ToString()) * weight++;
                     else
                         kTotal += 10 * weight++;
-                }//for
+                } //for
+
                 var checksumK = kTotal % 11;
                 dataToEncodeWithChecksums += checksumK.ToString();
-            }//if
+            } //if
 
             //encode data
-            var space = "0";
+            const string space = "0";
             var result = C11_Code[11] + space; //start-stop char + interchar space
 
             foreach (var c in dataToEncodeWithChecksums)
             {
-                var index = (c == '-' ? 10 : Int32.Parse(c.ToString()));
+                var index = (c == '-' ? 10 : int.Parse(c.ToString()));
                 result += C11_Code[index];
 
                 //inter-character space
                 result += space;
-            }//foreach
+            } //foreach
 
             //stop bars
             result += C11_Code[11];
 
             return result;
-        }//Encode_Code11 
+        } //Encode_Code11
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_Code11();
 
         #endregion
-    }//class
-}//namespace
+    } //class
+} //namespace

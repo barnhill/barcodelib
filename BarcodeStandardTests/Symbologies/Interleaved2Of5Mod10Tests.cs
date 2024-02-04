@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class Interleaved2Of5Mod10Tests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.Interleaved2Of5Mod10,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.Interleaved2Of5Mod10, };
 
         [DataTestMethod]
         [DataRow("192794729478122", "101011010010100110101101010011001011010011010010100101101100101101001101001001010110011011010010101100101101001001101101")]

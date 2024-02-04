@@ -8,20 +8,11 @@ namespace BarcodeLib
     /// </summary>
     interface IBarcode
     {
-        string Encoded_Value
-        {
-            get;
-        }//Encoded_Value
+        string Encoded_Value { get; }
 
-        string RawData
-        {
-            get;
-        }//Raw_Data
+        string RawData { get; }
 
-        List<string> Errors
-        {
-            get;
-        }//Errors
+        List<string> Errors { get; }
 
-    }//interface
-}//namespace
+    } //interface
+} //namespace

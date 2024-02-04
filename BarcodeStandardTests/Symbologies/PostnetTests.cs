@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class PostnetTests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.PostNet,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.PostNet, };
 
         [DataTestMethod]
         [DataRow("19283", "10001110100001011001000110100011")]

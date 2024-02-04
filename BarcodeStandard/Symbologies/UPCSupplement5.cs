@@ -1,4 +1,3 @@
-using System;
 using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
@@ -35,14 +34,14 @@ namespace BarcodeLib.Symbologies
             //odd
             for (var i = 0; i <= 4; i += 2)
             {
-                odd += Int32.Parse(RawData.Substring(i, 1)) * 3;
-            }//for
+                odd += int.Parse(RawData.Substring(i, 1)) * 3;
+            } //for
 
             //even
             for (var i = 1; i < 4; i += 2)
             {
-                even += Int32.Parse(RawData.Substring(i, 1)) * 9;
-            }//for
+                even += int.Parse(RawData.Substring(i, 1)) * 9;
+            } //for
 
             var total = even + odd;
             var cs = total % 10;
@@ -62,22 +61,24 @@ namespace BarcodeLib.Symbologies
                 {
                     case 'a':
                         //encode using odd parity
-                        result += EAN_CodeA[Int32.Parse(RawData[pos].ToString())]; //if
+                        result += EAN_CodeA[int.Parse(RawData[pos].ToString())]; //if
                         break;
                     case 'b':
                         //encode using even parity
-                        result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())]; //else if  
+                        result += EAN_CodeB[int.Parse(RawData[pos].ToString())]; //else if
                         break;
                 }
+
                 pos++;
-            }//foreach
+            } //foreach
+
             return result;
-        }//Encode_UPCSupplemental_5
+        } //Encode_UPCSupplemental_5
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_UPCSupplemental_5();
 
         #endregion
-    }//class
-}//namespace
+    } //class
+} //namespace

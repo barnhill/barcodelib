@@ -75,7 +75,7 @@ namespace BarcodeStandardExample
 
                     _b.IncludeLabel = chkGenerateLabel.Checked;
 
-                    if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
+                    if (!string.IsNullOrEmpty(textBox1.Text.Trim()))
                         _b.AlternateLabel = textBox1.Text;
                     else _b.AlternateLabel = null;
 

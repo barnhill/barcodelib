@@ -1,4 +1,3 @@
-using System;
 using BarcodeStandard;
 
 namespace BarcodeLib.Symbologies
@@ -22,25 +21,26 @@ namespace BarcodeLib.Symbologies
         public UPCE(string input)
         {
             RawData = input;
-        }//UPCE
+        } //UPCE
+
         /// <summary>
         /// Encode the raw data using the UPC-E algorithm.
         /// </summary>
         private string Encode_UPCE()
         {
-            if (RawData.Length != 6 && RawData.Length != 8 && RawData.Length != 12) 
+            if (RawData.Length != 6 && RawData.Length != 8 && RawData.Length != 12)
                 Error("EUPCE-1: Invalid data length. (8 or 12 numbers only)");
 
-            if (!CheckNumericOnly(RawData)) 
+            if (!CheckNumericOnly(RawData))
                 Error("EUPCE-2: Numeric only.");
 
             //check for a valid number system
-            var numberSystem = Int32.Parse(RawData[0].ToString());
-            if (numberSystem != 0 && numberSystem != 1) 
+            var numberSystem = int.Parse(RawData[0].ToString());
+            if (numberSystem != 0 && numberSystem != 1)
                 Error("EUPCE-3: Invalid Number System (only 0 & 1 are valid)");
 
-            var CheckDigit = Int32.Parse(RawData[RawData.Length - 1].ToString());
-            
+            var CheckDigit = int.Parse(RawData[RawData.Length - 1].ToString());
+
             //Convert to UPC-E from UPC-A if necessary
             if (RawData.Length == 12)
             {
@@ -49,41 +49,41 @@ namespace BarcodeLib.Symbologies
                 //break apart into components
                 var manufacturer = RawData.Substring(1, 5);
                 var productCode = RawData.Substring(6, 5);
-                
-                if (manufacturer.EndsWith("000") || manufacturer.EndsWith("100") || manufacturer.EndsWith("200") && Int32.Parse(productCode) <= 999)
+
+                if (manufacturer.EndsWith("000") || manufacturer.EndsWith("100") || manufacturer.EndsWith("200") && int.Parse(productCode) <= 999)
                 {
                     //rule 1
                     UPCECode += manufacturer.Substring(0, 2); //first two of manufacturer
                     UPCECode += productCode.Substring(2, 3); //last three of product
                     UPCECode += manufacturer[2].ToString(); //third of manufacturer
-                }//if
-                else if (manufacturer.EndsWith("00") && Int32.Parse(productCode) <= 99)
+                } //if
+                else if (manufacturer.EndsWith("00") && int.Parse(productCode) <= 99)
                 {
                     //rule 2
                     UPCECode += manufacturer.Substring(0, 3); //first three of manufacturer
                     UPCECode += productCode.Substring(3, 2); //last two of product
                     UPCECode += "3"; //number 3
-                }//else if
-                else if (manufacturer.EndsWith("0") && Int32.Parse(productCode) <= 9)
+                } //else if
+                else if (manufacturer.EndsWith("0") && int.Parse(productCode) <= 9)
                 {
                     //rule 3
                     UPCECode += manufacturer.Substring(0, 4); //first four of manufacturer
                     UPCECode += productCode[4]; //last digit of product
                     UPCECode += "4"; //number 4
-                }//else if
-                else if (!manufacturer.EndsWith("0") && Int32.Parse(productCode) <= 9 && Int32.Parse(productCode) >= 5)
+                } //else if
+                else if (!manufacturer.EndsWith("0") && int.Parse(productCode) <= 9 && int.Parse(productCode) >= 5)
                 {
                     //rule 4
                     UPCECode += manufacturer; //manufacturer
                     UPCECode += productCode[4]; //last digit of product
-                }//else if
+                } //else if
                 else
                     Error("EUPCE-4: Illegal UPC-A entered for conversion.  Unable to convert.");
 
                 RawData = UPCECode;
-            }//if
+            } //if
 
-            //get encoding pattern 
+            //get encoding pattern
             var pattern = "";
 
             if (numberSystem == 0) pattern = UPC_E_Code0[CheckDigit];
@@ -95,16 +95,16 @@ namespace BarcodeLib.Symbologies
             var pos = 0;
             foreach (var c in pattern)
             {
-                var i = Int32.Parse(RawData[pos++].ToString());
+                var i = int.Parse(RawData[pos++].ToString());
                 if (c == 'a')
                 {
                     result += EAN_Code_A[i];
-                }//if
+                } //if
                 else if (c == 'b')
                 {
                     result += EAN_Code_B[i];
-                }//else if
-            }//foreach
+                } //else if
+            } //foreach
 
             //guard bars
             result += "01010";
@@ -113,7 +113,7 @@ namespace BarcodeLib.Symbologies
             result += "1";
 
             return result;
-        }//Encode_UPCE
+        } //Encode_UPCE
 
         #region IBarcode Members
 

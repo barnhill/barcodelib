@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Type = BarcodeStandard.Type;
 
 namespace BarcodeStandardTests.Symbologies
@@ -9,10 +9,7 @@ namespace BarcodeStandardTests.Symbologies
     [TestClass]
     public class Code128Tests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.Code128,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.Code128, };
 
         [DataTestMethod]
         [DataRow("hello", "110100100001001100001010110010000110010100001100101000010001111010100010011001100011101011", null, "110100100001001100001010110010000110010100001100101000010001111010100010011001100011101011", null)]
@@ -46,8 +43,10 @@ namespace BarcodeStandardTests.Symbologies
                 catch when (expected == null)
                 {
                 }
+
                 Assert.AreEqual(expected, actual, $"{type}");
             }
+
             AssertByType(Type.Code128, expectedAuto);
             AssertByType(Type.Code128A, expectedA);
             AssertByType(Type.Code128B, expectedB);
@@ -61,19 +60,11 @@ namespace BarcodeStandardTests.Symbologies
         public void EncodeBarcode_GenerateDataRow()
         {
             foreach (var x in new[]
-            {
-                "hello",
-                "12094568792",
-                "121234349090",
-                "thisisalongerstring1212121212",
-                "fighting!",
-                "파이팅!",
-                "ファイト！",
-                // See issue #123.
-                "\u0012",
-                "\u0014",
-                "this\u0012is\u0014weird",
-            })
+                     {
+                         "hello", "12094568792", "121234349090", "thisisalongerstring1212121212", "fighting!", "파이팅!", "ファイト！",
+                         // See issue #123.
+                         "\u0012", "\u0014", "this\u0012is\u0014weird",
+                     })
             {
                 string Represent(
                     string s)
@@ -87,6 +78,7 @@ namespace BarcodeStandardTests.Symbologies
                         return c.ToString();
                     })) + "\"";
                 }
+
                 string TryByType(
                     Type type)
                 {
@@ -103,6 +95,7 @@ namespace BarcodeStandardTests.Symbologies
                         }
                     })());
                 }
+
                 Console.WriteLine($"        [DataRow({Represent(x)}, {TryByType(Type.Code128)}, {TryByType(Type.Code128A)}, {TryByType(Type.Code128B)}, {TryByType(Type.Code128C)})]");
             }
         }

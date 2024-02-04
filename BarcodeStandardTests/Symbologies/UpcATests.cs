@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class UpcATests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.UpcA,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.UpcA, };
 
         [DataTestMethod]
         [DataRow("038000356216", "10100011010111101011011100011010001101000110101010100001010011101010000110110011001101010000101")]

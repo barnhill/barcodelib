@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BarcodeStandard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BarcodeStandardTests.Symbologies
 {
     [TestClass]
     public class Code39ExtendedTests
     {
-        private readonly Barcode _barcode = new()
-        {
-            EncodedType = Type.Code39Extended,
-        };
+        private readonly Barcode _barcode = new() { EncodedType = Type.Code39Extended, };
 
         [DataTestMethod]
         [DataRow("19d27c947294z78a", "100101101101011010010101101011001011010100101001001010101100101101011001010110101001011011010010100100101101101001010101100101101010100110101101010010110110101100101011010110010110101010011010110100101001001010011011010101010010110110110100101101010010100100101101010010110100101101101")]
