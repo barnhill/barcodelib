@@ -10,8 +10,9 @@ using System.Xml.Serialization;
 using BarcodeLib;
 using BarcodeLib.Symbologies;
 using SkiaSharp;
+using static System.Net.Mime.MediaTypeNames;
 
-/* 
+/*
  * ***************************************************
  *                 Barcode Library                   *
  *                                                   *
@@ -23,16 +24,25 @@ using SkiaSharp;
  *  barcode images from a string of data.            *
  * ***************************************************
  */
+
 namespace BarcodeStandard
 {
     #region Enums
+
     public enum Type
     { Unspecified, UpcA, UpcE, UpcSupplemental2Digit, UpcSupplemental5Digit, Ean13, Ean8, Interleaved2Of5, Interleaved2Of5Mod10, Standard2Of5, Standard2Of5Mod10, Industrial2Of5, Industrial2Of5Mod10, Code39, Code39Extended, Code39Mod43, Codabar, PostNet, Bookland, Isbn, Jan13, MsiMod10, Msi2Mod10, MsiMod11, MsiMod11Mod10, ModifiedPlessey, Code11, Usd8, Ucc12, Ucc13, Logmars, Code128, Code128A, Code128B, Code128C, Itf14, Code93, Telepen, Fim, Pharmacode }
+
     public enum SaveTypes
     { Jpg, Png, Webp, Unspecified }
+
     public enum AlignmentPositions
     { Center, Left, Right }
-    #endregion
+
+    public enum GuardBarsMode
+    { Enabled, EnabledFirstCharOnQuietZone, Disabled }
+
+    #endregion Enums
+
     /// <summary>
     /// Generates a barcode image of a specified symbology from a string of data.
     /// </summary>
@@ -40,11 +50,14 @@ namespace BarcodeStandard
     public class Barcode : IDisposable
     {
         #region Variables
+
         private IBarcode _iBarcode = new Blank();
         private static readonly XmlSerializer SaveDataXmlSerializer = new XmlSerializer(typeof(SaveData));
-        #endregion
+
+        #endregion Variables
 
         #region Constructors
+
         /// <summary>
         /// Default constructor.  Does not populate the raw data.  MUST be done via the RawData property before encoding.
         /// </summary>
@@ -52,6 +65,7 @@ namespace BarcodeStandard
         {
             //constructor
         }//Barcode
+
         /// <summary>
         /// Constructor. Populates the raw data. No whitespace will be added before or after the barcode.
         /// </summary>
@@ -61,19 +75,23 @@ namespace BarcodeStandard
             //constructor
             RawData = data;
         }//Barcode
+
         public Barcode(string data, Type iType)
         {
             RawData = data;
             EncodedType = iType;
             GenerateBarcode();
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the raw data to encode.
         /// </summary>
         public string RawData { get; set; } = ""; //RawData
+
         /// <summary>
         /// Gets the encoded value.
         /// </summary>
@@ -88,6 +106,7 @@ namespace BarcodeStandard
         /// Gets or sets the Encoded Type (ex. UPC-A, EAN-13 ... etc)
         /// </summary>
         public Type EncodedType { set; get; } = Type.Unspecified; //EncodedType
+
         /// <summary>
         /// Gets the Image of the generated barcode.
         /// </summary>
@@ -97,14 +116,17 @@ namespace BarcodeStandard
         /// Gets or sets the color of the bars. (Default is black)
         /// </summary>
         public SKColorF ForeColor { get; set; } = SKColors.Black; //ForeColor
+
         /// <summary>
         /// Gets or sets the background color. (Default is white)
         /// </summary>
         public SKColorF BackColor { get; set; } = SKColors.White; //BackColor
+
         /// <summary>
         /// Gets or sets the label font. (Default is Microsoft Sans Serif, 10pt, Bold)
         /// </summary>
         public SKFont LabelFont { get; set; } = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold), 28); //LabelFont
+
         /// <summary>
         /// Gets or sets the width of the image to be drawn. (Default is 300 pixels)
         /// </summary>
@@ -119,6 +141,7 @@ namespace BarcodeStandard
         ///   If non-null, sets the width of a bar. <see cref="Width"/> is ignored and calculated automatically.
         /// </summary>
         public int? BarWidth { get; set; }
+
         /// <summary>
         ///   If non-null, <see cref="Height"/> is ignored and set to <see cref="Width"/> divided by this value rounded down.
         /// </summary>
@@ -131,6 +154,7 @@ namespace BarcodeStandard
         ///   calculated. So it is safe to use in conjunction with <see cref="BarWidth"/>.
         /// </para></remarks>
         public double? AspectRatio { get; set; }
+
         /// <summary>
         /// Gets or sets whether a label should be drawn below the image. (Default is false)
         /// </summary>
@@ -142,6 +166,13 @@ namespace BarcodeStandard
         public String AlternateLabel { get; set; }
 
         /// <summary>
+        /// Mode when rendering guard bars for barcodes that support them (EAN-8/EAN-13/UPC-A/UPC-E)
+        /// 
+        /// Functionality not implemented for codes other than EAN-13
+        /// </summary>
+        public GuardBarsMode GuardBarsMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the amount of time in milliseconds that it took to encode and draw the barcode.
         /// </summary>
         public double EncodingTime
@@ -149,6 +180,7 @@ namespace BarcodeStandard
             get;
             set;
         }
+
         /// <summary>
         /// Gets or sets the image format to use when encoding and returning images. (Jpeg is default)
         /// </summary>
@@ -167,6 +199,7 @@ namespace BarcodeStandard
             get;
             set;
         }//Alignment
+
         /// <summary>
         /// Gets a byte array representation of the encoded image. (Used for Crystal Reports)
         /// </summary>
@@ -184,6 +217,7 @@ namespace BarcodeStandard
                 }//using
             }
         }
+
         /// <summary>
         /// Gets the assembly version information.
         /// </summary>
@@ -193,9 +227,11 @@ namespace BarcodeStandard
         /// Disables EAN13 invalid country code exception.
         /// </summary>
         public bool DisableEan13CountryException { get; set; } = false;
-        #endregion
+
+        #endregion Properties
 
         #region General Encode
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -242,6 +278,7 @@ namespace BarcodeStandard
             ForeColor = foreColor;
             return Encode(iType, stringToEncode);
         }//(Image)Encode(Type, string, Color, Color)
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -253,6 +290,7 @@ namespace BarcodeStandard
             RawData = stringToEncode;
             return Encode(iType);
         }//(Image)Encode(TYPE, string)
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -262,11 +300,13 @@ namespace BarcodeStandard
             EncodedType = iType;
             return Encode();
         }//Encode()
+
         public SKImage Encode(string stringToEncode)
         {
             RawData = stringToEncode;
             return Encode();
         }//(Image)Encode(TYPE, string)
+
         /// <summary>
         /// Encodes the raw data into a barcode image.
         /// </summary>
@@ -282,7 +322,7 @@ namespace BarcodeStandard
             EncodedImage = SKImage.FromBitmap(Generate_Image());
 
             EncodingTime = (DateTime.Now - dtStartTime).TotalMilliseconds;
-            
+
             return EncodedImage;
         }//Encode
 
@@ -290,7 +330,7 @@ namespace BarcodeStandard
         /// Encodes the raw data into binary form representing bars and spaces.
         /// </summary>
         /// <returns>
-        /// Returns a string containing the binary value of the barcode. 
+        /// Returns a string containing the binary value of the barcode.
         /// This also sets the internal values used within the class.
         /// </returns>
         /// <param name="rawData" >Optional raw_data parameter to for quick barcode generation</param>
@@ -310,53 +350,65 @@ namespace BarcodeStandard
 
             EncodedValue = "";
             CountryAssigningManufacturerCode = "N/A";
-            
+
             switch (EncodedType)
             {
                 case Type.Ucc12:
                 case Type.UpcA: //Encode_UPCA();
                     _iBarcode = new UPCA(RawData);
                     break;
+
                 case Type.Ucc13:
                 case Type.Ean13: //Encode_EAN13();
                     _iBarcode = new EAN13(RawData, DisableEan13CountryException);
                     break;
+
                 case Type.Interleaved2Of5Mod10:
                 case Type.Interleaved2Of5: //Encode_Interleaved2of5();
                     _iBarcode = new Interleaved2of5(RawData, EncodedType);
                     break;
+
                 case Type.Industrial2Of5Mod10:
                 case Type.Industrial2Of5:
                 case Type.Standard2Of5Mod10:
                 case Type.Standard2Of5: //Encode_Standard2of5();
                     _iBarcode = new Standard2of5(RawData, EncodedType);
                     break;
+
                 case Type.Logmars:
                 case Type.Code39: //Encode_Code39();
                     _iBarcode = new Code39(RawData);
                     break;
+
                 case Type.Code39Extended:
                     _iBarcode = new Code39(RawData, true);
                     break;
+
                 case Type.Code39Mod43:
                     _iBarcode = new Code39(RawData, false, true);
                     break;
+
                 case Type.Codabar: //Encode_Codabar();
                     _iBarcode = new Codabar(RawData);
                     break;
+
                 case Type.PostNet: //Encode_PostNet();
                     _iBarcode = new Postnet(RawData);
                     break;
+
                 case Type.Isbn:
                 case Type.Bookland: //Encode_ISBN_Bookland();
                     _iBarcode = new ISBN(RawData);
                     break;
+
                 case Type.Jan13: //Encode_JAN13();
                     _iBarcode = new JAN13(RawData);
                     break;
+
                 case Type.UpcSupplemental2Digit: //Encode_UPCSupplemental_2();
                     _iBarcode = new UPCSupplement2(RawData);
                     break;
+
                 case Type.MsiMod10:
                 case Type.Msi2Mod10:
                 case Type.MsiMod11:
@@ -364,43 +416,56 @@ namespace BarcodeStandard
                 case Type.ModifiedPlessey: //Encode_MSI();
                     _iBarcode = new MSI(RawData, EncodedType);
                     break;
+
                 case Type.UpcSupplemental5Digit: //Encode_UPCSupplemental_5();
                     _iBarcode = new UPCSupplement5(RawData);
                     break;
+
                 case Type.UpcE: //Encode_UPCE();
                     _iBarcode = new UPCE(RawData);
                     break;
+
                 case Type.Ean8: //Encode_EAN8();
                     _iBarcode = new EAN8(RawData);
                     break;
+
                 case Type.Usd8:
                 case Type.Code11: //Encode_Code11();
                     _iBarcode = new Code11(RawData);
                     break;
+
                 case Type.Code128: //Encode_Code128();
                     _iBarcode = new Code128(RawData);
                     break;
+
                 case Type.Code128A:
                     _iBarcode = new Code128(RawData, Code128.TYPES.A);
                     break;
+
                 case Type.Code128B:
                     _iBarcode = new Code128(RawData, Code128.TYPES.B);
                     break;
+
                 case Type.Code128C:
                     _iBarcode = new Code128(RawData, Code128.TYPES.C);
                     break;
+
                 case Type.Itf14:
                     _iBarcode = new ITF14(RawData);
                     break;
+
                 case Type.Code93:
                     _iBarcode = new Code93(RawData);
                     break;
+
                 case Type.Telepen:
                     _iBarcode = new Telepen(RawData);
                     break;
+
                 case Type.Fim:
                     _iBarcode = new FIM(RawData);
                     break;
+
                 case Type.Pharmacode:
                     _iBarcode = new Pharmacode(RawData);
                     break;
@@ -410,9 +475,11 @@ namespace BarcodeStandard
 
             return _iBarcode.Encoded_Value;
         }
-        #endregion
+
+        #endregion General Encode
 
         #region Image Functions
+
         /// <summary>
         /// Gets a bitmap representation of the encoded data.
         /// </summary>
@@ -447,7 +514,7 @@ namespace BarcodeStandard
                         var ilHeight = Height;
                         if (IncludeLabel)
                         {
-                            ilHeight -= Utils.GetFontHeight(RawData, LabelFont);  
+                            ilHeight -= Utils.GetFontHeight(RawData, LabelFont);
                         }
 
                         bitmap = new SKBitmap(Width, Height);
@@ -462,7 +529,7 @@ namespace BarcodeStandard
 
                         //draw image
                         var pos = 0;
-                        
+
                         var canvas = new SKCanvas(bitmap);
 
                         //fill background
@@ -497,7 +564,7 @@ namespace BarcodeStandard
 
                         if (IncludeLabel)
                             Labels.Label_ITF14(this, bitmap);
-                        
+
                         break;
                     }//case
                 case Type.UpcA:
@@ -528,7 +595,7 @@ namespace BarcodeStandard
                         {
                             //clears the image and colors the entire background
                             canvas.Clear(BackColor);
-                            
+
                             var barwidth = iBarWidth;
                             //lines are fBarWidth wide so draw the appropriate color line vertically
 
@@ -547,7 +614,7 @@ namespace BarcodeStandard
                                 }//while
                             }//using
                         }
-                       
+
                         if (IncludeLabel)
                         {
                             Labels.Label_UPCA(this, bitmap);
@@ -563,8 +630,15 @@ namespace BarcodeStandard
                         // Automatically calculate Height if applicable.
                         Height = (int?)(Width / AspectRatio) ?? Height;
 
+                        var ilWidth = Width;
                         var ilHeight = Height;
                         var topLabelAdjustment = 0;
+
+                        // If first char is printed outside of the code we need to shift the image right and reduce it's width to compensate
+                        var quietZoneAdjustment = BarcodeCommon.GetQuietZoneAdjustment(this);
+
+                        // We reduce the image size by quite zone form both ends
+                        ilWidth -= quietZoneAdjustment * 2;
 
                         //set alignment
                         var shiftAdjustment = BarcodeCommon.GetAlignmentShiftAdjustment(this);
@@ -572,7 +646,7 @@ namespace BarcodeStandard
                         if (IncludeLabel)
                         {
                             // Shift drawing down if top label.
-                            if (AlternateLabel != null)
+                            if (AlternateLabel != null)// || GuardBarsMode == GuardBarsMode.Disabled)
                             {
                                 topLabelAdjustment = Utils.GetFontHeight(RawData, LabelFont);
                                 ilHeight -= Utils.GetFontHeight(RawData, LabelFont);
@@ -580,7 +654,7 @@ namespace BarcodeStandard
                         }
 
                         bitmap = new SKBitmap(Width, Height);
-                        var iBarWidth = Width / EncodedValue.Length;
+                        var iBarWidth = ilWidth / EncodedValue.Length;
                         if (iBarWidth <= 0)
                             throw new Exception("EGENERATE_IMAGE-2: Image size specified not large enough to draw image. (Bar size determined to be less than 1 pixel)");
 
@@ -611,7 +685,14 @@ namespace BarcodeStandard
 
                         if (IncludeLabel)
                         {
-                            Labels.Label_EAN13(this, bitmap);
+                            if (GuardBarsMode != GuardBarsMode.Disabled)
+                            {
+                                Labels.Label_EAN13(this, bitmap, iBarWidth);
+                            }
+                            else
+                            {
+                                Labels.Label_Generic(this, bitmap);
+                            }
                         }
 
                         break;
@@ -649,7 +730,7 @@ namespace BarcodeStandard
                             canvas.Clear((SKColor)BackColor);
 
                             var barWidth = iBarWidth / iBarWidthModifier;
-                            
+
                             //lines are fBarWidth wide so draw the appropriate color line vertically
                             using (var backPaint = new SKPaint())
                             {
@@ -667,7 +748,7 @@ namespace BarcodeStandard
                                             var y = 0f;
                                             if (EncodedValue[pos] == '0')
                                                 y = ilHeight - ilHeight * 0.4f;
-                                            
+
                                             canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, y), forePaint);
                                         }//if
                                         else
@@ -682,7 +763,7 @@ namespace BarcodeStandard
                         }//using
                         if (IncludeLabel)
                         {
-                           Labels.Label_Generic(this, bitmap);
+                            Labels.Label_Generic(this, bitmap);
                         }//if
 
                         break;
@@ -709,7 +790,7 @@ namespace BarcodeStandard
             {
                 if (EncodedImage != null)
                 {
-                    //Save the image to a memory stream so that we can get a byte array!      
+                    //Save the image to a memory stream so that we can get a byte array!
                     using (var ms = new MemoryStream())
                     {
                         SaveImage(ms, savetype);
@@ -722,9 +803,10 @@ namespace BarcodeStandard
             catch (Exception ex)
             {
                 throw new Exception("EGETIMAGEDATA-1: Could not retrieve image data. " + ex.Message);
-            }//catch  
+            }//catch
             return imageData;
         }
+
         /// <summary>
         /// Saves an encoded image to a specified file and type.
         /// </summary>
@@ -747,6 +829,7 @@ namespace BarcodeStandard
                 throw new Exception("ESAVEIMAGE-1: Could not save image.\n\n=======================\n\n" + ex.Message);
             }//catch
         }//SaveImage(string, SaveTypes)
+
         /// <summary>
         /// Saves an encoded image to a specified stream.
         /// </summary>
@@ -775,8 +858,8 @@ namespace BarcodeStandard
                 default: return ImageFormat;
             }//switch
         }
-        
-        #endregion
+
+        #endregion Image Functions
 
         #region XML Methods
 
@@ -806,6 +889,7 @@ namespace BarcodeStandard
             }//using
             return saveData;
         }
+
         public string ToJson(Boolean includeImage = true)
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(GetSaveData(includeImage));
@@ -835,6 +919,7 @@ namespace BarcodeStandard
                 }//catch
             }//else
         }
+
         public static SaveData FromJson(Stream jsonStream)
         {
             using (jsonStream)
@@ -851,6 +936,7 @@ namespace BarcodeStandard
                 }
             }
         }
+
         public static SaveData FromXml(Stream xmlStream)
         {
             try
@@ -865,6 +951,7 @@ namespace BarcodeStandard
                 throw new Exception("EGETIMAGEFROMXML-1: " + ex.Message);
             }//catch
         }
+
         public static SKImage GetImageFromSaveData(SaveData saveData)
         {
             try
@@ -885,9 +972,11 @@ namespace BarcodeStandard
         {
             public override Encoding Encoding => new UTF8Encoding(false);
         }
-        #endregion
+
+        #endregion XML Methods
 
         #region Static Encode Methods
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -901,6 +990,7 @@ namespace BarcodeStandard
                 return b.Encode(iType, data);
             }//using
         }
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -917,6 +1007,7 @@ namespace BarcodeStandard
                 return i;
             }//using
         }
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -932,6 +1023,7 @@ namespace BarcodeStandard
                 return b.Encode(iType, data);
             }//using
         }
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -949,6 +1041,7 @@ namespace BarcodeStandard
                 return b.Encode(iType, data, width, height);
             }//using
         }
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -966,6 +1059,7 @@ namespace BarcodeStandard
                 return b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A));
             }//using
         }
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -985,6 +1079,7 @@ namespace BarcodeStandard
                 return b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A), width, height);
             }//using
         }
+
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
         /// </summary>
@@ -1009,6 +1104,7 @@ namespace BarcodeStandard
         }
 
         #region IDisposable Support
+
         private bool _disposedValue; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -1033,22 +1129,24 @@ namespace BarcodeStandard
             EncodedValue = null;
             CountryAssigningManufacturerCode = null;
         }
-        
-         ~Barcode() {
-           // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-           Dispose(false);
-         }
+
+        ~Barcode()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(false);
+        }
 
         // This code added to correctly implement the disposable pattern.
         void IDisposable.Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // Call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.	
+            // Call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.
             GC.SuppressFinalize(this);
         }
-        #endregion
 
-        #endregion
+        #endregion IDisposable Support
+
+        #endregion Static Encode Methods
     }//Barcode Class
 }//Barcode namespace
