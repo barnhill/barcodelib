@@ -20,5 +20,16 @@ namespace BarcodeStandardTests.Symbologies
             _barcode.Encode(data);
             Assert.AreEqual(expected, _barcode.EncodedValue, $"{_barcode.EncodedType}");
         }
+
+        [DataTestMethod]
+        [DataRow("498000356216", "4980003562162")]
+        [DataRow("4980003562162", "4980003562162")]
+        [DataRow("493123123123", "4931231231238")]
+        public void CalculateChecksum(string data, string expected)
+        {
+            _barcode.Encode(data);
+
+            Assert.AreEqual(expected, _barcode.RawData);
+        }
     }
 }
