@@ -6,12 +6,16 @@ namespace BarcodeLib.Symbologies
     ///  JAN-13 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class JAN13 : BarcodeCommon, IBarcode
+    internal class JAN13 : BarcodeCommon, IBarcode
     {
+        private readonly EAN13 _ean13;
+
         public JAN13(string input)
         {
-            RawData = input;
+            _ean13 = new EAN13(input);
+            RawData = _ean13.RawData;
         }
+
         /// <summary>
         /// Encode the raw data using the JAN-13 algorithm.
         /// </summary>
@@ -21,14 +25,13 @@ namespace BarcodeLib.Symbologies
             if (!CheckNumericOnly(RawData))
                 Error("EJAN13-2: Numeric Data Only");
 
-            EAN13 ean13 = new EAN13(RawData);
-            return ean13.Encoded_Value;
+            return _ean13.Encoded_Value;
         }//Encode_JAN13
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_JAN13();
 
-        #endregion
+        #endregion IBarcode Members
     }
 }
