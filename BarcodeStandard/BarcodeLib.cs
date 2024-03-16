@@ -661,6 +661,7 @@ namespace BarcodeStandard
                         //draw image
                         var pos = 0;
                         var halfBarWidth = (int)(iBarWidth * 0.5);
+                        var totalBarcodeWidth = EncodedValue.Length * iBarWidth;
 
                         using (var canvas = new SKCanvas(bitmap))
                         {
@@ -691,7 +692,7 @@ namespace BarcodeStandard
                             }
                             else
                             {
-                                Labels.Label_Generic(this, bitmap);
+                                Labels.Label_Generic(this, bitmap, totalBarcodeWidth);
                             }
                         }
 
@@ -724,12 +725,13 @@ namespace BarcodeStandard
                         var pos = 0;
                         var halfBarWidth = (int)Math.Round(iBarWidth * 0.5);
 
+                        var barWidth = iBarWidth / iBarWidthModifier;
+                        var totalBarcodeWidth = EncodedValue.Length * barWidth;
+
                         using (var canvas = new SKCanvas(bitmap))
                         {
                             //clears the image and colors the entire background
                             canvas.Clear((SKColor)BackColor);
-
-                            var barWidth = iBarWidth / iBarWidthModifier;
 
                             //lines are fBarWidth wide so draw the appropriate color line vertically
                             using (var backPaint = new SKPaint())
@@ -763,7 +765,7 @@ namespace BarcodeStandard
                         }//using
                         if (IncludeLabel)
                         {
-                            Labels.Label_Generic(this, bitmap);
+                            Labels.Label_Generic(this, bitmap, totalBarcodeWidth);
                         }//if
 
                         break;

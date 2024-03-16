@@ -82,7 +82,7 @@ namespace BarcodeLib
         /// <param name="barcode">Barcode to draw label for</param>
         /// <param name="img">Image representation of the barcode without the labels</param>
         /// <returns>Image representation of the barcode with labels applied</returns>
-        public static SKImage Label_Generic(Barcode barcode, SKBitmap img)
+        public static SKImage Label_Generic(Barcode barcode, SKBitmap img, int width)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace BarcodeLib
                 foreBrush.MeasureText(text, ref textBounds);
                 var labelPadding = textBounds.Height / 2f;
 
-                var labelX = img.Width / 2f - textBounds.Width / 2f;
+                var labelX = alignmentAdjustment + ((width - textBounds.Width) / 2f);
                 var labelY = img.Height - textBounds.Height + labelPadding;
                 var backY = img.Height - textBounds.Height - labelPadding * 2f;
 
