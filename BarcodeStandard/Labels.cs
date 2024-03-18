@@ -37,8 +37,11 @@ namespace BarcodeLib
                             pen.ColorF = barcode.ForeColor;
                             pen.StrokeWidth = (float)img.Height / 16;
 
-                            canvas.DrawLine(new SKPoint(0, backY - pen.StrokeWidth / 2f),
-                                new SKPoint(img.Width, backY - pen.StrokeWidth / 2f), pen); //bottom
+                            if (barcode.BearerBarsMode != BearerBarsMode.Disabled)
+                            {
+                                canvas.DrawLine(new SKPoint(0, backY - pen.StrokeWidth / 2f),
+                                    new SKPoint(img.Width, backY - pen.StrokeWidth / 2f), pen); //bottom
+                            }
                         }
 
                         //color a box at the bottom of the barcode to hold the string of data

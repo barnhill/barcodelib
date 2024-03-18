@@ -60,6 +60,7 @@ namespace BarcodeStandardExample
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkTopBar = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.cbGuardBarsMode = new System.Windows.Forms.ComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -79,7 +80,8 @@ namespace BarcodeStandardExample
             this.txtData = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.chkTopBar = new System.Windows.Forms.CheckBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cbBearerBarsMode = new System.Windows.Forms.ComboBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -408,6 +410,8 @@ namespace BarcodeStandardExample
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.cbBearerBarsMode);
             this.groupBox3.Controls.Add(this.chkTopBar);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.cbGuardBarsMode);
@@ -419,6 +423,16 @@ namespace BarcodeStandardExample
             this.groupBox3.Size = new System.Drawing.Size(128, 193);
             this.groupBox3.TabIndex = 77;
             this.groupBox3.TabStop = false;
+            // 
+            // chkTopBar
+            // 
+            this.chkTopBar.AutoSize = true;
+            this.chkTopBar.Location = new System.Drawing.Point(6, 124);
+            this.chkTopBar.Name = "chkTopBar";
+            this.chkTopBar.Size = new System.Drawing.Size(63, 17);
+            this.chkTopBar.TabIndex = 58;
+            this.chkTopBar.Text = "Top bar";
+            this.chkTopBar.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -629,15 +643,27 @@ namespace BarcodeStandardExample
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // chkTopBar
+            // label15
             // 
-            this.chkTopBar.AutoSize = true;
-            this.chkTopBar.Location = new System.Drawing.Point(6, 124);
-            this.chkTopBar.Name = "chkTopBar";
-            this.chkTopBar.Size = new System.Drawing.Size(63, 17);
-            this.chkTopBar.TabIndex = 58;
-            this.chkTopBar.Text = "Top bar";
-            this.chkTopBar.UseVisualStyleBackColor = true;
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(4, 143);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(90, 13);
+            this.label15.TabIndex = 60;
+            this.label15.Text = "Bearer bars mode";
+            // 
+            // cbBearerBarsMode
+            // 
+            this.cbBearerBarsMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBearerBarsMode.FormattingEnabled = true;
+            this.cbBearerBarsMode.Items.AddRange(new object[] {
+            "Frame",
+            "BearerBars",
+            "Disabled"});
+            this.cbBearerBarsMode.Location = new System.Drawing.Point(5, 159);
+            this.cbBearerBarsMode.Name = "cbBearerBarsMode";
+            this.cbBearerBarsMode.Size = new System.Drawing.Size(118, 21);
+            this.cbBearerBarsMode.TabIndex = 59;
             // 
             // TestApp
             // 
@@ -726,6 +752,8 @@ namespace BarcodeStandardExample
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cbGuardBarsMode;
         private System.Windows.Forms.CheckBox chkTopBar;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cbBearerBarsMode;
     }
 }
 

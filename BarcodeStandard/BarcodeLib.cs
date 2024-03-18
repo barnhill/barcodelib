@@ -41,6 +41,9 @@ namespace BarcodeStandard
     public enum GuardBarsMode
     { Enabled, EnabledFirstCharOnQuietZone, Disabled }
 
+    public enum BearerBarsMode
+    { Frame, BearerBars, Disabled }
+
     #endregion Enums
 
     /// <summary>
@@ -171,6 +174,13 @@ namespace BarcodeStandard
         /// Functionality not implemented for codes other than EAN-13
         /// </summary>
         public GuardBarsMode GuardBarsMode { get; set; }
+
+        /// <summary>
+        /// Mode when rendering bearer bars
+        ///
+        /// Functionality not implemented for codes other than EAN-13
+        /// </summary>
+        public BearerBarsMode BearerBarsMode { get; set; }
 
         /// <summary>
         /// Gets or sets the amount of time in milliseconds that it took to encode and draw the barcode.
@@ -565,10 +575,16 @@ namespace BarcodeStandard
                             paint.ColorF = ForeColor;
 
                             //paint.Alignment = PenAlignment.Center;
-                            canvas.DrawLine(new SKPoint(0, 0), new SKPoint(bitmap.Width, 0), paint);//top
-                            canvas.DrawLine(new SKPoint(0, ilHeight), new SKPoint(bitmap.Width, ilHeight), paint);//bottom
-                            canvas.DrawLine(new SKPoint(0, 0), new SKPoint(0, ilHeight), paint);//left
-                            canvas.DrawLine(new SKPoint(bitmap.Width, 0), new SKPoint(bitmap.Width, ilHeight), paint);//right
+                            if (BearerBarsMode == BearerBarsMode.Frame || BearerBarsMode == BearerBarsMode.BearerBars)
+                            {
+                                canvas.DrawLine(new SKPoint(0, 0), new SKPoint(bitmap.Width, 0), paint);//top
+                                canvas.DrawLine(new SKPoint(0, ilHeight), new SKPoint(bitmap.Width, ilHeight), paint);//bottom
+                            }
+                            if (BearerBarsMode == BearerBarsMode.Frame)
+                            {
+                                canvas.DrawLine(new SKPoint(bitmap.Width, 0), new SKPoint(bitmap.Width, ilHeight), paint);//right
+                                canvas.DrawLine(new SKPoint(0, 0), new SKPoint(0, ilHeight), paint);//left
+                            }
                         }//using
 
                         if (IncludeLabel)

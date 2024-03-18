@@ -28,6 +28,7 @@ namespace BarcodeStandardExample
             cbEncodeType.SelectedIndex = 0;
             cbBarcodeAlign.SelectedIndex = 0;
             cbGuardBarsMode.SelectedIndex = 0;
+            cbBearerBarsMode.SelectedIndex = 0;
 
             //Show library version
             tslblLibraryVersion.Text = @"Barcode Library Version: " + Barcode.Version;
@@ -58,6 +59,14 @@ namespace BarcodeStandardExample
                 case "disabled": _b.GuardBarsMode = GuardBarsMode.Disabled; break;
                 case "enabledfirstcharonquietzone": _b.GuardBarsMode = GuardBarsMode.EnabledFirstCharOnQuietZone; break;
                 default: _b.GuardBarsMode = GuardBarsMode.Enabled; break;
+            }//switch
+
+            //bearer bars mode
+            switch (cbBearerBarsMode.SelectedItem.ToString().Trim().ToLower())
+            {
+                case "disabled": _b.BearerBarsMode = BearerBarsMode.Disabled; break;
+                case "bearerbars": _b.BearerBarsMode = BearerBarsMode.BearerBars; break;
+                default: _b.BearerBarsMode = BearerBarsMode.Frame; break;
             }//switch
 
             var type = GetTypeSelected();
