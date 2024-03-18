@@ -346,5 +346,25 @@ namespace BarcodeLib
 
             return fontSize;
         }
+
+        internal static void TopBar(Barcode barcode, SKBitmap img, int shiftAdjustment, int barcodeWidth, int iBarWidth)
+        {
+            using (var g = new SKCanvas(img))
+            using (var foreBrush = new SKPaint())
+            using (var backBrush = new SKPaint())
+            {
+                foreBrush.ColorF = barcode.ForeColor;
+                foreBrush.IsAntialias = true;
+                foreBrush.StrokeWidth = iBarWidth;
+                backBrush.ColorF = barcode.BackColor;
+                backBrush.IsAntialias = true;
+
+                // Clear area under top bar
+                g.DrawRect(new SKRect(0, 0, img.Width, iBarWidth * 3), backBrush);
+
+                // Draw the top bar
+                g.DrawLine(new SKPoint(shiftAdjustment, iBarWidth * 1.5f), new SKPoint(shiftAdjustment + barcodeWidth, iBarWidth * 1.5f), foreBrush); 
+            }
+        }
     }
 }

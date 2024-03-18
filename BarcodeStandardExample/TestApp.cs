@@ -42,6 +42,7 @@ namespace BarcodeStandardExample
             var w = Convert.ToInt32(txtWidth.Text.Trim());
             var h = Convert.ToInt32(txtHeight.Text.Trim());
             _b.Alignment = AlignmentPositions.Center;
+            _b.IncludeTopBar = chkTopBar.Checked;
 
             //barcode alignment
             switch (cbBarcodeAlign.SelectedItem.ToString().Trim().ToLower())

@@ -79,6 +79,7 @@ namespace BarcodeStandardExample
             this.txtData = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.chkTopBar = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -98,7 +99,7 @@ namespace BarcodeStandardExample
             this.tsslEncodedType,
             this.tslblLibraryVersion,
             this.tslblCredits});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 630);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 671);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1015, 24);
@@ -133,7 +134,7 @@ namespace BarcodeStandardExample
             this.barcode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.barcode.Location = new System.Drawing.Point(0, 0);
             this.barcode.Name = "barcode";
-            this.barcode.Size = new System.Drawing.Size(711, 630);
+            this.barcode.Size = new System.Drawing.Size(711, 671);
             this.barcode.TabIndex = 36;
             this.barcode.TabStop = false;
             this.barcode.Text = "Barcode Image";
@@ -181,7 +182,7 @@ namespace BarcodeStandardExample
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.barcode);
-            this.splitContainer1.Size = new System.Drawing.Size(1015, 630);
+            this.splitContainer1.Size = new System.Drawing.Size(1015, 671);
             this.splitContainer1.SplitterDistance = 300;
             this.splitContainer1.TabIndex = 37;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
@@ -192,7 +193,7 @@ namespace BarcodeStandardExample
             this.groupBox2.Controls.Add(this.btnMassGeneration);
             this.groupBox2.Controls.Add(this.lblAverageGenerationTime);
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Location = new System.Drawing.Point(8, 542);
+            this.groupBox2.Location = new System.Drawing.Point(8, 586);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -234,7 +235,7 @@ namespace BarcodeStandardExample
             this.groupBox1.Controls.Add(this.btnSaveXML);
             this.groupBox1.Controls.Add(this.btnSave);
             this.groupBox1.Controls.Add(this.btnEncode);
-            this.groupBox1.Location = new System.Drawing.Point(8, 448);
+            this.groupBox1.Location = new System.Drawing.Point(8, 492);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -407,6 +408,7 @@ namespace BarcodeStandardExample
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chkTopBar);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.cbGuardBarsMode);
             this.groupBox3.Controls.Add(this.textBox1);
@@ -414,7 +416,7 @@ namespace BarcodeStandardExample
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Location = new System.Drawing.Point(164, 145);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(128, 144);
+            this.groupBox3.Size = new System.Drawing.Size(128, 193);
             this.groupBox3.TabIndex = 77;
             this.groupBox3.TabStop = false;
             // 
@@ -486,7 +488,7 @@ namespace BarcodeStandardExample
             // 
             // txtEncoded
             // 
-            this.txtEncoded.Location = new System.Drawing.Point(7, 295);
+            this.txtEncoded.Location = new System.Drawing.Point(7, 344);
             this.txtEncoded.Multiline = true;
             this.txtEncoded.Name = "txtEncoded";
             this.txtEncoded.ReadOnly = true;
@@ -540,7 +542,7 @@ namespace BarcodeStandardExample
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 209);
+            this.label2.Location = new System.Drawing.Point(9, 325);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 64;
@@ -627,11 +629,21 @@ namespace BarcodeStandardExample
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // chkTopBar
+            // 
+            this.chkTopBar.AutoSize = true;
+            this.chkTopBar.Location = new System.Drawing.Point(6, 124);
+            this.chkTopBar.Name = "chkTopBar";
+            this.chkTopBar.Size = new System.Drawing.Size(63, 17);
+            this.chkTopBar.TabIndex = 58;
+            this.chkTopBar.Text = "Top bar";
+            this.chkTopBar.UseVisualStyleBackColor = true;
+            // 
             // TestApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1015, 654);
+            this.ClientSize = new System.Drawing.Size(1015, 695);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.DoubleBuffered = true;
@@ -713,6 +725,7 @@ namespace BarcodeStandardExample
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cbGuardBarsMode;
+        private System.Windows.Forms.CheckBox chkTopBar;
     }
 }
 
