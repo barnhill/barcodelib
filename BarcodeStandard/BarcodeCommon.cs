@@ -24,17 +24,31 @@ namespace BarcodeStandard
             return true;
         }
 
-        internal static int GetAlignmentShiftAdjustment(Barcode barcode)
+        internal static int GetQuietZoneAdjustment(Barcode barcode)
         {
+            if (barcode.IncludeLabel && barcode.GuardBarsMode == GuardBarsMode.EnabledFirstCharOnQuietZone)
+            {
+                return Utils.GetFontWidth("0", barcode.LabelFont) * 2;
+            }
+
+            return 0;
+        }
+
+        internal static int GetAlignmentShiftAdjustment(Barcode barcode)
+        { 
+            var quietZoneAdjustment = BarcodeCommon.GetQuietZoneAdjustment(barcode);
+
             switch (barcode.Alignment)
             {
                 case AlignmentPositions.Left:
-                    return 0;
+                    return quietZoneAdjustment;
+
                 case AlignmentPositions.Right:
-                    return (barcode.Width % barcode.EncodedValue.Length);
+                    return ((barcode.Width - quietZoneAdjustment * 2) % barcode.EncodedValue.Length) + quietZoneAdjustment;
+
                 case AlignmentPositions.Center:
                 default:
-                    return (barcode.Width % barcode.EncodedValue.Length) / 2;
+                    return ((barcode.Width - quietZoneAdjustment * 2) % barcode.EncodedValue.Length) / 2 + quietZoneAdjustment;
             }//switch
         }
     }//BarcodeVariables abstract class

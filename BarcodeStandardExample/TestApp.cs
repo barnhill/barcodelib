@@ -11,13 +11,13 @@ namespace BarcodeStandardExample
 {
     /// <summary>
     /// This form is a test form to show what all you can do with the Barcode Library.
-    /// Only one call is actually needed to do the encoding and return the image of the 
+    /// Only one call is actually needed to do the encoding and return the image of the
     /// barcode but the rest is just flare and user interface ... stuff.
     /// </summary>
     public partial class TestApp : Form
     {
-        Barcode _b = new Barcode();
-        
+        private Barcode _b = new Barcode();
+
         public TestApp()
         {
             InitializeComponent();
@@ -27,6 +27,8 @@ namespace BarcodeStandardExample
         {
             cbEncodeType.SelectedIndex = 0;
             cbBarcodeAlign.SelectedIndex = 0;
+            cbGuardBarsMode.SelectedIndex = 0;
+            cbBearerBarsMode.SelectedIndex = 0;
 
             //Show library version
             tslblLibraryVersion.Text = @"Barcode Library Version: " + Barcode.Version;
@@ -41,6 +43,7 @@ namespace BarcodeStandardExample
             var w = Convert.ToInt32(txtWidth.Text.Trim());
             var h = Convert.ToInt32(txtHeight.Text.Trim());
             _b.Alignment = AlignmentPositions.Center;
+            _b.IncludeTopBar = chkTopBar.Checked;
 
             //barcode alignment
             switch (cbBarcodeAlign.SelectedItem.ToString().Trim().ToLower())
@@ -48,6 +51,22 @@ namespace BarcodeStandardExample
                 case "left": _b.Alignment = AlignmentPositions.Left; break;
                 case "right": _b.Alignment = AlignmentPositions.Right; break;
                 default: _b.Alignment = AlignmentPositions.Center; break;
+            }//switch
+
+            //guard bars mode
+            switch (cbGuardBarsMode.SelectedItem.ToString().Trim().ToLower())
+            {
+                case "disabled": _b.GuardBarsMode = GuardBarsMode.Disabled; break;
+                case "enabledfirstcharonquietzone": _b.GuardBarsMode = GuardBarsMode.EnabledFirstCharOnQuietZone; break;
+                default: _b.GuardBarsMode = GuardBarsMode.Enabled; break;
+            }//switch
+
+            //bearer bars mode
+            switch (cbBearerBarsMode.SelectedItem.ToString().Trim().ToLower())
+            {
+                case "disabled": _b.BearerBarsMode = BearerBarsMode.Disabled; break;
+                case "bearerbars": _b.BearerBarsMode = BearerBarsMode.BearerBars; break;
+                default: _b.BearerBarsMode = BearerBarsMode.Frame; break;
             }//switch
 
             var type = GetTypeSelected();
@@ -82,10 +101,10 @@ namespace BarcodeStandardExample
                     //===== Encoding performed here =====
                     barcode.BackgroundImage = Image.FromStream(_b.Encode(type, txtData.Text.Trim(), _b.ForeColor, _b.BackColor, w, h).Encode().AsStream());
                     //===================================
-                    
+
                     //show the encoding time
                     lblEncodingTime.Text = @"(" + Math.Round(_b.EncodingTime, 0, MidpointRounding.AwayFromZero) + @"ms)";
-                    
+
                     txtEncoded.Text = _b.EncodedValue;
 
                     tsslEncodedType.Text = @"Encoding Type: " + _b.EncodedType;
@@ -298,50 +317,65 @@ namespace BarcodeStandardExample
                 case "UPCA":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC-A");
                     break;
+
                 case "UCC13":
                 case "EAN13":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("EAN-13");
                     break;
+
                 case "Interleaved2of5_Mod10":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
                     break;
+
                 case "Interleaved2of5":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5");
                     break;
+
                 case "Standard2of5_Mod10":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Standard 2 of 5 Mod 10");
                     break;
+
                 case "Standard2of5":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Standard 2 of 5");
                     break;
+
                 case "LOGMARS":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("LOGMARS");
                     break;
+
                 case "CODE39":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 39");
                     break;
+
                 case "CODE39Extended":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 39 Extended");
                     break;
+
                 case "CODE39_Mod43":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 39 Mod 43");
                     break;
+
                 case "Codabar":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Codabar");
                     break;
+
                 case "PostNet":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("PostNet");
                     break;
+
                 case "ISBN":
                 case "BOOKLAND":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Bookland/ISBN");
                     break;
+
                 case "JAN13":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("JAN-13");
                     break;
+
                 case "UPC_SUPPLEMENTAL_2DIGIT":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC 2 Digit Ext.");
                     break;
+
                 case "MSI_Mod10":
                 case "MSI_2Mod10":
                 case "MSI_Mod11":
@@ -349,40 +383,52 @@ namespace BarcodeStandardExample
                 case "Modified_Plessey":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("MSI");
                     break;
+
                 case "UPC_SUPPLEMENTAL_5DIGIT":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC 5 Digit Ext.");
                     break;
+
                 case "UPCE":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC-E");
                     break;
+
                 case "EAN8":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("EAN-8");
                     break;
+
                 case "USD8":
                 case "CODE11":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 11");
                     break;
+
                 case "CODE128":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128");
                     break;
+
                 case "CODE128A":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128-A");
                     break;
+
                 case "CODE128B":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128-B");
                     break;
+
                 case "CODE128C":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128-C");
                     break;
+
                 case "ITF14":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("ITF-14");
                     break;
+
                 case "CODE93":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 93");
                     break;
+
                 case "FIM":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("FIM");
                     break;
+
                 case "Pharmacode":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Pharmacode");
                     break;
