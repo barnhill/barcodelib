@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  ITF-14 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class ITF14 : BarcodeCommon, IBarcode
+    internal class ITF14 : BarcodeCommon, IBarcode
     {
         private readonly string[] ITF14_Code = { "NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN" };
 

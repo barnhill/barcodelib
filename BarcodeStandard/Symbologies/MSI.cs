@@ -4,7 +4,7 @@ using Type = BarcodeStandard.Type;
 
 namespace BarcodeLib.Symbologies
 {
-    class MSI : BarcodeCommon, IBarcode
+    internal class MSI : BarcodeCommon, IBarcode
     {
         /// <summary>
         ///  MSI encoding

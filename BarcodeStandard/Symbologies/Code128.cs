@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     ///  Code 128 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Code128 : BarcodeCommon, IBarcode
+    internal class Code128 : BarcodeCommon, IBarcode
     {
         public static readonly char FNC1 = Convert.ToChar(200);
         public static readonly char FNC2 = Convert.ToChar(201);

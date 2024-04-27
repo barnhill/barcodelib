@@ -96,10 +96,10 @@ namespace BarcodeStandardExample
             this.tsslEncodedType,
             this.tslblLibraryVersion,
             this.tslblCredits});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 550);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1015, 30);
+            this.statusStrip1.Size = new System.Drawing.Size(1015, 24);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 30;
             this.statusStrip1.Text = "statusStrip1";
@@ -108,20 +108,20 @@ namespace BarcodeStandardExample
             // 
             this.tsslEncodedType.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tsslEncodedType.Name = "tsslEncodedType";
-            this.tsslEncodedType.Size = new System.Drawing.Size(4, 24);
+            this.tsslEncodedType.Size = new System.Drawing.Size(4, 19);
             // 
             // tslblLibraryVersion
             // 
             this.tslblLibraryVersion.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tslblLibraryVersion.Name = "tslblLibraryVersion";
-            this.tslblLibraryVersion.Size = new System.Drawing.Size(825, 24);
+            this.tslblLibraryVersion.Size = new System.Drawing.Size(860, 19);
             this.tslblLibraryVersion.Spring = true;
             this.tslblLibraryVersion.Text = "LibVersion";
             // 
             // tslblCredits
             // 
             this.tslblCredits.Name = "tslblCredits";
-            this.tslblCredits.Size = new System.Drawing.Size(170, 24);
+            this.tslblCredits.Size = new System.Drawing.Size(135, 19);
             this.tslblCredits.Text = "Written by: Brad Barnhill";
             this.tslblCredits.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -131,7 +131,7 @@ namespace BarcodeStandardExample
             this.barcode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.barcode.Location = new System.Drawing.Point(0, 0);
             this.barcode.Name = "barcode";
-            this.barcode.Size = new System.Drawing.Size(711, 550);
+            this.barcode.Size = new System.Drawing.Size(711, 556);
             this.barcode.TabIndex = 36;
             this.barcode.TabStop = false;
             this.barcode.Text = "Barcode Image";
@@ -139,7 +139,7 @@ namespace BarcodeStandardExample
             // btnMassGeneration
             // 
             this.btnMassGeneration.Location = new System.Drawing.Point(4, 16);
-            this.btnMassGeneration.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnMassGeneration.Margin = new System.Windows.Forms.Padding(2);
             this.btnMassGeneration.Name = "btnMassGeneration";
             this.btnMassGeneration.Size = new System.Drawing.Size(121, 33);
             this.btnMassGeneration.TabIndex = 0;
@@ -179,7 +179,7 @@ namespace BarcodeStandardExample
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.barcode);
-            this.splitContainer1.Size = new System.Drawing.Size(1015, 550);
+            this.splitContainer1.Size = new System.Drawing.Size(1015, 556);
             this.splitContainer1.SplitterDistance = 300;
             this.splitContainer1.TabIndex = 37;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
@@ -191,9 +191,9 @@ namespace BarcodeStandardExample
             this.groupBox2.Controls.Add(this.lblAverageGenerationTime);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Location = new System.Drawing.Point(8, 472);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(290, 80);
             this.groupBox2.TabIndex = 85;
             this.groupBox2.TabStop = false;
@@ -211,7 +211,7 @@ namespace BarcodeStandardExample
             this.lblAverageGenerationTime.AutoSize = true;
             this.lblAverageGenerationTime.Location = new System.Drawing.Point(136, 63);
             this.lblAverageGenerationTime.Name = "lblAverageGenerationTime";
-            this.lblAverageGenerationTime.Size = new System.Drawing.Size(0, 15);
+            this.lblAverageGenerationTime.Size = new System.Drawing.Size(0, 13);
             this.lblAverageGenerationTime.TabIndex = 81;
             // 
             // label14
@@ -219,7 +219,7 @@ namespace BarcodeStandardExample
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(3, 63);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(152, 15);
+            this.label14.Size = new System.Drawing.Size(134, 13);
             this.label14.TabIndex = 80;
             this.label14.Text = "Average Generation Time: ";
             // 
@@ -233,9 +233,9 @@ namespace BarcodeStandardExample
             this.groupBox1.Controls.Add(this.btnSave);
             this.groupBox1.Controls.Add(this.btnEncode);
             this.groupBox1.Location = new System.Drawing.Point(8, 378);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(282, 90);
             this.groupBox1.TabIndex = 84;
             this.groupBox1.TabStop = false;
@@ -244,9 +244,9 @@ namespace BarcodeStandardExample
             // 
             this.chkIncludeImageInSavedData.AutoSize = true;
             this.chkIncludeImageInSavedData.Location = new System.Drawing.Point(186, 70);
-            this.chkIncludeImageInSavedData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkIncludeImageInSavedData.Margin = new System.Windows.Forms.Padding(2);
             this.chkIncludeImageInSavedData.Name = "chkIncludeImageInSavedData";
-            this.chkIncludeImageInSavedData.Size = new System.Drawing.Size(107, 19);
+            this.chkIncludeImageInSavedData.Size = new System.Drawing.Size(93, 17);
             this.chkIncludeImageInSavedData.TabIndex = 0;
             this.chkIncludeImageInSavedData.Text = "Include Image";
             this.chkIncludeImageInSavedData.UseVisualStyleBackColor = true;
@@ -347,7 +347,7 @@ namespace BarcodeStandardExample
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(58, 50);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(72, 15);
+            this.label13.Size = new System.Drawing.Size(65, 13);
             this.label13.TabIndex = 53;
             this.label13.Text = "AspectRatio";
             // 
@@ -356,7 +356,7 @@ namespace BarcodeStandardExample
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(8, 50);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(57, 15);
+            this.label12.Size = new System.Drawing.Size(51, 13);
             this.label12.TabIndex = 52;
             this.label12.Text = "BarWidth";
             // 
@@ -373,7 +373,7 @@ namespace BarcodeStandardExample
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(16, 8);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 15);
+            this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 41;
             this.label7.Text = "Width";
             // 
@@ -382,7 +382,7 @@ namespace BarcodeStandardExample
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(62, 8);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 15);
+            this.label6.Size = new System.Drawing.Size(38, 13);
             this.label6.TabIndex = 42;
             this.label6.Text = "Height";
             // 
@@ -399,7 +399,7 @@ namespace BarcodeStandardExample
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(53, 28);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(13, 15);
+            this.label9.Size = new System.Drawing.Size(12, 13);
             this.label9.TabIndex = 51;
             this.label9.Text = "x";
             // 
@@ -426,7 +426,7 @@ namespace BarcodeStandardExample
             this.chkGenerateLabel.AutoSize = true;
             this.chkGenerateLabel.Location = new System.Drawing.Point(6, 15);
             this.chkGenerateLabel.Name = "chkGenerateLabel";
-            this.chkGenerateLabel.Size = new System.Drawing.Size(110, 19);
+            this.chkGenerateLabel.Size = new System.Drawing.Size(95, 17);
             this.chkGenerateLabel.TabIndex = 40;
             this.chkGenerateLabel.Text = "Generate label";
             this.chkGenerateLabel.UseVisualStyleBackColor = true;
@@ -436,7 +436,7 @@ namespace BarcodeStandardExample
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(3, 39);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(115, 15);
+            this.label11.Size = new System.Drawing.Size(102, 13);
             this.label11.TabIndex = 55;
             this.label11.Text = "Alternate Label Text";
             // 
@@ -445,7 +445,7 @@ namespace BarcodeStandardExample
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(6, 93);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 15);
+            this.label8.Size = new System.Drawing.Size(53, 13);
             this.label8.TabIndex = 74;
             this.label8.Text = "Alignment";
             // 
@@ -454,7 +454,7 @@ namespace BarcodeStandardExample
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(7, 141);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 15);
+            this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 68;
             this.label4.Text = "Foreground";
             // 
@@ -474,7 +474,7 @@ namespace BarcodeStandardExample
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(70, 141);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 15);
+            this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 69;
             this.label5.Text = "Background";
             // 
@@ -516,7 +516,7 @@ namespace BarcodeStandardExample
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(5, 209);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 15);
+            this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 64;
             this.label2.Text = "Encoded Value";
             // 
@@ -525,7 +525,7 @@ namespace BarcodeStandardExample
             this.lblEncodingTime.AutoSize = true;
             this.lblEncodingTime.Location = new System.Drawing.Point(89, 207);
             this.lblEncodingTime.Name = "lblEncodingTime";
-            this.lblEncodingTime.Size = new System.Drawing.Size(0, 15);
+            this.lblEncodingTime.Size = new System.Drawing.Size(0, 13);
             this.lblEncodingTime.TabIndex = 70;
             // 
             // label3
@@ -533,7 +533,7 @@ namespace BarcodeStandardExample
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 48);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 15);
+            this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 65;
             this.label3.Text = "Encoding";
             // 
@@ -555,6 +555,7 @@ namespace BarcodeStandardExample
             "Interleaved 2 of 5 Mod 10",
             "Standard 2 of 5",
             "Standard 2 of 5 Mod 10",
+            "IATA2of5",
             "Codabar",
             "PostNet",
             "Bookland/ISBN",
@@ -593,7 +594,7 @@ namespace BarcodeStandardExample
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 15);
+            this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 63;
             this.label1.Text = "Value to Encode";
             // 

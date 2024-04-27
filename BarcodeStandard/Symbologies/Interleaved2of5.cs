@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     ///  Interleaved 2 of 5 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Interleaved2of5 : BarcodeCommon, IBarcode
+    internal class Interleaved2of5 : BarcodeCommon, IBarcode
     {
         private readonly string[] _i25Code = { "NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN" };
         private readonly Type _encodedType;

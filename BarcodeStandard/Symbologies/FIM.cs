@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     ///  FIM encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class FIM: BarcodeCommon, IBarcode
+    internal class FIM : BarcodeCommon, IBarcode
     {
         private readonly string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111", "101000101" };
         public enum FIMTypes {FIM_A = 0, FIM_B, FIM_C, FIM_D, FIM_E};

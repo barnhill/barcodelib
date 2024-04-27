@@ -160,6 +160,7 @@ namespace BarcodeStandardExample
                 case "Telepen": type = Type.Telepen; break;
                 case "FIM": type = Type.Fim; break;
                 case "Pharmacode": type = Type.Pharmacode; break;
+                case "IATA2of5": type = Type.IATA2of5; break;
                 default: MessageBox.Show(@"Please specify the encoding type."); break;
             }//switch
 
@@ -385,6 +386,9 @@ namespace BarcodeStandardExample
                     break;
                 case "Pharmacode":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Pharmacode");
+                    break;
+                case "IATA2of5":
+                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("IATA2of5");
                     break;
 
                 default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");

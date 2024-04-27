@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     ///  JAN-13 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class JAN13 : BarcodeCommon, IBarcode
+    internal class JAN13 : BarcodeCommon, IBarcode
     {
         public JAN13(string input)
         {

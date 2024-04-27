@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     ///  Codabar encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Codabar: BarcodeCommon, IBarcode
+    internal class Codabar : BarcodeCommon, IBarcode
     {
         private readonly System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
         

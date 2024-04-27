@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     ///  ISBN encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class ISBN : BarcodeCommon, IBarcode
+    internal class ISBN : BarcodeCommon, IBarcode
     {
         public ISBN(string input)
         {

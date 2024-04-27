@@ -9,6 +9,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using BarcodeLib;
 using BarcodeLib.Symbologies;
+using BarcodeStandard.Symbologies;
 using SkiaSharp;
 
 /* 
@@ -27,7 +28,7 @@ namespace BarcodeStandard
 {
     #region Enums
     public enum Type
-    { Unspecified, UpcA, UpcE, UpcSupplemental2Digit, UpcSupplemental5Digit, Ean13, Ean8, Interleaved2Of5, Interleaved2Of5Mod10, Standard2Of5, Standard2Of5Mod10, Industrial2Of5, Industrial2Of5Mod10, Code39, Code39Extended, Code39Mod43, Codabar, PostNet, Bookland, Isbn, Jan13, MsiMod10, Msi2Mod10, MsiMod11, MsiMod11Mod10, ModifiedPlessey, Code11, Usd8, Ucc12, Ucc13, Logmars, Code128, Code128A, Code128B, Code128C, Itf14, Code93, Telepen, Fim, Pharmacode }
+    { Unspecified, UpcA, UpcE, UpcSupplemental2Digit, UpcSupplemental5Digit, Ean13, Ean8, Interleaved2Of5, Interleaved2Of5Mod10, Standard2Of5, Standard2Of5Mod10, Industrial2Of5, Industrial2Of5Mod10, Code39, Code39Extended, Code39Mod43, Codabar, PostNet, Bookland, Isbn, Jan13, MsiMod10, Msi2Mod10, MsiMod11, MsiMod11Mod10, ModifiedPlessey, Code11, Usd8, Ucc12, Ucc13, Logmars, Code128, Code128A, Code128B, Code128C, Itf14, Code93, Telepen, Fim, Pharmacode, IATA2of5 }
     public enum SaveTypes
     { Jpg, Png, Webp, Unspecified }
     public enum AlignmentPositions
@@ -330,6 +331,9 @@ namespace BarcodeStandard
                 case Type.Standard2Of5Mod10:
                 case Type.Standard2Of5: //Encode_Standard2of5();
                     _iBarcode = new Standard2of5(RawData, EncodedType);
+                    break;
+                case Type.IATA2of5: //Encode_IATA2of5();
+                    _iBarcode = new IATA2of5(RawData);
                     break;
                 case Type.Logmars:
                 case Type.Code39: //Encode_Code39();
