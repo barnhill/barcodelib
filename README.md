@@ -13,6 +13,7 @@ This library was designed to give an easy class for developers to use when they 
 | ISBN          | Codabar       | Interleaved 2 of 5 |
 | ITF-14        | Telepen       | UPC Supplemental 2 |
 | JAN-13        | EAN-13        | UPC Supplemental 5 |
+| IATA2of5      |               |                    |
 
 ## Usage
 
@@ -42,4 +43,4 @@ If you find this or any of my software useful and decide its worth supporting.  
 
 ## Copyright and license
 
-Copyright 2007-2023 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
+Copyright 2007-2024 Brad Barnhill. Code released under the [Apache License, Version 2.0](https://github.com/bbarnhill/barcodelib/blob/master/LICENSE).
