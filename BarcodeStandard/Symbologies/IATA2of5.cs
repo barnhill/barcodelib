@@ -28,17 +28,21 @@ namespace BarcodeStandard.Symbologies
                 Error("EIATA25-2: Numeric Data Only");
 
             //strip check digit if provided so it can be recalculated
-            var raw = RawData.Length == 17 ? RawData.Substring(0, 16) : RawData;
+            RawData = RawData.Length == 17 ? RawData.Substring(0, 16) : RawData;
+
+            //calculate check digit
+            var checkdigit = CalculateMod10CheckDigit();
+            RawData += checkdigit.ToString();
 
             var result = "1010";
 
-            for (int i = 0; i < raw.Length; i++)
+            for (int i = 0; i < RawData.Length; i++)
             {
-                result += IATA2of5_Code[(int)char.GetNumericValue(raw, i)];
+                result += IATA2of5_Code[(int)char.GetNumericValue(RawData, i)];
             }
 
-            //calculate check digit
-            result += IATA2of5_Code[CalculateMod10CheckDigit()];
+            //add check digit
+            result += IATA2of5_Code[checkdigit];
 
             //add ending bars
             result += "01101";
