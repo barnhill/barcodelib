@@ -82,10 +82,10 @@ namespace BarcodeStandardExample
                     //===== Encoding performed here =====
                     barcode.BackgroundImage = Image.FromStream(_b.Encode(type, txtData.Text.Trim(), _b.ForeColor, _b.BackColor, w, h).Encode().AsStream());
                     //===================================
-                    
+
                     //show the encoding time
                     lblEncodingTime.Text = @"(" + Math.Round(_b.EncodingTime, 0, MidpointRounding.AwayFromZero) + @"ms)";
-                    
+
                     txtEncoded.Text = _b.EncodedValue;
 
                     tsslEncodedType.Text = @"Encoding Type: " + _b.EncodedType;
@@ -160,6 +160,7 @@ namespace BarcodeStandardExample
                 case "Telepen": type = Type.Telepen; break;
                 case "FIM": type = Type.Fim; break;
                 case "Pharmacode": type = Type.Pharmacode; break;
+                case "IATA2of5": type = Type.IATA2of5; break;
                 default: MessageBox.Show(@"Please specify the encoding type."); break;
             }//switch
 
@@ -385,6 +386,9 @@ namespace BarcodeStandardExample
                     break;
                 case "Pharmacode":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Pharmacode");
+                    break;
+                case "IATA2of5":
+                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("IATA2of5");
                     break;
 
                 default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");

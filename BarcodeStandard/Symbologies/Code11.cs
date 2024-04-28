@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  Code 11 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Code11 : BarcodeCommon, IBarcode
+    internal class Code11 : BarcodeCommon, IBarcode
     {
         private readonly string[] C11_Code = { "101011", "1101011", "1001011", "1100101", "1011011", "1101101", "1001101", "1010011", "1101001", "110101", "101101", "1011001" };
 
@@ -20,7 +20,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Code11()
         {
-            if (!CheckNumericOnly(RawData.Replace("-", "")))
+            if (!IsNumericOnly(RawData.Replace("-", "")))
                 Error("EC11-1: Numeric data and '-' Only");
 
             //calculate the checksums

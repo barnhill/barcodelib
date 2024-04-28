@@ -14,12 +14,13 @@ namespace BarcodeStandard
             throw new Exception(errorMessage);
         }
 
-        internal static bool CheckNumericOnly(string data)
+        internal static bool IsNumericOnly(string s)
         {
-            foreach (var c in data)
-            {
-                if (c < '0' && c > '9') return false;
-            }
+            if (s == null || s == "") return false;
+
+            for (int i = 0; i < s.Length; i++)
+                if ((s[i] ^ '0') > 9)
+                    return false;
 
             return true;
         }

@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     ///  ISBN encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class ISBN : BarcodeCommon, IBarcode
+    internal class ISBN : BarcodeCommon, IBarcode
     {
         public ISBN(string input)
         {
@@ -17,7 +17,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_ISBN_Bookland()
         {
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EBOOKLANDISBN-1: Numeric Data Only");
 
             var type = "UNKNOWN";

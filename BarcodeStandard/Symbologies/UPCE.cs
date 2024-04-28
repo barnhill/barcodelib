@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  UPC-E encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class UPCE : BarcodeCommon, IBarcode
+    internal class UPCE : BarcodeCommon, IBarcode
     {
         private readonly string[] EAN_Code_A = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
         private readonly string[] EAN_Code_B = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
@@ -31,7 +31,7 @@ namespace BarcodeLib.Symbologies
             if (RawData.Length != 6 && RawData.Length != 8 && RawData.Length != 12) 
                 Error("EUPCE-1: Invalid data length. (8 or 12 numbers only)");
 
-            if (!CheckNumericOnly(RawData)) 
+            if (!IsNumericOnly(RawData)) 
                 Error("EUPCE-2: Numeric only.");
 
             //check for a valid number system

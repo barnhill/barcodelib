@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  Blank encoding template
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Blank: BarcodeCommon, IBarcode
+    internal class Blank: BarcodeCommon, IBarcode
     {
         
         #region IBarcode Members

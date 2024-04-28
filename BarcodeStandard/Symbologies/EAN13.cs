@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     ///  EAN-13 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class EAN13 : BarcodeCommon, IBarcode
+    internal class EAN13 : BarcodeCommon, IBarcode
     {
         private readonly string[] EAN_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
         private readonly string[] EAN_CodeB = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
@@ -41,7 +41,7 @@ namespace BarcodeLib.Symbologies
             if (RawData.Length < 12 || RawData.Length > 13)
                 Error("EEAN13-1: Data length invalid. (Length must be 12 or 13)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EEAN13-2: Numeric Data Only");
 
             var patterncode = EAN_Pattern[Int32.Parse(RawData[0].ToString())];

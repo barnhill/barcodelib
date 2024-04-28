@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  Pharmacode encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Pharmacode: BarcodeCommon, IBarcode
+    internal class Pharmacode : BarcodeCommon, IBarcode
     {
         string _thinBar = "1";
         string _gap = "00";
@@ -21,7 +21,7 @@ namespace BarcodeLib.Symbologies
         {
             RawData = input;
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
             {
                 Error("EPHARM-1: Data contains invalid  characters (non-numeric).");
             }//if

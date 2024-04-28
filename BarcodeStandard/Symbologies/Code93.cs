@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  Code 93 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Code93 : BarcodeCommon, IBarcode
+    internal class Code93 : BarcodeCommon, IBarcode
     {
         private readonly System.Data.DataTable C93_Code = new System.Data.DataTable("C93_Code");
 

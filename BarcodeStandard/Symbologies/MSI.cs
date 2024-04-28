@@ -4,7 +4,7 @@ using Type = BarcodeStandard.Type;
 
 namespace BarcodeLib.Symbologies
 {
-    class MSI : BarcodeCommon, IBarcode
+    internal class MSI : BarcodeCommon, IBarcode
     {
         /// <summary>
         ///  MSI encoding
@@ -25,7 +25,7 @@ namespace BarcodeLib.Symbologies
         private string Encode_MSI()
         {
             //check for non-numeric chars
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EMSI-1: Numeric Data Only");
 
             //get checksum

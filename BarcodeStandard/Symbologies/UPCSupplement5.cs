@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  UPC Supplement-5 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class UPCSupplement5 : BarcodeCommon, IBarcode
+    internal class UPCSupplement5 : BarcodeCommon, IBarcode
     {
         private readonly string[] EAN_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
         private readonly string[] EAN_CodeB = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
@@ -25,7 +25,7 @@ namespace BarcodeLib.Symbologies
         {
             if (RawData.Length != 5) Error("EUPC-SUP5-1: Invalid data length. (Length = 5 required)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EUPCA-2: Numeric Data Only");
 
             //calculate the checksum digit

@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  Postnet encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Postnet : BarcodeCommon, IBarcode
+    internal class Postnet : BarcodeCommon, IBarcode
     {
         private readonly string[] POSTNET_Code = { "11000", "00011", "00101", "00110", "01001", "01010", "01100", "10001", "10010", "10100" };
 

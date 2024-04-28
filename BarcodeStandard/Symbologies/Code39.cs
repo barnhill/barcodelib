@@ -7,7 +7,7 @@ namespace BarcodeLib.Symbologies
     ///  Code 39 encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Code39 : BarcodeCommon, IBarcode
+    internal class Code39 : BarcodeCommon, IBarcode
     {
         private readonly System.Collections.Hashtable C39_Code = new System.Collections.Hashtable(); //is initialized by init_Code39()
         private readonly System.Collections.Hashtable ExtC39_Translation = new System.Collections.Hashtable();

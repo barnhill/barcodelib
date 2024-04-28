@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     ///  Telepen encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Telepen: BarcodeCommon, IBarcode
+    internal class Telepen : BarcodeCommon, IBarcode
     {
         private static readonly Hashtable Telepen_Code = new Hashtable();
         private enum StartStopCode : int { START1, STOP1, START2, STOP2, START3, STOP3 };

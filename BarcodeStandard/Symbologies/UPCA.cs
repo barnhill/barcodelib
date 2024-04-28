@@ -8,7 +8,7 @@ namespace BarcodeLib.Symbologies
     ///  UPC-A encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class UPCA : BarcodeCommon, IBarcode
+    internal class UPCA : BarcodeCommon, IBarcode
     {
         private readonly string[] UPC_Code_A = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
         private readonly string[] UPC_Code_B = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
@@ -28,7 +28,7 @@ namespace BarcodeLib.Symbologies
             if (RawData.Length != 11 && RawData.Length != 12)
                 Error("EUPCA-1: Data length invalid. (Length must be 11 or 12)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EUPCA-2: Numeric Data Only");
 
             CheckDigit();

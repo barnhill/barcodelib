@@ -6,7 +6,7 @@ namespace BarcodeLib.Symbologies
     ///  Codabar encoding
     ///  Written by: Brad Barnhill
     /// </summary>
-    class Codabar: BarcodeCommon, IBarcode
+    internal class Codabar : BarcodeCommon, IBarcode
     {
         private readonly System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
         
@@ -52,14 +52,14 @@ namespace BarcodeLib.Symbologies
 
             foreach (char c in Codabar_Code.Keys)
             {
-                if (!CheckNumericOnly(c.ToString()))
+                if (!IsNumericOnly(c.ToString()))
                 {
                     temp = temp.Replace(c, '1');
                 }//if
             }//if
 
             //now that all the valid non-numeric chars have been replaced with a number check if all numeric exist
-            if (!CheckNumericOnly(temp))
+            if (!IsNumericOnly(temp))
                 Error("ECODABAR-4: Data contains invalid  characters.");
 
             var result = "";
