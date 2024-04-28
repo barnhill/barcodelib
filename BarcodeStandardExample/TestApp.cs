@@ -82,10 +82,10 @@ namespace BarcodeStandardExample
                     //===== Encoding performed here =====
                     barcode.BackgroundImage = Image.FromStream(_b.Encode(type, txtData.Text.Trim(), _b.ForeColor, _b.BackColor, w, h).Encode().AsStream());
                     //===================================
-                    
+
                     //show the encoding time
                     lblEncodingTime.Text = @"(" + Math.Round(_b.EncodingTime, 0, MidpointRounding.AwayFromZero) + @"ms)";
-                    
+
                     txtEncoded.Text = _b.EncodedValue;
 
                     tsslEncodedType.Text = @"Encoding Type: " + _b.EncodedType;
