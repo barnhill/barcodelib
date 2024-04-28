@@ -41,7 +41,7 @@ namespace BarcodeLib.Symbologies
             if (RawData.Length < 12 || RawData.Length > 13)
                 Error("EEAN13-1: Data length invalid. (Length must be 12 or 13)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EEAN13-2: Numeric Data Only");
 
             var patterncode = EAN_Pattern[Int32.Parse(RawData[0].ToString())];

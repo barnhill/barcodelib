@@ -25,7 +25,7 @@ namespace BarcodeLib.Symbologies
         private string Encode_MSI()
         {
             //check for non-numeric chars
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EMSI-1: Numeric Data Only");
 
             //get checksum

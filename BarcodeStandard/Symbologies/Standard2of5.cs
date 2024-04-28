@@ -24,7 +24,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         private string Encode_Standard2of5()
         {
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("ES25-1: Numeric Data Only");
 
             var result = "11011010";

@@ -27,7 +27,7 @@ namespace BarcodeLib.Symbologies
             if (RawData.Length % 2 != (_encodedType == Type.Interleaved2Of5Mod10 ? 1 : 0))
                 Error("EI25-1: Data length invalid.");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EI25-2: Numeric Data Only");
             
             var result = "1010";

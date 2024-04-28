@@ -25,7 +25,7 @@ namespace BarcodeLib.Symbologies
         {
             if (RawData.Length != 5) Error("EUPC-SUP5-1: Invalid data length. (Length = 5 required)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EUPCA-2: Numeric Data Only");
 
             //calculate the checksum digit

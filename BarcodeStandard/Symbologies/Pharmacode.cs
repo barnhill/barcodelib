@@ -21,7 +21,7 @@ namespace BarcodeLib.Symbologies
         {
             RawData = input;
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
             {
                 Error("EPHARM-1: Data contains invalid  characters (non-numeric).");
             }//if

@@ -17,7 +17,8 @@ namespace BarcodeLib.Symbologies
             RawData = input;
 
             //check numeric only
-            if (!CheckNumericOnly(RawData)) Error("EEAN8-2: Numeric only.");
+            if (!IsNumericOnly(RawData)) 
+                Error("EEAN8-2: Numeric only.");
 
             CheckDigit();
         }

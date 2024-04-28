@@ -28,7 +28,7 @@ namespace BarcodeLib.Symbologies
             if (RawData.Length != 11 && RawData.Length != 12)
                 Error("EUPCA-1: Data length invalid. (Length must be 11 or 12)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EUPCA-2: Numeric Data Only");
 
             CheckDigit();

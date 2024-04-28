@@ -24,7 +24,7 @@ namespace BarcodeStandard.Symbologies
             if (RawData.Length > 17 || RawData.Length < 16)
                 Error("EIATA25-1: Data length invalid. (Length must be 16 or 17)");
 
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EIATA25-2: Numeric Data Only");
 
             //strip check digit if provided so it can be recalculated

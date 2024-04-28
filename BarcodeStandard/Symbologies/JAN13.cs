@@ -18,7 +18,7 @@ namespace BarcodeLib.Symbologies
         private string Encode_JAN13()
         {
             if (!RawData.StartsWith("49")) Error("EJAN13-1: Invalid Country Code for JAN13 (49 required)");
-            if (!CheckNumericOnly(RawData))
+            if (!IsNumericOnly(RawData))
                 Error("EJAN13-2: Numeric Data Only");
 
             EAN13 ean13 = new EAN13(RawData);
