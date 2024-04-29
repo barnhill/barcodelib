@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 
-namespace BarcodeLib
+namespace BarcodeStandard
 {
     /// <summary>
     ///  Barcode interface for symbology layout.
     ///  Written by: Brad Barnhill
     /// </summary>
-    interface IBarcode
+    internal interface IBarcode
     {
         string Encoded_Value
         {

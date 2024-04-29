@@ -1,7 +1,6 @@
 using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Code 39 encoding
@@ -18,7 +17,7 @@ namespace BarcodeLib.Symbologies
         /// Encodes with Code39.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        public Code39(string input)
+        internal Code39(string input)
         {
             RawData = input;
         }//Code39
@@ -28,7 +27,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         /// <param name="input">Data to encode.</param>
         /// <param name="allowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
-        public Code39(string input, bool allowExtended)
+        internal Code39(string input, bool allowExtended)
         {
             RawData = input;
             _allowExtended = allowExtended;
@@ -40,7 +39,7 @@ namespace BarcodeLib.Symbologies
         /// <param name="input">Data to encode.</param>
         /// <param name="allowExtended">Allow Extended Code 39 (Full Ascii mode).</param>
         /// <param name="enableChecksum">Whether to calculate the Mod 43 checksum and encode it into the barcode</param>
-        public Code39(string input, bool allowExtended, bool enableChecksum)
+        internal Code39(string input, bool allowExtended, bool enableChecksum)
         {
             RawData = input;
             _allowExtended = allowExtended;

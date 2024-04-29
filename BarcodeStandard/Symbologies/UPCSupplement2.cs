@@ -1,7 +1,6 @@
 using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  UPC Supplement-2 encoding
@@ -13,7 +12,7 @@ namespace BarcodeLib.Symbologies
         private readonly string [] EAN_CodeB    = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
         private readonly string[] UPC_SUPP_2 = { "aa", "ab", "ba", "bb" };
 
-        public UPCSupplement2(string input)
+        internal UPCSupplement2(string input)
         {
             RawData = input;
         }

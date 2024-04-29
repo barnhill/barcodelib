@@ -1,7 +1,6 @@
 ﻿using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Pharmacode encoding
@@ -17,7 +16,7 @@ namespace BarcodeLib.Symbologies
         /// Encodes with Pharmacode.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        public Pharmacode(string input)
+        internal Pharmacode(string input)
         {
             RawData = input;
 

@@ -1,6 +1,4 @@
-﻿using BarcodeStandard;
-
-namespace BarcodeLib.Symbologies
+﻿namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  FIM encoding
@@ -11,7 +9,7 @@ namespace BarcodeLib.Symbologies
         private readonly string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111", "101000101" };
         public enum FIMTypes {FIM_A = 0, FIM_B, FIM_C, FIM_D, FIM_E};
 
-        public FIM(string input)
+        internal FIM(string input)
         {
             input = input.Trim();
 
@@ -37,7 +35,7 @@ namespace BarcodeLib.Symbologies
             }//switch
         }
 
-        public string Encode_FIM()
+        internal string Encode_FIM()
         {
             string encoded = "";
             foreach (char c in RawData)

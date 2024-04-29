@@ -1,6 +1,4 @@
-using BarcodeStandard;
-
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  JAN-13 encoding
@@ -8,7 +6,7 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     internal class JAN13 : BarcodeCommon, IBarcode
     {
-        public JAN13(string input)
+        internal JAN13(string input)
         {
             RawData = input;
         }

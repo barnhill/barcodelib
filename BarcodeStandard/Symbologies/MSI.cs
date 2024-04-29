@@ -1,8 +1,6 @@
 using System;
-using BarcodeStandard;
-using Type = BarcodeStandard.Type;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     internal class MSI : BarcodeCommon, IBarcode
     {
@@ -13,7 +11,7 @@ namespace BarcodeLib.Symbologies
         private readonly string[] MSI_Code = { "100100100100", "100100100110", "100100110100", "100100110110", "100110100100", "100110100110", "100110110100", "100110110110", "110100100100", "110100100110" };
         private Type Encoded_Type = Type.Unspecified;
 
-        public MSI(string input, Type encodedType)
+        internal MSI(string input, Type encodedType)
         {
             Encoded_Type = encodedType;
             RawData = input;

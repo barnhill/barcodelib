@@ -7,8 +7,6 @@ using System.Text;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
-using BarcodeLib;
-using BarcodeLib.Symbologies;
 using BarcodeStandard.Symbologies;
 using SkiaSharp;
 
@@ -105,7 +103,10 @@ namespace BarcodeStandard
         /// <summary>
         /// Gets or sets the label font. (Default is Microsoft Sans Serif, 10pt, Bold)
         /// </summary>
-        public SKFont LabelFont { get; set; } = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold), 28); //LabelFont
+        public SKFont LabelFont { get; set; } = new SKFont{
+            Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold),
+            Size = 28,
+        }; //LabelFont
         /// <summary>
         /// Gets or sets the width of the image to be drawn. (Default is 300 pixels)
         /// </summary>

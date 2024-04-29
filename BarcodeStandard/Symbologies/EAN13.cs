@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  EAN-13 encoding
@@ -19,7 +18,7 @@ namespace BarcodeLib.Symbologies
 
 		public string CountryAssigningManufacturerCode { get => _countryAssigningManufacturerCode; set => _countryAssigningManufacturerCode = value; }
 
-		public EAN13(string input, bool disableCountryCode = false)
+        internal EAN13(string input, bool disableCountryCode = false)
         {
             RawData = input;
 			DisableCountryCode = disableCountryCode;

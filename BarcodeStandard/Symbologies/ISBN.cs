@@ -1,6 +1,4 @@
-using BarcodeStandard;
-
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  ISBN encoding
@@ -8,7 +6,7 @@ namespace BarcodeLib.Symbologies
     /// </summary>
     internal class ISBN : BarcodeCommon, IBarcode
     {
-        public ISBN(string input)
+        internal ISBN(string input)
         {
             RawData = input;
         }

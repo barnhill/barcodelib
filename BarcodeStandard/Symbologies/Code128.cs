@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Code 128 encoding
@@ -29,7 +28,7 @@ namespace BarcodeLib.Symbologies
         /// Encodes data in Code128 format.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        public Code128(string input)
+        internal Code128(string input)
         {
             RawData = input;
         }//Code128
@@ -39,7 +38,7 @@ namespace BarcodeLib.Symbologies
         /// </summary>
         /// <param name="input">Data to encode.</param>
         /// <param name="type">Type of encoding to lock to. (Code 128A, Code 128B, Code 128C)</param>
-        public Code128(string input, TYPES type)
+        internal Code128(string input, TYPES type)
         {
             this.type = type;
             RawData = input;
