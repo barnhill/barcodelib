@@ -34,7 +34,7 @@ namespace BarcodeStandard.Symbologies
             var formattedData = MapFullASCII(RawData);
             formattedData = "*" + formattedData + CalculateChecksum(formattedData) + "*";
 
-            var sb = new StringBuilder(9 * formattedData.Length + 1);
+            var sb = new StringBuilder(9 * (formattedData.Length + 2));
 
             foreach (var c in formattedData)
             {
