@@ -1,8 +1,6 @@
 using System;
-using BarcodeStandard;
-using Type = BarcodeStandard.Type;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Interleaved 2 of 5 encoding
@@ -13,7 +11,7 @@ namespace BarcodeLib.Symbologies
         private readonly string[] _i25Code = { "NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN" };
         private readonly Type _encodedType;
 
-        public Interleaved2of5(string input, Type encodedType)
+        internal Interleaved2of5(string input, Type encodedType)
         {
             _encodedType = encodedType;
             RawData = input;

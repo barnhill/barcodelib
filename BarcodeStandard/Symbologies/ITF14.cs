@@ -1,7 +1,6 @@
 using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  ITF-14 encoding
@@ -11,7 +10,7 @@ namespace BarcodeLib.Symbologies
     {
         private readonly string[] ITF14_Code = { "NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN" };
 
-        public ITF14(string input)
+        internal ITF14(string input)
         {
             RawData = input;
 

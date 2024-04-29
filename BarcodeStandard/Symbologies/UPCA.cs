@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  UPC-A encoding
@@ -15,7 +14,7 @@ namespace BarcodeLib.Symbologies
         private string _countryAssigningManufacturerCode = "N/A";
         private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
 
-        public UPCA(string input)
+        internal UPCA(string input)
         {
             RawData = input;
         }

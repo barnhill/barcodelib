@@ -1,7 +1,6 @@
 using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Postnet encoding
@@ -11,7 +10,7 @@ namespace BarcodeLib.Symbologies
     {
         private readonly string[] POSTNET_Code = { "11000", "00011", "00101", "00110", "01001", "01010", "01100", "10001", "10010", "10100" };
 
-        public Postnet(string input)
+        internal Postnet(string input)
         {
             RawData = input;
         }//Postnet

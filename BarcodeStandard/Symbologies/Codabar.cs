@@ -1,6 +1,4 @@
-using BarcodeStandard;
-
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Codabar encoding
@@ -9,8 +7,8 @@ namespace BarcodeLib.Symbologies
     internal class Codabar : BarcodeCommon, IBarcode
     {
         private readonly System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
-        
-        public Codabar(string input)
+
+        internal Codabar(string input)
         {
             RawData = input;
         }//Codabar

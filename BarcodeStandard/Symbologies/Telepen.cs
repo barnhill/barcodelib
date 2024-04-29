@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Telepen encoding
@@ -21,7 +20,7 @@ namespace BarcodeLib.Symbologies
         /// Encodes data using the Telepen algorithm.
         /// </summary>
         /// <param name="input"></param>
-        public Telepen(string input)
+        internal Telepen(string input)
         {
             RawData = input;
         }

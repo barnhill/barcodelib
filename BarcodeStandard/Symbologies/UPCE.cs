@@ -1,7 +1,6 @@
 using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  UPC-E encoding
@@ -19,7 +18,7 @@ namespace BarcodeLib.Symbologies
         /// Encodes a UPC-E symbol.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        public UPCE(string input)
+        internal UPCE(string input)
         {
             RawData = input;
         }//UPCE

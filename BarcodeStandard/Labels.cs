@@ -1,9 +1,7 @@
 ﻿using SkiaSharp;
 using System;
-using System.Drawing;
-using BarcodeStandard;
 
-namespace BarcodeLib
+namespace BarcodeStandard
 {
     class Labels
     {
