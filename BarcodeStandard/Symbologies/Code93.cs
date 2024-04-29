@@ -1,7 +1,7 @@
 using System;
 using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Code 93 encoding
@@ -15,7 +15,7 @@ namespace BarcodeLib.Symbologies
         /// Encodes with Code93.
         /// </summary>
         /// <param name="input">Data to encode.</param>
-        public Code93(string input)
+        internal Code93(string input)
         {
             RawData = input;
         }//Code93

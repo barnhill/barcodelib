@@ -1,7 +1,6 @@
 using System;
-using BarcodeStandard;
 
-namespace BarcodeLib.Symbologies
+namespace BarcodeStandard.Symbologies
 {
     /// <summary>
     ///  Code 11 encoding
@@ -11,7 +10,7 @@ namespace BarcodeLib.Symbologies
     {
         private readonly string[] C11_Code = { "101011", "1101011", "1001011", "1100101", "1011011", "1101101", "1001101", "1010011", "1101001", "110101", "101101", "1011001" };
 
-        public Code11(string input)
+        internal Code11(string input)
         {
             RawData = input;
         }//Code11
