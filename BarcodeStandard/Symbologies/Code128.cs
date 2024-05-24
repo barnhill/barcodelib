@@ -358,6 +358,7 @@ namespace BarcodeStandard.Symbologies
                 try
                 {
                     Dictionary<string, int> col = null;
+                    var currentStartCode = "";
 
                     for (var i = 0; i < _FormattedData.Count; i++)
                     {
@@ -368,9 +369,9 @@ namespace BarcodeStandard.Symbologies
                         var sameCodeSet = false;
                         foreach (var row in tempStartChars)
                         {
-                            if (C128_CodeIndexByA.TryGetValue(currentElement, out var index) && index == row
-                                || C128_CodeIndexByB.TryGetValue(currentElement, out index) && index == row
-                                || C128_CodeIndexByC.TryGetValue(currentElement, out index) && index == row)
+                            if ((C128_CodeIndexByA.ContainsKey(currentElement) && currentStartCode == "START_A")
+                                || (C128_CodeIndexByB.ContainsKey(currentElement) && currentStartCode == "START_B")
+                                || (C128_CodeIndexByC.ContainsKey(currentElement) && currentStartCode == "START_C"))
                             {
                                 sameCodeSet = true;
                                 break;
@@ -396,6 +397,7 @@ namespace BarcodeStandard.Symbologies
                                     if (CurrentCodeSet == C128_CodeIndexByA[start])
                                     {
                                         col = nextCol;
+                                        currentStartCode = start;
                                         _FormattedData.Insert(i++, start);
                                         break;
                                     }
@@ -406,6 +408,7 @@ namespace BarcodeStandard.Symbologies
                                     if (col != nextCol && CurrentCodeSet == col[code])
                                     {
                                         col = nextCol;
+                                        currentStartCode = start;
                                         _FormattedData.Insert(i++, code);
                                         break;
                                     }
