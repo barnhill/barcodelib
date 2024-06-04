@@ -172,6 +172,7 @@ namespace BarcodeStandard.Symbologies
             entry("CODE_B", "FNC4", "CODE_B", "10111101110");
             entry("FNC4", "CODE_A", "CODE_A", "11101011110");
             entry("FNC1", "FNC1", "FNC1", "11110101110");
+            entry($"{FNC1}", $"{FNC1}", $"{FNC1}", "11110101110");
             entry("START_A", "START_A", "START_A", "11010000100");
             entry("START_B", "START_B", "START_B", "11010010000");
             entry("START_C", "START_C", "START_C", "11010011100");
