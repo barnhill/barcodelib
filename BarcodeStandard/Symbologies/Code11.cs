@@ -8,12 +8,12 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class Code11 : BarcodeCommon, IBarcode
     {
-        private readonly string[] C11_Code = { "101011", "1101011", "1001011", "1100101", "1011011", "1101101", "1001101", "1010011", "1101001", "110101", "101101", "1011001" };
+        private readonly string[] C11_Code = ["101011", "1101011", "1001011", "1100101", "1011011", "1101101", "1001101", "1010011", "1101001", "110101", "101101", "1011001"];
 
         internal Code11(string input)
         {
             RawData = input;
-        }//Code11
+        }
         /// <summary>
         /// Encode the raw data using the Code 11 algorithm.
         /// </summary>
@@ -37,7 +37,7 @@ namespace BarcodeStandard.Symbologies
                     cTotal += Int32.Parse(RawData[i].ToString()) * weight++;
                 else
                     cTotal += 10 * weight++;
-            }//for
+            }
             var checksumC = cTotal % 11;
 
             dataToEncodeWithChecksums += checksumC.ToString();
@@ -58,10 +58,10 @@ namespace BarcodeStandard.Symbologies
                         kTotal += Int32.Parse(dataToEncodeWithChecksums[i].ToString()) * weight++;
                     else
                         kTotal += 10 * weight++;
-                }//for
+                }
                 var checksumK = kTotal % 11;
                 dataToEncodeWithChecksums += checksumK.ToString();
-            }//if
+            }
 
             //encode data
             var space = "0";
@@ -74,18 +74,18 @@ namespace BarcodeStandard.Symbologies
 
                 //inter-character space
                 result += space;
-            }//foreach
+            }
 
             //stop bars
             result += C11_Code[11];
 
             return result;
-        }//Encode_Code11 
+        }
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_Code11();
 
         #endregion
-    }//class
-}//namespace
+    }
+}

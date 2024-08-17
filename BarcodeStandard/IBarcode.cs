@@ -24,4 +24,4 @@ namespace BarcodeStandard
         }//Errors
 
     }//interface
-}//namespace
+}

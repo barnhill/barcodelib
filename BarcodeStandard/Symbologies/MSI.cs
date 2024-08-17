@@ -8,14 +8,14 @@ namespace BarcodeStandard.Symbologies
         ///  MSI encoding
         ///  Written by: Brad Barnhill
         /// </summary>
-        private readonly string[] MSI_Code = { "100100100100", "100100100110", "100100110100", "100100110110", "100110100100", "100110100110", "100110110100", "100110110110", "110100100100", "110100100110" };
-        private Type Encoded_Type = Type.Unspecified;
+        private readonly string[] MSI_Code = ["100100100100", "100100100110", "100100110100", "100100110110", "100110100100", "100110100110", "100110110100", "100110110110", "110100100100", "110100100110"];
+        private readonly Type Encoded_Type = Type.Unspecified;
 
         internal MSI(string input, Type encodedType)
         {
             Encoded_Type = encodedType;
             RawData = input;
-        }//MSI
+        }
 
         /// <summary>
         /// Encode the raw data using the MSI algorithm.
@@ -43,13 +43,13 @@ namespace BarcodeStandard.Symbologies
             foreach (var c in withChecksum)
             {
                 result += MSI_Code[Int32.Parse(c.ToString())];
-            }//foreach
+            }
 
             //add stop character
             result += "1001";
 
             return result;
-        }//Encode_MSI
+        }
 
         private string Mod10(string code)
         {
@@ -60,7 +60,7 @@ namespace BarcodeStandard.Symbologies
                 odds = code[i] + odds;
                 if (i - 1 >= 0)
                     evens = code[i - 1] + evens;
-            }//for
+            }
 
             //multiply odds by 2
             odds = Convert.ToString((Int32.Parse(odds) * 2));
@@ -84,7 +84,7 @@ namespace BarcodeStandard.Symbologies
             {
                 if (weight > 7) weight = 2;
                 sum += Int32.Parse(code[i].ToString()) * weight++;
-            }//foreach
+            }
             var mod = sum % 11;
             var checksum = mod == 0 ? 0 : 11 - mod;
 
@@ -96,5 +96,5 @@ namespace BarcodeStandard.Symbologies
         public string Encoded_Value => Encode_MSI();
 
         #endregion
-    }//class
-}//namepsace
+    }
+}

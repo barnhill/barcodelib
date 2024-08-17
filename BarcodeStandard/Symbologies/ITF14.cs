@@ -8,7 +8,7 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class ITF14 : BarcodeCommon, IBarcode
     {
-        private readonly string[] ITF14_Code = { "NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN" };
+        private readonly string[] ITF14_Code = ["NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN"];
 
         internal ITF14(string input)
         {
@@ -43,7 +43,7 @@ namespace BarcodeStandard.Symbologies
                     patternmixed += patternbars[0].ToString() + patternspaces[0].ToString();
                     patternbars = patternbars.Substring(1);
                     patternspaces = patternspaces.Substring(1);
-                }//while
+                }
 
                 foreach (var c1 in patternmixed)
                 {
@@ -53,22 +53,22 @@ namespace BarcodeStandard.Symbologies
                             result += "1";
                         else
                             result += "11";
-                    }//if
+                    }
                     else
                     {
                         if (c1 == 'N')
                             result += "0";
                         else
                             result += "00";
-                    }//else
+                    }
                     bars = !bars;
-                }//foreach
-            }//foreach
+                }
+            }
 
             //add ending bars
             result += "1101";
             return result;
-        }//Encode_ITF14
+        }
         private void CheckDigit()
         {
             //calculate and include checksum if it is necessary
@@ -80,7 +80,7 @@ namespace BarcodeStandard.Symbologies
                 {
                     var temp = Int32.Parse(RawData.Substring(i, 1));
                     total += temp * ((i == 0 || i % 2 == 0) ? 3 : 1);
-                }//for
+                }
 
                 var cs = total % 10;
                 cs = 10 - cs;
@@ -88,7 +88,7 @@ namespace BarcodeStandard.Symbologies
                     cs = 0;
 
                 this.RawData += cs.ToString();
-            }//if
+            }
         }
 
         #region IBarcode Members

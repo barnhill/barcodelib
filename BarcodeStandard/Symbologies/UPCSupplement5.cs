@@ -8,9 +8,9 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class UPCSupplement5 : BarcodeCommon, IBarcode
     {
-        private readonly string[] EAN_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private readonly string[] EAN_CodeB = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
-        private readonly string[] UPC_SUPP_5 = { "bbaaa", "babaa", "baaba", "baaab", "abbaa", "aabba", "aaabb", "ababa", "abaab", "aabab" };
+        private readonly string[] EAN_CodeA = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"];
+        private readonly string[] EAN_CodeB = ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"];
+        private readonly string[] UPC_SUPP_5 = ["bbaaa", "babaa", "baaba", "baaab", "abbaa", "aabba", "aaabb", "ababa", "abaab", "aabab"];
 
         internal UPCSupplement5(string input)
         {
@@ -35,13 +35,13 @@ namespace BarcodeStandard.Symbologies
             for (var i = 0; i <= 4; i += 2)
             {
                 odd += Int32.Parse(RawData.Substring(i, 1)) * 3;
-            }//for
+            }
 
             //even
             for (var i = 1; i < 4; i += 2)
             {
                 even += Int32.Parse(RawData.Substring(i, 1)) * 9;
-            }//for
+            }
 
             var total = even + odd;
             var cs = total % 10;
@@ -61,22 +61,22 @@ namespace BarcodeStandard.Symbologies
                 {
                     case 'a':
                         //encode using odd parity
-                        result += EAN_CodeA[Int32.Parse(RawData[pos].ToString())]; //if
+                        result += EAN_CodeA[Int32.Parse(RawData[pos].ToString())]; 
                         break;
                     case 'b':
                         //encode using even parity
-                        result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())]; //else if  
+                        result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())]; 
                         break;
                 }
                 pos++;
-            }//foreach
+            }
             return result;
-        }//Encode_UPCSupplemental_5
+        }
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_UPCSupplemental_5();
 
         #endregion
-    }//class
-}//namespace
+    }
+}

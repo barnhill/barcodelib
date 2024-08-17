@@ -8,9 +8,9 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class Pharmacode : BarcodeCommon, IBarcode
     {
-        string _thinBar = "1";
-        string _gap = "00";
-        string _thickBar = "111";
+        readonly string _thinBar = "1";
+        readonly string _gap = "00";
+        readonly string _thickBar = "111";
 
         /// <summary>
         /// Encodes with Pharmacode.
@@ -23,11 +23,11 @@ namespace BarcodeStandard.Symbologies
             if (!IsNumericOnly(RawData))
             {
                 Error("EPHARM-1: Data contains invalid  characters (non-numeric).");
-            }//if
+            }
             else if (RawData.Length > 6)
             {
                 Error("EPHARM-2: Data too long (invalid data input length).");
-            }//if
+            }
         }
 
         /// <summary>
@@ -35,16 +35,14 @@ namespace BarcodeStandard.Symbologies
         /// </summary>
         private string Encode_Pharmacode()
         {
-            int num;
-
-            if (!Int32.TryParse(RawData, out num))
+            if (!Int32.TryParse(RawData, out int num))
             {
                 Error("EPHARM-3: Input is unparseable.");
             }
             else if (num < 3 || num > 131070)
             {
                 Error("EPHARM-4: Data contains invalid  characters (invalid numeric range).");
-            }//if
+            }
 
             var result = String.Empty;
             do
