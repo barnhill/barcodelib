@@ -6,7 +6,7 @@
     /// </summary>
     internal class FIM : BarcodeCommon, IBarcode
     {
-        private readonly string[] FIM_Codes = { "110010011", "101101101", "110101011", "111010111", "101000101" };
+        private readonly string[] FIM_Codes = ["110010011", "101101101", "110101011", "111010111", "101000101"];
         public enum FIMTypes {FIM_A = 0, FIM_B, FIM_C, FIM_D, FIM_E};
 
         internal FIM(string input)
@@ -32,7 +32,7 @@
                     break;
                 default: Error("EFIM-1: Could not determine encoding type. (Only pass in A, B, C, D, or E)");
                     break;
-            }//switch
+            }
         }
 
         internal string Encode_FIM()
@@ -41,7 +41,7 @@
             foreach (char c in RawData)
             {
                 encoded += c + "0";
-            }//foreach
+            }
 
             encoded = encoded.Substring(0, encoded.Length - 1);
 

@@ -10,10 +10,10 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class UPCE : BarcodeCommon, IBarcode
     {
-        private readonly string[] EAN_Code_A = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private readonly string[] EAN_Code_B = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
-        private readonly string[] UPC_E_Code0 = { "bbbaaa", "bbabaa", "bbaaba", "bbaaab", "babbaa", "baabba", "baaabb", "bababa", "babaab", "baabab" };
-        private readonly string[] UPC_E_Code1 = { "aaabbb", "aababb", "aabbab", "aabbba", "abaabb", "abbaab", "abbbaa", "ababab", "ababba", "abbaba" };
+        private readonly string[] EAN_Code_A = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"];
+        private readonly string[] EAN_Code_B = ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"];
+        private readonly string[] UPC_E_Code0 = ["bbbaaa", "bbabaa", "bbaaba", "bbaaab", "babbaa", "baabba", "baaabb", "bababa", "babaab", "baabab"];
+        private readonly string[] UPC_E_Code1 = ["aaabbb", "aababb", "aabbab", "aabbba", "abaabb", "abbaab", "abbbaa", "ababab", "ababba", "abbaba"];
 
         /// <summary>
         /// Encodes a UPC-E symbol.
@@ -50,16 +50,16 @@ namespace BarcodeStandard.Symbologies
             if (RawData.Length == 12)
             {
                 numberSystem = Int16.Parse(RawData[0].ToString());
-                RawData = convertUPCAToUPCE();
+                RawData = ConvertUPCAToUPCE();
             }
 
-            int checkDigit = Int16.Parse(calculateCheckDigit(convertUPCEToUPCA(RawData)));
+            int checkDigit = Int16.Parse(CalculateCheckDigit(ConvertUPCEToUPCA(RawData)));
 
             //get encoding pattern 
-            String pattern = getPattern(checkDigit, numberSystem);
+            String pattern = GetPattern(checkDigit, numberSystem);
 
             //encode the data
-            StringBuilder result = new StringBuilder("101");
+            StringBuilder result = new("101");
 
             int pos = 0;
             foreach (char c in pattern)
@@ -79,9 +79,9 @@ namespace BarcodeStandard.Symbologies
             result.Append("010101");
 
             return result.ToString();
-        }//Encode_UPCE
+        }
 
-        private String getPattern(int checkDigit, int numberSystem)
+        private String GetPattern(int checkDigit, int numberSystem)
         {
             if (numberSystem != 0 && numberSystem != 1)
             {
@@ -102,7 +102,7 @@ namespace BarcodeStandard.Symbologies
             return pattern;
         }
 
-        private String convertUPCAToUPCE()
+        private String ConvertUPCAToUPCE()
         {
             String UPCECode = "";
 
@@ -147,7 +147,7 @@ namespace BarcodeStandard.Symbologies
             return UPCECode;
         }
 
-        private String convertUPCEToUPCA(String UPCECode)
+        private String ConvertUPCEToUPCA(String UPCECode)
         {
             String UPCACode = "0";
             if (UPCECode.EndsWith("0") || UPCECode.EndsWith("1") || UPCECode.EndsWith("2"))
@@ -178,7 +178,7 @@ namespace BarcodeStandard.Symbologies
             return UPCACode;
         }
 
-        private String calculateCheckDigit(String upcA)
+        private String CalculateCheckDigit(String upcA)
         {
             int cs = 0;
             try
@@ -201,7 +201,7 @@ namespace BarcodeStandard.Symbologies
 
                 cs = (10 - sum % 10) % 10;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Error("EUPCE-5: Error calculating check digit.");
             }

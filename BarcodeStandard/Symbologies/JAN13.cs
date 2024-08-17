@@ -19,9 +19,9 @@ namespace BarcodeStandard.Symbologies
             if (!IsNumericOnly(RawData))
                 Error("EJAN13-2: Numeric Data Only");
 
-            EAN13 ean13 = new EAN13(RawData);
+            EAN13 ean13 = new(RawData);
             return ean13.Encoded_Value;
-        }//Encode_JAN13
+        }
 
         #region IBarcode Members
 

@@ -6,7 +6,7 @@ namespace BarcodeStandard
     internal abstract class BarcodeCommon
     {
         public string RawData { get; protected set; } = "";
-        public List<string> Errors { get; } = new List<string>();
+        public List<string> Errors { get; } = [];
 
         protected void Error(string errorMessage)
         {
@@ -27,16 +27,12 @@ namespace BarcodeStandard
 
         internal static int GetAlignmentShiftAdjustment(Barcode barcode)
         {
-            switch (barcode.Alignment)
+            return barcode.Alignment switch
             {
-                case AlignmentPositions.Left:
-                    return 0;
-                case AlignmentPositions.Right:
-                    return (barcode.Width % barcode.EncodedValue.Length);
-                case AlignmentPositions.Center:
-                default:
-                    return (barcode.Width % barcode.EncodedValue.Length) / 2;
-            }//switch
+                AlignmentPositions.Left => 0,
+                AlignmentPositions.Right => (barcode.Width % barcode.EncodedValue.Length),
+                _ => (barcode.Width % barcode.EncodedValue.Length) / 2,
+            };
         }
     }//BarcodeVariables abstract class
-}//namespace
+}

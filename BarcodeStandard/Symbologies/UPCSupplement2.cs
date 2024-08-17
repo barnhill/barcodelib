@@ -8,9 +8,9 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class UPCSupplement2 : BarcodeCommon, IBarcode
     {
-        private readonly string [] EAN_CodeA    = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private readonly string [] EAN_CodeB    = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
-        private readonly string[] UPC_SUPP_2 = { "aa", "ab", "ba", "bb" };
+        private readonly string [] EAN_CodeA    = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"];
+        private readonly string [] EAN_CodeB    = ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"];
+        private readonly string[] UPC_SUPP_2 = ["aa", "ab", "ba", "bb"];
 
         internal UPCSupplement2(string input)
         {
@@ -32,7 +32,7 @@ namespace BarcodeStandard.Symbologies
             try
             {
                 pattern = this.UPC_SUPP_2[Int32.Parse(RawData.Trim()) % 4];
-            }//try
+            }
             catch { Error("EUPC-SUP2-3: Invalid Data. (Numeric only)"); }
 
             string result = "1011";
@@ -44,22 +44,22 @@ namespace BarcodeStandard.Symbologies
                 {
                     //encode using odd parity
                     result += EAN_CodeA[Int32.Parse(RawData[pos].ToString())];
-                }//if
+                }
                 else if (c == 'b')
                 {
                     //encode using even parity
                     result += EAN_CodeB[Int32.Parse(RawData[pos].ToString())];
-                }//else if
+                }
 
                 if (pos++ == 0) result += "01"; //Inter-character separator
-            }//foreach
+            }
             return result;
-        }//Encode_UPSSupplemental_2
+        }
 
         #region IBarcode Members
 
         public string Encoded_Value => Encode_UPCSupplemental_2();
 
         #endregion
-    }//class
-}//namespace
+    }
+}
