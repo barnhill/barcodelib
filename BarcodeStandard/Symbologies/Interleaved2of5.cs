@@ -8,7 +8,7 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class Interleaved2of5 : BarcodeCommon, IBarcode
     {
-        private readonly string[] _i25Code = { "NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN" };
+        private readonly string[] _i25Code = ["NNWWN", "WNNNW", "NWNNW", "WWNNN", "NNWNW", "WNWNN", "NWWNN", "NNNWW", "WNNWN", "NWNWN"];
         private readonly Type _encodedType;
 
         internal Interleaved2of5(string input, Type encodedType)
@@ -44,7 +44,7 @@ namespace BarcodeStandard.Symbologies
                     patternmixed += patternbars[0].ToString() + patternspaces[0].ToString();
                     patternbars = patternbars.Substring(1);
                     patternspaces = patternspaces.Substring(1);
-                }//while
+                }
 
                 foreach (char c1 in patternmixed)
                 {
@@ -54,22 +54,22 @@ namespace BarcodeStandard.Symbologies
                             result += "1";
                         else
                             result += "11";
-                    }//if
+                    }
                     else
                     {
                         if (c1 == 'N')
                             result += "0";
                         else
                             result += "00";
-                    }//else
+                    }
                     bars = !bars;
-                }//foreach
-            }//foreach
+                }
+            }
             
             //add ending bars
             result += "1101";
             return result;
-        }//Encode_Interleaved2of5
+        }
 
         private int CalculateMod10CheckDigit()
         {

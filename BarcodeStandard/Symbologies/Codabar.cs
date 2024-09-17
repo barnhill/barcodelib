@@ -6,12 +6,12 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class Codabar : BarcodeCommon, IBarcode
     {
-        private readonly System.Collections.Hashtable Codabar_Code = new System.Collections.Hashtable(); //is initialized by init_Codabar()
+        private readonly System.Collections.Hashtable Codabar_Code = []; //is initialized by init_Codabar()
 
         internal Codabar(string input)
         {
             RawData = input;
-        }//Codabar
+        }
 
         /// <summary>
         /// Encode the raw data using the Codabar algorithm.
@@ -29,7 +29,7 @@ namespace BarcodeStandard.Symbologies
                 case "D": break;
                 default: Error("ECODABAR-2: Data format invalid. (Invalid START character)");
                     break;
-            }//switch
+            }
 
             //check the ending char to make sure its a start/stop char
             switch (RawData[RawData.Trim().Length - 1].ToString().ToUpper().Trim())
@@ -40,10 +40,10 @@ namespace BarcodeStandard.Symbologies
                 case "D": break;
                 default: Error("ECODABAR-3: Data format invalid. (Invalid STOP character)");
                     break;
-            }//switch
+            }
 
             //populate the hashtable to begin the process
-            init_Codabar();
+            Init_Codabar();
 
             //replace non-numeric VALID chars with empty strings before checking for all numerics
             var temp = RawData;
@@ -53,8 +53,8 @@ namespace BarcodeStandard.Symbologies
                 if (!IsNumericOnly(c.ToString()))
                 {
                     temp = temp.Replace(c, '1');
-                }//if
-            }//if
+                }
+            }
 
             //now that all the valid non-numeric chars have been replaced with a number check if all numeric exist
             if (!IsNumericOnly(temp))
@@ -66,7 +66,7 @@ namespace BarcodeStandard.Symbologies
             {
                 result += Codabar_Code[c].ToString();
                 result += "0"; //inter-character space
-            }//foreach
+            }
 
             //remove the extra 0 at the end of the result
             result = result.Remove(result.Length - 1);
@@ -78,8 +78,8 @@ namespace BarcodeStandard.Symbologies
             RawData = RawData.Trim().Substring(1, RawData.Trim().Length - 2);
 
             return result;
-        }//Encode_Codabar
-        private void init_Codabar()
+        }
+        private void Init_Codabar()
         {
             Codabar_Code.Clear();
             Codabar_Code.Add('0', "101010011");
@@ -106,7 +106,7 @@ namespace BarcodeStandard.Symbologies
             Codabar_Code.Add('b', "1010010011");
             Codabar_Code.Add('c', "1001001011");
             Codabar_Code.Add('d', "1010011001");
-        }//init_Codeabar
+        }
 
         #region IBarcode Members
 
@@ -114,5 +114,5 @@ namespace BarcodeStandard.Symbologies
 
         #endregion
 
-    }//class
-}//namespace
+    }
+}

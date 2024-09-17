@@ -9,11 +9,11 @@ namespace BarcodeStandard.Symbologies
     /// </summary>
     internal class EAN13 : BarcodeCommon, IBarcode
     {
-        private readonly string[] EAN_CodeA = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private readonly string[] EAN_CodeB = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
-        private readonly string[] EAN_CodeC = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
-        private readonly string[] EAN_Pattern = { "aaaaaa", "aababb", "aabbab", "aabbba", "abaabb", "abbaab", "abbbaa", "ababab", "ababba", "abbaba" };
-        private readonly Hashtable _countryCodes = new Hashtable(); //is initialized by init_CountryCodes()
+        private readonly string[] EAN_CodeA = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"];
+        private readonly string[] EAN_CodeB = ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"];
+        private readonly string[] EAN_CodeC = ["1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100"];
+        private readonly string[] EAN_Pattern = ["aaaaaa", "aababb", "aabbab", "aabbba", "abaabb", "abbaab", "abbbaa", "ababab", "ababba", "abbaba"];
+        private readonly Hashtable _countryCodes = []; //is initialized by init_CountryCodes()
         private string _countryAssigningManufacturerCode = "N/A";
 
 		public string CountryAssigningManufacturerCode { get => _countryAssigningManufacturerCode; set => _countryAssigningManufacturerCode = value; }
@@ -58,7 +58,7 @@ namespace BarcodeStandard.Symbologies
                 if (patterncode[pos] == 'b')
                     result += EAN_CodeB[Int32.Parse(RawData[pos + 1].ToString())];
                 pos++;
-            }//while
+            }
 
 
             //add divider bars
@@ -69,7 +69,7 @@ namespace BarcodeStandard.Symbologies
             while (pos <= 5)
             {
                 result += EAN_CodeC[Int32.Parse(RawData[(pos++) + 6].ToString())];
-            }//while
+            }
 
             //checksum digit
             var cs = Int32.Parse(RawData[RawData.Length - 1].ToString());
@@ -86,7 +86,7 @@ namespace BarcodeStandard.Symbologies
 			}
 
 			return result;
-        }//Encode_EAN13
+        }
 
 		private void ParseCountryCode()
         {
@@ -122,8 +122,8 @@ namespace BarcodeStandard.Symbologies
 			for (var i = startingNumber; i <= endingNumber; i++)
 			{
 				_countryCodes.Add(i.ToString("00"), countryDescription);
-			}	// for
-		}   // create_CountryCodeRange
+			}
+		}
 
 		private void Init_CountryCodes()
         {
@@ -260,7 +260,7 @@ namespace BarcodeStandard.Symbologies
 			Create_CountryCodeRange(980, 980, "REFUND RECEIPTS");
 			Create_CountryCodeRange(981, 984, "GS1 COUPON IDENTIFICATION FOR COMMON CURRENCY AREAS");
 			Create_CountryCodeRange(990, 999, "GS1 COUPON IDENTIFICATION");
-        }//init_CountryCodes
+        }
         private void CheckDigit()
         {
             try
@@ -276,7 +276,7 @@ namespace BarcodeStandard.Symbologies
                         odd += Int32.Parse(rawDataHolder.Substring(i, 1));
                     else
                         even += Int32.Parse(rawDataHolder.Substring(i, 1)) * 3;
-                }//for
+                }
 
                 var total = even + odd;
                 var cs = total % 10;
@@ -285,11 +285,11 @@ namespace BarcodeStandard.Symbologies
                     cs = 0;
 
                 RawData = rawDataHolder + cs.ToString()[0];
-            }//try
+            }
             catch
             {
                 Error("EEAN13-4: Error calculating check digit.");
-            }//catch
+            }
         }
 
         #region IBarcode Members

@@ -2,12 +2,12 @@
 {
     internal class IATA2of5 : BarcodeCommon, IBarcode
     {
-        private readonly string[] IATA2of5_Code = { "10101110111010", "11101010101110", "10111010101110", "11101110101010", "10101110101110", "11101011101010", "10111011101010", "10101011101110", "11101010111010", "10111010111010" };
+        private readonly string[] IATA2of5_Code = ["10101110111010", "11101010101110", "10111010101110", "11101110101010", "10101110101110", "11101011101010", "10111011101010", "10101011101110", "11101010111010", "10111010111010"];
 
         internal IATA2of5(string input)
         {
             RawData = input;
-        }//Standard2of5
+        }
 
         /// <summary>
         /// Encode the raw data using the IATA 2 of 5 algorithm.
