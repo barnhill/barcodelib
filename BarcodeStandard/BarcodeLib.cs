@@ -40,7 +40,7 @@ namespace BarcodeStandard
     {
         #region Variables
         private IBarcode _iBarcode = new Blank();
-        private static readonly XmlSerializer SaveDataXmlSerializer = new XmlSerializer(typeof(SaveData));
+        private static readonly XmlSerializer SaveDataXmlSerializer = new(typeof(SaveData));
         #endregion
 
         #region Constructors
@@ -179,11 +179,10 @@ namespace BarcodeStandard
                 if (EncodedImage == null)
                     return null;
 
-                using (var ms = new MemoryStream())
-                {
-                    EncodedImage.Encode(ImageFormat, 100).SaveTo(ms);
-                    return ms.ToArray();
-                }//using
+                using var ms = new MemoryStream();
+                EncodedImage.Encode(ImageFormat, 100).SaveTo(ms);
+                return ms.ToArray();
+                
             }
         }
         /// <summary>
@@ -312,107 +311,38 @@ namespace BarcodeStandard
 
             EncodedValue = "";
             CountryAssigningManufacturerCode = "N/A";
-            
-            switch (EncodedType)
+
+            _iBarcode = EncodedType switch
             {
-                case Type.Ucc12:
-                case Type.UpcA: //Encode_UPCA();
-                    _iBarcode = new UPCA(RawData);
-                    break;
-                case Type.Ucc13:
-                case Type.Ean13: //Encode_EAN13();
-                    _iBarcode = new EAN13(RawData, DisableEan13CountryException);
-                    break;
-                case Type.Interleaved2Of5Mod10:
-                case Type.Interleaved2Of5: //Encode_Interleaved2of5();
-                    _iBarcode = new Interleaved2of5(RawData, EncodedType);
-                    break;
-                case Type.Industrial2Of5Mod10:
-                case Type.Industrial2Of5:
-                case Type.Standard2Of5Mod10:
-                case Type.Standard2Of5: //Encode_Standard2of5();
-                    _iBarcode = new Standard2of5(RawData, EncodedType);
-                    break;
-                case Type.IATA2of5: //Encode_IATA2of5();
-                    _iBarcode = new IATA2of5(RawData);
-                    break;
-                case Type.Logmars:
-                case Type.Code39: //Encode_Code39();
-                    _iBarcode = new Code39(RawData);
-                    break;
-                case Type.Code39Extended:
-                    _iBarcode = new Code39(RawData, true);
-                    break;
-                case Type.Code39Mod43:
-                    _iBarcode = new Code39(RawData, false, true);
-                    break;
-                case Type.Codabar: //Encode_Codabar();
-                    _iBarcode = new Codabar(RawData);
-                    break;
-                case Type.PostNet: //Encode_PostNet();
-                    _iBarcode = new Postnet(RawData);
-                    break;
-                case Type.Isbn:
-                case Type.Bookland: //Encode_ISBN_Bookland();
-                    _iBarcode = new ISBN(RawData);
-                    break;
-                case Type.Jan13: //Encode_JAN13();
-                    _iBarcode = new JAN13(RawData);
-                    break;
-                case Type.UpcSupplemental2Digit: //Encode_UPCSupplemental_2();
-                    _iBarcode = new UPCSupplement2(RawData);
-                    break;
-                case Type.MsiMod10:
-                case Type.Msi2Mod10:
-                case Type.MsiMod11:
-                case Type.MsiMod11Mod10:
-                case Type.ModifiedPlessey: //Encode_MSI();
-                    _iBarcode = new MSI(RawData, EncodedType);
-                    break;
-                case Type.UpcSupplemental5Digit: //Encode_UPCSupplemental_5();
-                    _iBarcode = new UPCSupplement5(RawData);
-                    break;
-                case Type.UpcE: //Encode_UPCE();
-                    _iBarcode = new UPCE(RawData);
-                    break;
-                case Type.Ean8: //Encode_EAN8();
-                    _iBarcode = new EAN8(RawData);
-                    break;
-                case Type.Usd8:
-                case Type.Code11: //Encode_Code11();
-                    _iBarcode = new Code11(RawData);
-                    break;
-                case Type.Code128: //Encode_Code128();
-                    _iBarcode = new Code128(RawData);
-                    break;
-                case Type.Code128A:
-                    _iBarcode = new Code128(RawData, Code128.TYPES.A);
-                    break;
-                case Type.Code128B:
-                    _iBarcode = new Code128(RawData, Code128.TYPES.B);
-                    break;
-                case Type.Code128C:
-                    _iBarcode = new Code128(RawData, Code128.TYPES.C);
-                    break;
-                case Type.Itf14:
-                    _iBarcode = new ITF14(RawData);
-                    break;
-                case Type.Code93:
-                    _iBarcode = new Code93(RawData);
-                    break;
-                case Type.Telepen:
-                    _iBarcode = new Telepen(RawData);
-                    break;
-                case Type.Fim:
-                    _iBarcode = new FIM(RawData);
-                    break;
-                case Type.Pharmacode:
-                    _iBarcode = new Pharmacode(RawData);
-                    break;
-
-                default: throw new Exception("EENCODE-2: Unsupported encoding type specified.");
-            }//switch
-
+                Type.Ucc12 or Type.UpcA => new UPCA(RawData),
+                Type.Ucc13 or Type.Ean13 => new EAN13(RawData, DisableEan13CountryException),
+                Type.Interleaved2Of5Mod10 or Type.Interleaved2Of5 => new Interleaved2of5(RawData, EncodedType),
+                Type.Industrial2Of5Mod10 or Type.Industrial2Of5 or Type.Standard2Of5Mod10 or Type.Standard2Of5 => new Standard2of5(RawData, EncodedType),
+                Type.IATA2of5 => new IATA2of5(RawData),
+                Type.Logmars or Type.Code39 => new Code39(RawData),
+                Type.Code39Extended => new Code39(RawData, true),
+                Type.Code39Mod43 => new Code39(RawData, false, true),
+                Type.Codabar => new Codabar(RawData),
+                Type.PostNet => new Postnet(RawData),
+                Type.Isbn or Type.Bookland => new ISBN(RawData),
+                Type.Jan13 => new JAN13(RawData),
+                Type.UpcSupplemental2Digit => new UPCSupplement2(RawData),
+                Type.MsiMod10 or Type.Msi2Mod10 or Type.MsiMod11 or Type.MsiMod11Mod10 or Type.ModifiedPlessey => new MSI(RawData, EncodedType),
+                Type.UpcSupplemental5Digit => new UPCSupplement5(RawData),
+                Type.UpcE => new UPCE(RawData),
+                Type.Ean8 => new EAN8(RawData),
+                Type.Usd8 or Type.Code11 => new Code11(RawData),
+                Type.Code128 => new Code128(RawData),
+                Type.Code128A => new Code128(RawData, Code128.TYPES.A),
+                Type.Code128B => new Code128(RawData, Code128.TYPES.B),
+                Type.Code128C => new Code128(RawData, Code128.TYPES.C),
+                Type.Itf14 => new ITF14(RawData),
+                Type.Code93 => new Code93(RawData),
+                Type.Telepen => new Telepen(RawData),
+                Type.Fim => new FIM(RawData),
+                Type.Pharmacode => new Pharmacode(RawData),
+                _ => throw new Exception("EENCODE-2: Unsupported encoding type specified."),
+            };
             return _iBarcode.Encoded_Value;
         }
         #endregion
@@ -487,7 +417,7 @@ namespace BarcodeStandard
                                     canvas.DrawLine(new SKPoint((pos * iBarWidth) + shiftAdjustment + bearerwidth + iquietzone, 0), new SKPoint((pos * iBarWidth) + shiftAdjustment + bearerwidth + iquietzone, Height), paint);
 
                                 pos++;
-                            }//while
+                            }
 
                             //bearer bars
                             paint.StrokeWidth = (float)ilHeight / 8;
@@ -498,7 +428,7 @@ namespace BarcodeStandard
                             canvas.DrawLine(new SKPoint(0, ilHeight), new SKPoint(bitmap.Width, ilHeight), paint);//bottom
                             canvas.DrawLine(new SKPoint(0, 0), new SKPoint(0, ilHeight), paint);//left
                             canvas.DrawLine(new SKPoint(bitmap.Width, 0), new SKPoint(bitmap.Width, ilHeight), paint);//right
-                        }//using
+                        }
 
                         if (IncludeLabel)
                             Labels.Label_ITF14(this, bitmap);
@@ -537,20 +467,18 @@ namespace BarcodeStandard
                             var barwidth = iBarWidth;
                             //lines are fBarWidth wide so draw the appropriate color line vertically
 
-                            using (var paintFore = new SKPaint())
+                            using var paintFore = new SKPaint();
+                            paintFore.ColorF = ForeColor;
+                            paintFore.StrokeWidth = barwidth;
+                            while (pos < EncodedValue.Length)
                             {
-                                paintFore.ColorF = ForeColor;
-                                paintFore.StrokeWidth = barwidth;
-                                while (pos < EncodedValue.Length)
+                                if (EncodedValue[pos] == '1')
                                 {
-                                    if (EncodedValue[pos] == '1')
-                                    {
-                                        canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), paintFore);
-                                    }
+                                    canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), paintFore);
+                                }
 
-                                    pos++;
-                                }//while
-                            }//using
+                                pos++;
+                            }
                         }
                        
                         if (IncludeLabel)
@@ -598,19 +526,17 @@ namespace BarcodeStandard
                             //clears the image and colors the entire background
                             canvas.Clear((SKColor)BackColor);
 
-                            using (var paint = new SKPaint())
+                            using var paint = new SKPaint();
+                            paint.ColorF = ForeColor;
+                            paint.StrokeWidth = iBarWidth;
+                            while (pos < EncodedValue.Length)
                             {
-                                paint.ColorF = ForeColor;
-                                paint.StrokeWidth = iBarWidth;
-                                while (pos < EncodedValue.Length)
+                                if (EncodedValue[pos] == '1')
                                 {
-                                    if (EncodedValue[pos] == '1')
-                                    {
-                                        canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), paint);
-                                    }
-
-                                    pos++;
+                                    canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, topLabelAdjustment), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight + topLabelAdjustment), paint);
                                 }
+
+                                pos++;
                             }
                         }
 
@@ -654,45 +580,43 @@ namespace BarcodeStandard
                             canvas.Clear((SKColor)BackColor);
 
                             var barWidth = iBarWidth / iBarWidthModifier;
-                            
+
                             //lines are fBarWidth wide so draw the appropriate color line vertically
-                            using (var backPaint = new SKPaint())
+                            using var backPaint = new SKPaint();
+                            backPaint.ColorF = BackColor;
+                            backPaint.StrokeWidth = barWidth;
+                            using var forePaint = new SKPaint();
+                            forePaint.ColorF = ForeColor;
+                            forePaint.StrokeWidth = barWidth;
+                            while (pos < EncodedValue.Length)
                             {
-                                backPaint.ColorF = BackColor;
-                                backPaint.StrokeWidth = barWidth;
-                                using (var forePaint = new SKPaint())
+                                if (EncodedType == Type.PostNet)
                                 {
-                                    forePaint.ColorF = ForeColor;
-                                    forePaint.StrokeWidth = barWidth;
-                                    while (pos < EncodedValue.Length)
-                                    {
-                                        if (EncodedType == Type.PostNet)
-                                        {
-                                            //draw half bars in postnet
-                                            var y = 0f;
-                                            if (EncodedValue[pos] == '0')
-                                                y = ilHeight - ilHeight * 0.4f;
-                                            
-                                            canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, y), forePaint);
-                                        }//if
-                                        else
-                                        {
-                                            if (EncodedValue[pos] == '1')
-                                                canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0f), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), forePaint);
-                                        }
-                                        pos++;
-                                    }//while
-                                }//using
-                            }//using
-                        }//using
+                                    //draw half bars in postnet
+                                    var y = 0f;
+                                    if (EncodedValue[pos] == '0')
+                                        y = ilHeight - ilHeight * 0.4f;
+
+                                    canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, y), forePaint);
+                                }
+                                else
+                                {
+                                    if (EncodedValue[pos] == '1')
+                                        canvas.DrawLine(new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, 0f), new SKPoint(pos * iBarWidth + shiftAdjustment + halfBarWidth, ilHeight), forePaint);
+                                }
+                                pos++;
+                            }
+                             
+                             
+                        }
                         if (IncludeLabel)
                         {
                            Labels.Label_Generic(this, bitmap);
-                        }//if
+                        }
 
                         break;
-                    }//switch
-            }//switch
+                    }
+            }
 
             EncodedImage = SKImage.FromBitmap(bitmap);
 
@@ -715,19 +639,18 @@ namespace BarcodeStandard
                 if (EncodedImage != null)
                 {
                     //Save the image to a memory stream so that we can get a byte array!      
-                    using (var ms = new MemoryStream())
-                    {
-                        SaveImage(ms, savetype);
-                        imageData = ms.ToArray();
-                        ms.Flush();
-                        ms.Close();
-                    }//using
-                }//if
-            }//try
+                    using var ms = new MemoryStream();
+                    SaveImage(ms, savetype);
+                    imageData = ms.ToArray();
+                    ms.Flush();
+                    ms.Close();
+                    
+                }
+            }
             catch (Exception ex)
             {
                 throw new Exception("EGETIMAGEDATA-1: Could not retrieve image data. " + ex.Message);
-            }//catch  
+            }  
             return imageData;
         }
         /// <summary>
@@ -740,17 +663,15 @@ namespace BarcodeStandard
             try
             {
                 if (EncodedImage == null) return;
-                using (Stream fs = File.OpenWrite(filename))
-                {
-                    var data = EncodedImage.Encode(GetSaveType(fileType), 100);
-                    data.SaveTo(fs);
-                }
-                //if
-            }//try
+                using Stream fs = File.OpenWrite(filename);
+                var data = EncodedImage.Encode(GetSaveType(fileType), 100);
+                data.SaveTo(fs);
+                
+            }
             catch (Exception ex)
             {
                 throw new Exception("ESAVEIMAGE-1: Could not save image.\n\n=======================\n\n" + ex.Message);
-            }//catch
+            }
         }//SaveImage(string, SaveTypes)
         /// <summary>
         /// Saves an encoded image to a specified stream.
@@ -762,23 +683,22 @@ namespace BarcodeStandard
             try
             {
                 EncodedImage?.Encode(GetSaveType(fileType), 100).SaveTo(stream);
-            }//try
+            }
             catch (Exception ex)
             {
                 throw new Exception("ESAVEIMAGE-2: Could not save image.\n\n=======================\n\n" + ex.Message);
-            }//catch
+            }
         }//SaveImage(Stream, SaveTypes)
 
         private SKEncodedImageFormat GetSaveType(SaveTypes fileType)
         {
-            switch (fileType)
+            return fileType switch
             {
-                case SaveTypes.Jpg: return SKEncodedImageFormat.Jpeg;
-                case SaveTypes.Png: return SKEncodedImageFormat.Png;
-                case SaveTypes.Webp: return SKEncodedImageFormat.Webp;
-                case SaveTypes.Unspecified:
-                default: return ImageFormat;
-            }//switch
+                SaveTypes.Jpg => SKEncodedImageFormat.Jpeg,
+                SaveTypes.Png => SKEncodedImageFormat.Png,
+                SaveTypes.Webp => SKEncodedImageFormat.Webp,
+                _ => ImageFormat,
+            };
         }
         
         #endregion
@@ -787,20 +707,22 @@ namespace BarcodeStandard
 
         private SaveData GetSaveData(bool includeImage = true)
         {
-            var saveData = new SaveData();
-            saveData.Type = EncodedType.ToString();
-            saveData.RawData = RawData;
-            saveData.EncodedValue = EncodedValue;
-            saveData.EncodingTime = EncodingTime;
-            saveData.IncludeLabel = IncludeLabel;
-            saveData.Forecolor = ForeColor.ToString();
-            saveData.Backcolor = BackColor.ToString();
-            saveData.CountryAssigningManufacturingCode = CountryAssigningManufacturerCode;
-            saveData.ImageWidth = Width;
-            saveData.ImageHeight = Height;
-            saveData.LabelFont = LabelFont.ToString();
-            saveData.ImageFormat = ImageFormat.ToString();
-            saveData.Alignment = (int)Alignment;
+            var saveData = new SaveData
+            {
+                Type = EncodedType.ToString(),
+                RawData = RawData,
+                EncodedValue = EncodedValue,
+                EncodingTime = EncodingTime,
+                IncludeLabel = IncludeLabel,
+                Forecolor = ForeColor.ToString(),
+                Backcolor = BackColor.ToString(),
+                CountryAssigningManufacturingCode = CountryAssigningManufacturerCode,
+                ImageWidth = Width,
+                ImageHeight = Height,
+                LabelFont = LabelFont.ToString(),
+                ImageFormat = ImageFormat.ToString(),
+                Alignment = (int)Alignment
+            };
 
             //get image in base 64
             if (!includeImage) return saveData;
@@ -808,7 +730,7 @@ namespace BarcodeStandard
             {
                 EncodedImage.Encode(ImageFormat, 100).SaveTo(ms);
                 saveData.Image = Convert.ToBase64String(ms.ToArray(), Base64FormattingOptions.None);
-            }//using
+            }
             return saveData;
         }
         public string ToJson(Boolean includeImage = true)
@@ -825,65 +747,56 @@ namespace BarcodeStandard
             {
                 try
                 {
-                    using (var xml = GetSaveData(includeImage))
-                    {
-                        using (var sw = new Utf8StringWriter())
-                        {
-                            SaveDataXmlSerializer.Serialize(sw, xml);
-                            return sw.ToString();
-                        }
-                    }//using
-                }//try
+                    using var xml = GetSaveData(includeImage);
+                    using var sw = new Utf8StringWriter();
+                    SaveDataXmlSerializer.Serialize(sw, xml);
+                    return sw.ToString();
+                }
                 catch (Exception ex)
                 {
                     throw new Exception("EGETXML-2: " + ex.Message);
-                }//catch
-            }//else
+                }
+            }
         }
         public static SaveData FromJson(Stream jsonStream)
         {
             using (jsonStream)
             {
-                if (jsonStream is MemoryStream)
+                if (jsonStream is MemoryStream stream)
                 {
-                    return JsonSerializer.Deserialize<SaveData>(((MemoryStream)jsonStream).ToArray());
+                    return JsonSerializer.Deserialize<SaveData>(stream.ToArray());
                 }
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    jsonStream.CopyTo(memoryStream);
-                    return JsonSerializer.Deserialize<SaveData>(memoryStream.ToArray());
-                }
+                using var memoryStream = new MemoryStream();
+                jsonStream.CopyTo(memoryStream);
+                return JsonSerializer.Deserialize<SaveData>(memoryStream.ToArray());
             }
         }
         public static SaveData FromXml(Stream xmlStream)
         {
             try
             {
-                using (var reader = XmlReader.Create(xmlStream))
-                {
-                    return (SaveData)SaveDataXmlSerializer.Deserialize(reader);
-                }
-            }//try
+                using var reader = XmlReader.Create(xmlStream);
+                return (SaveData)SaveDataXmlSerializer.Deserialize(reader);
+            }
             catch (Exception ex)
             {
                 throw new Exception("EGETIMAGEFROMXML-1: " + ex.Message);
-            }//catch
+            }
         }
         public static SKImage GetImageFromSaveData(SaveData saveData)
         {
             try
             {
                 //loading it to memory stream and then to image object
-                using (var ms = new MemoryStream(Convert.FromBase64String(saveData.Image)))
-                {
-                    return SKImage.FromBitmap(SKBitmap.Decode(ms));
-                }//using
-            }//try
+                using var ms = new MemoryStream(Convert.FromBase64String(saveData.Image));
+                return SKImage.FromBitmap(SKBitmap.Decode(ms));
+                
+            }
             catch (Exception ex)
             {
                 throw new Exception("EGETIMAGEFROMXML-1: " + ex.Message);
-            }//catch
+            }
         }
 
         public class Utf8StringWriter : StringWriter
@@ -901,10 +814,9 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data)
         {
-            using (var b = new Barcode())
-            {
-                return b.Encode(iType, data);
-            }//using
+            using var b = new Barcode();
+            return b.Encode(iType, data);
+            
         }
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -915,12 +827,11 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data, out string xml)
         {
-            using (var b = new Barcode())
-            {
-                var i = b.Encode(iType, data);
-                xml = b.ToXml();
-                return i;
-            }//using
+            using var b = new Barcode();
+            var i = b.Encode(iType, data);
+            xml = b.ToXml();
+            return i;
+            
         }
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -931,11 +842,10 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data, bool includeLabel)
         {
-            using (var b = new Barcode())
-            {
-                b.IncludeLabel = includeLabel;
-                return b.Encode(iType, data);
-            }//using
+            using var b = new Barcode();
+            b.IncludeLabel = includeLabel;
+            return b.Encode(iType, data);
+            
         }
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -948,11 +858,10 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data, bool includeLabel, int width, int height)
         {
-            using (var b = new Barcode())
-            {
-                b.IncludeLabel = includeLabel;
-                return b.Encode(iType, data, width, height);
-            }//using
+            using var b = new Barcode();
+            b.IncludeLabel = includeLabel;
+            return b.Encode(iType, data, width, height);
+            
         }
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -965,11 +874,10 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data, bool includeLabel, Color drawColor, Color backColor)
         {
-            using (var b = new Barcode())
-            {
-                b.IncludeLabel = includeLabel;
-                return b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A));
-            }//using
+            using var b = new Barcode();
+            b.IncludeLabel = includeLabel;
+            return b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A));
+            
         }
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -984,11 +892,10 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data, bool includeLabel, Color drawColor, Color backColor, int width, int height)
         {
-            using (var b = new Barcode())
-            {
-                b.IncludeLabel = includeLabel;
-                return b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A), width, height);
-            }//using
+            using var b = new Barcode();
+            b.IncludeLabel = includeLabel;
+            return b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A), width, height);
+            
         }
         /// <summary>
         /// Encodes the raw data into binary form representing bars and spaces.  Also generates an Image of the barcode.
@@ -1004,13 +911,12 @@ namespace BarcodeStandard
         /// <returns>Image representing the barcode.</returns>
         public static SKImage DoEncode(Type iType, string data, bool includeLabel, Color drawColor, Color backColor, int width, int height, out string xml)
         {
-            using (var b = new Barcode())
-            {
-                b.IncludeLabel = includeLabel;
-                var i = b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A), width, height);
-                xml = b.ToXml();
-                return i;
-            }//using
+            using var b = new Barcode();
+            b.IncludeLabel = includeLabel;
+            var i = b.Encode(iType, data, new SKColor(drawColor.R, drawColor.G, drawColor.B, drawColor.A), new SKColor(backColor.R, backColor.G, backColor.B, backColor.A), width, height);
+            xml = b.ToXml();
+            return i;
+            
         }
 
         #region IDisposable Support

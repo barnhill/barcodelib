@@ -16,7 +16,7 @@ namespace BarcodeStandardExample
     /// </summary>
     public partial class TestApp : Form
     {
-        Barcode _b = new Barcode();
+        readonly Barcode _b = new();
         
         public TestApp()
         {
@@ -48,7 +48,7 @@ namespace BarcodeStandardExample
                 case "left": _b.Alignment = AlignmentPositions.Left; break;
                 case "right": _b.Alignment = AlignmentPositions.Right; break;
                 default: _b.Alignment = AlignmentPositions.Center; break;
-            }//switch
+            }
 
             var type = GetTypeSelected();
 
@@ -95,15 +95,15 @@ namespace BarcodeStandardExample
                         txtWidth.Text = _b.Width.ToString();
                     if (_b.AspectRatio.HasValue)
                         txtHeight.Text = _b.Height.ToString();
-                }//if
+                }
 
                 //reposition the barcode image to the middle
                 barcode.Location = new Point((barcode.Location.X + barcode.Width / 2) - barcode.Width / 2, (barcode.Location.Y + barcode.Height / 2) - barcode.Height / 2);
-            }//try
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }//catch
+            }
         }//btnEncode_Click
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -119,7 +119,7 @@ namespace BarcodeStandardExample
                 case 1: /* JPG */  type = SaveTypes.Jpg; break;
                 case 2: /* PNG */  type = SaveTypes.Png; break;
                 case 3: /* WEBP*/  type = SaveTypes.Webp; break;
-            }//switch
+            }
             _b.SaveImage(sfd.FileName, type);
         }//btnSave_Click
 
@@ -162,7 +162,7 @@ namespace BarcodeStandardExample
                 case "Pharmacode": type = Type.Pharmacode; break;
                 case "IATA2of5": type = Type.IATA2of5; break;
                 default: MessageBox.Show(@"Please specify the encoding type."); break;
-            }//switch
+            }
 
             return type;
         }
@@ -181,7 +181,7 @@ namespace BarcodeStandardExample
                 {
                     _b.ForeColor = new SKColor(colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B, colorDialog.Color.A);
                     btnForeColor.BackColor = colorDialog.Color;
-                }//if
+                }
             }//using
         }//btnForeColor_Click
 
@@ -193,7 +193,7 @@ namespace BarcodeStandardExample
                 if (colorDialog.ShowDialog() != DialogResult.OK) return;
                 _b.BackColor = new SKColor(colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B, colorDialog.Color.A);
                 btnBackColor.BackColor = colorDialog.Color;
-                //if
+                
             }//using
         }//btnBackColor_Click
 
@@ -209,7 +209,7 @@ namespace BarcodeStandardExample
                 {
                     sw.Write(_b.ToJson(chkIncludeImageInSavedData.Checked));
                 }//using
-                //if
+                
             }//using
         }
 
@@ -225,7 +225,7 @@ namespace BarcodeStandardExample
                     {
                         LoadFromSaveData(savedData);
                     }//using
-                }//if
+                }
             }//using
 
             //populate the local object
@@ -262,7 +262,7 @@ namespace BarcodeStandardExample
                     {
                         LoadFromSaveData(savedData);
                     }//using
-                }//if
+                }
             }//using
 
             //populate the local object
@@ -392,7 +392,7 @@ namespace BarcodeStandardExample
                     break;
 
                 default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");
-            }//switch
+            }
         }
 
         private void btnMassGeneration_Click(object sender, EventArgs e)
@@ -449,5 +449,5 @@ namespace BarcodeStandardExample
                 return null;
             }
         }
-    }//class
-}//namespace
+    }
+}

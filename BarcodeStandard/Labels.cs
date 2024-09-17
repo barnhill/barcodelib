@@ -26,53 +26,51 @@ namespace BarcodeStandard
                     var labelPadding = textBounds.Height / 2f;
                     var backY = img.Height - textBounds.Height - labelPadding * 2f;
 
-                    using (var canvas = new SKCanvas(img))
+                    using var canvas = new SKCanvas(img);
+                    //draw bounding box side overdrawn by label
+                    using (var pen = new SKPaint())
                     {
-                        //draw bounding box side overdrawn by label
-                        using (var pen = new SKPaint())
-                        {
-                            pen.FilterQuality = SKFilterQuality.High;
-                            pen.IsAntialias = true;
-                            pen.ColorF = barcode.ForeColor;
-                            pen.StrokeWidth = (float)img.Height / 16;
+                        pen.FilterQuality = SKFilterQuality.High;
+                        pen.IsAntialias = true;
+                        pen.ColorF = barcode.ForeColor;
+                        pen.StrokeWidth = (float)img.Height / 16;
 
-                            canvas.DrawLine(new SKPoint(0, backY - pen.StrokeWidth / 2f),
-                                new SKPoint(img.Width, backY - pen.StrokeWidth / 2f), pen); //bottom
-                        }
+                        canvas.DrawLine(new SKPoint(0, backY - pen.StrokeWidth / 2f),
+                            new SKPoint(img.Width, backY - pen.StrokeWidth / 2f), pen); //bottom
+                    }
 
-                        //color a box at the bottom of the barcode to hold the string of data
-                        using (var paint = new SKPaint(font))
-                        {
-                            paint.FilterQuality = SKFilterQuality.High;
-                            paint.IsAntialias = true;
-                            paint.ColorF = barcode.BackColor;
-                            paint.Style = SKPaintStyle.Fill;
+                    //color a box at the bottom of the barcode to hold the string of data
+                    using (var paint = new SKPaint(font))
+                    {
+                        paint.FilterQuality = SKFilterQuality.High;
+                        paint.IsAntialias = true;
+                        paint.ColorF = barcode.BackColor;
+                        paint.Style = SKPaintStyle.Fill;
 
-                            var rect = SKRect.Create(0, backY, img.Width, textBounds.Height + labelPadding * 2f);
-                            canvas.DrawRect(rect, paint);
-                        }
+                        var rect = SKRect.Create(0, backY, img.Width, textBounds.Height + labelPadding * 2f);
+                        canvas.DrawRect(rect, paint);
+                    }
 
-                        //draw datastring under the barcode image
-                        foreBrush.FilterQuality = SKFilterQuality.High;
-                        foreBrush.IsAntialias = true;
-                        foreBrush.ColorF = barcode.ForeColor;
-                        foreBrush.TextAlign = SKTextAlign.Center;
+                    //draw datastring under the barcode image
+                    foreBrush.FilterQuality = SKFilterQuality.High;
+                    foreBrush.IsAntialias = true;
+                    foreBrush.ColorF = barcode.ForeColor;
+                    foreBrush.TextAlign = SKTextAlign.Center;
 
-                        var labelX = img.Width / 2f;
-                        var labelY = img.Height - textBounds.Height + labelPadding;
+                    var labelX = img.Width / 2f;
+                    var labelY = img.Height - textBounds.Height + labelPadding;
 
-                        canvas.DrawText(str, labelX, labelY, foreBrush);
+                    canvas.DrawText(str, labelX, labelY, foreBrush);
 
-                        canvas.Save();
-                    } //using
+                    canvas.Save();
                 }
 
                 return SKImage.FromBitmap(img);
-            }//try
+            }
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_ITF14-1: " + ex.Message);
-            }//catch
+            }
         }
 
         /// <summary>
@@ -128,11 +126,11 @@ namespace BarcodeStandard
                     g.Save();
                 }
                 return SKImage.FromBitmap(img);
-            }//try
+            }
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_GENERIC-1: " + ex.Message);
-            }//catch
+            }
             finally
             {
                 foreBrush.Dispose();
@@ -220,11 +218,11 @@ namespace BarcodeStandard
                 }
                 
                 return SKImage.FromBitmap(img);
-            }//try
+            }
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_EAN13-1: " + ex.Message);
-            }//catch
+            }
             finally
             {
                 foreBrush.Dispose();
@@ -316,11 +314,11 @@ namespace BarcodeStandard
                 }
 
                 return SKImage.FromBitmap(img);
-            }//try
+            }
             catch (Exception ex)
             {
                 throw new Exception("ELABEL_UPCA-1: " + ex.Message);
-            }//catch
+            }
             finally
             {
                 foreBrush.Dispose();
@@ -328,7 +326,7 @@ namespace BarcodeStandard
             }
         }//Label_UPCA
 
-        private static int GetFontSize(Barcode barcode, int wid, int hgt, string lbl)
+        /*private static int GetFontSize(int wid, int hgt, string lbl)
         {
             //Returns the optimal font size for the specified dimensions
             var fontSize = 10;
@@ -338,23 +336,19 @@ namespace BarcodeStandard
                 var bounds = SKRect.Empty;
                 for (var i = 1; i <= 100; i++)
                 {
-                    using (var testFont = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal), i))
-                    {
-                        // Make a Graphics object to measure the text.
-                        using (var gr = new SKPaint(testFont))
-                        {
-                            gr.MeasureText(lbl, ref bounds);
+                    using var testFont = new SKFont(SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal), i);
+                    // Make a Graphics object to measure the text.
+                    using var gr = new SKPaint(testFont);
+                    gr.MeasureText(lbl, ref bounds);
 
-                            if (!(bounds.Width > wid) && !(bounds.Height > hgt)) continue;
-                            fontSize = i - 1;
-                            break;
-                        }
-                    }
+                    if (!(bounds.Width > wid) && !(bounds.Height > hgt)) continue;
+                    fontSize = i - 1;
+                    break;
                 }
 
             };
 
             return fontSize;
-        }
+        }*/
     }
 }

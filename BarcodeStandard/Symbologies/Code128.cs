@@ -15,14 +15,14 @@ namespace BarcodeStandard.Symbologies
         public static readonly char FNC4 = Convert.ToChar(203);
 
         public enum TYPES : int { DYNAMIC, A, B, C };
-        private readonly List<string> C128_Code = new List<string>();
-        private readonly Dictionary<string, int> C128_CodeIndexByA = new Dictionary<string, int>();
-        private readonly Dictionary<string, int> C128_CodeIndexByB = new Dictionary<string, int>();
-        private readonly Dictionary<string, int> C128_CodeIndexByC = new Dictionary<string, int>();
-        private List<string> _FormattedData = new List<string>();
-        private List<string> _EncodedData = new List<string>();
+        private readonly List<string> C128_Code = [];
+        private readonly Dictionary<string, int> C128_CodeIndexByA = [];
+        private readonly Dictionary<string, int> C128_CodeIndexByB = [];
+        private readonly Dictionary<string, int> C128_CodeIndexByC = [];
+        private readonly List<string> _FormattedData = [];
+        private readonly List<string> _EncodedData = [];
         private int? _startCharacterIndex;
-        private TYPES type = TYPES.DYNAMIC;
+        private readonly TYPES type = TYPES.DYNAMIC;
 
         /// <summary>
         /// Encodes data in Code128 format.
@@ -31,7 +31,7 @@ namespace BarcodeStandard.Symbologies
         internal Code128(string input)
         {
             RawData = input;
-        }//Code128
+        }
 
         /// <summary>
         /// Encodes data in Code128 format.
@@ -42,7 +42,7 @@ namespace BarcodeStandard.Symbologies
         {
             this.type = type;
             RawData = input;
-        }//Code128
+        }
 
         string C128_ByA(string a) => C128_Code[C128_CodeIndexByA[a]];
 
@@ -54,11 +54,11 @@ namespace BarcodeStandard.Symbologies
         private string Encode_Code128()
         {
             //initialize datastructure to hold encoding information
-            init_Code128();
+            Init_Code128();
 
             return GetEncoding();
-        }//Encode_Code128
-        private void init_Code128()
+        }
+        private void Init_Code128()
         {
             //populate data
             void entry(string a, string b, string c, string encoding)
@@ -183,17 +183,17 @@ namespace BarcodeStandard.Symbologies
         {
             var rows = new List<int>();
 
-            //if two chars are numbers (or FNC1) then START_C or CODE_C
+            // if two chars are numbers (or FNC1) then START_C or CODE_C
             if (s.Length > 1 && (Char.IsNumber(s[0]) || s[0] == FNC1) && (Char.IsNumber(s[1]) || s[1] == FNC1))
             {
                 if (!_startCharacterIndex.HasValue)
                 {
                     _startCharacterIndex = C128_CodeIndexByA["START_C"];
                     rows.Add(_startCharacterIndex.Value);
-                }//if
+                }
                 else
                     rows.Add(C128_CodeIndexByA["CODE_C"]);
-            }//if
+            }
             else
             {
                 try
@@ -205,11 +205,11 @@ namespace BarcodeStandard.Symbologies
                         {
                             _startCharacterIndex = C128_CodeIndexByA["START_A"];
                             rows.Add(_startCharacterIndex.Value);
-                        }//if
+                        }
                         else
                         {
                             rows.Add(C128_CodeIndexByB["CODE_A"]);//first column is FNC4 so use B
-                        }//else
+                        }
                     }
                     var BFound = C128_CodeIndexByB.TryGetValue(s, out var bIndex) && (!AFound || bIndex != aIndex);
                     if (BFound)
@@ -218,21 +218,21 @@ namespace BarcodeStandard.Symbologies
                         {
                             _startCharacterIndex = C128_CodeIndexByA["START_B"];
                             rows.Add(_startCharacterIndex.Value);
-                        }//if
+                        }
                         else
                         {
                             rows.Add(C128_CodeIndexByA["CODE_B"]);
-                        }//else
+                        }
                     }
-                }//try
+                }
                 catch (Exception ex)
                 {
                     Error("EC128-1: " + ex.Message);
-                }//catch
+                }
 
                 if (rows.Count <= 0)
                     Error("EC128-2: Could not determine start character.");
-            }//else
+            }
 
             return rows;
         }
@@ -244,16 +244,16 @@ namespace BarcodeStandard.Symbologies
             {
                 var s = _FormattedData[(int)i];
 
-                //try to find value in the A column
+                 // try to find value in the A column
                 var value = C128_CodeIndexByA.TryGetValue(s, out var index)
-                //try to find value in the B column
+                // try to find value in the B column
                     || C128_CodeIndexByB.TryGetValue(s, out index)
-                //try to find value in the C column
+                // try to find value in the C column
                     || C128_CodeIndexByC.TryGetValue(s, out index) ? (uint)index : throw new InvalidOperationException($"Unable to find character “{s}”");
 
                 var addition = value * ((i == 0) ? 1 : i);
                 checkSum += addition;
-            }//for
+            }
 
             var remainder = checkSum % 103;
             return C128_Code[(int)remainder];
@@ -309,30 +309,30 @@ namespace BarcodeStandard.Symbologies
                     if (temp == "")
                     {
                         temp += c;
-                    }//if
+                    }
                     else
                     {
                         temp += c;
                         _FormattedData.Add(temp);
                         temp = "";
-                    }//else
-                }//if
+                    }
+                }
                 else
                 {
                     if (temp != "")
                     {
                         _FormattedData.Add(temp);
                         temp = "";
-                    }//if
+                    }
                     _FormattedData.Add(c.ToString());
-                }//else
-            }//foreach
+                }
+            }
 
-            //if something is still in temp go ahead and push it onto the queue
+            // if something is still in temp go ahead and push it onto the queue
             if (temp != "")
             {
                 _FormattedData.Add(temp);
-            }//if
+            }
         }
         private void InsertStartandCodeCharacters()
         {
@@ -353,7 +353,7 @@ namespace BarcodeStandard.Symbologies
                         Error("EC128-4: Unknown start type in fixed type encoding.");
                         break;
                 }
-            }//if
+            }
             else
             {
                 try
@@ -376,11 +376,11 @@ namespace BarcodeStandard.Symbologies
                             {
                                 sameCodeSet = true;
                                 break;
-                            }//if
-                        }//foreach
+                            }
+                        }
 
                         //only insert a new code char if starting a new codeset
-                        //if (CurrentCodeString == "" || !tempStartChars[0][col].ToString().EndsWith(CurrentCodeString)) /* Removed because of bug */
+                        // if (CurrentCodeString == "" || !tempStartChars[0][col].ToString().EndsWith(CurrentCodeString)) /* Removed because of bug */
 
                         if (col == null || !sameCodeSet)
                         {
@@ -415,15 +415,15 @@ namespace BarcodeStandard.Symbologies
                                     }
                                 }
                             }
-                        }//if
+                        }
 
-                    }//for
-                }//try
+                    }
+                }
                 catch (Exception ex)
                 {
                     Error("EC128-3: Could not insert start and code characters.\n Message: " + ex.Message);
-                }//catch
-            }//else
+                }
+            }
         }
         private string GetEncoding()
         {
@@ -458,23 +458,20 @@ namespace BarcodeStandard.Symbologies
                         {
                             E_Row = C128_TryByB(s);
 
-                            if (E_Row == null)
-                            {
-                                E_Row = C128_TryByC(s);
-                            }//if
-                        }//if
+                            E_Row ??= C128_TryByC(s);
+                        }
                         break;
                     default:
                         E_Row = null;
                         break;
-                }//switch              
+                }              
 
                 if (E_Row == null)
                     Error("EC128-5: Could not find encoding of a value( " + s + " ) in C128 type " + type.ToString());
 
                 Encoded_Data += E_Row;
                 _EncodedData.Add(E_Row);
-            }//foreach
+            }
 
             //add the check digit
             string checkDigit = CalculateCheckDigit();
@@ -498,5 +495,5 @@ namespace BarcodeStandard.Symbologies
         public string Encoded_Value => Encode_Code128();
 
         #endregion
-    }//class
-}//namespace
+    }
+}

@@ -26,15 +26,15 @@ namespace BarcodeStandard.Symbologies
                 {
                     if (RawData.Length == 10) RawData = RawData.Remove(9, 1);
                     RawData = "978" + RawData;
-                    type = "ISBN"; //if
+                    type = "ISBN"; 
                     break;
                 }
                 case 12 when RawData.StartsWith("978"):
-                    type = "BOOKLAND-NOCHECKDIGIT"; //else if
+                    type = "BOOKLAND-NOCHECKDIGIT"; 
                     break;
                 case 13 when RawData.StartsWith("978"):
                     type = "BOOKLAND-CHECKDIGIT";
-                    RawData = RawData.Remove(12, 1); //else if
+                    RawData = RawData.Remove(12, 1);
                     break;
             }
 
@@ -43,7 +43,7 @@ namespace BarcodeStandard.Symbologies
 
             var ean13 = new EAN13(RawData);
             return ean13.Encoded_Value;
-        }//Encode_ISBN_Bookland
+        }
 
         #region IBarcode Members
 
