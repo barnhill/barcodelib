@@ -267,11 +267,11 @@ namespace BarcodeStandard.Symbologies
             {
                 case TYPES.A:
                 case TYPES.B:
-                {
-                    foreach (var c in RawData)
-                        _FormattedData.Add(c.ToString());
-                    return;
-                }
+                    {
+                        foreach (var c in RawData)
+                            _FormattedData.Add(c.ToString());
+                        return;
+                    }
 
                 case TYPES.C:
                     {
