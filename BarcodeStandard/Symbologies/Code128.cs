@@ -171,7 +171,7 @@ namespace BarcodeStandard.Symbologies
             entry("CODE_C", "CODE_C", "99", "10111011110");
             entry("CODE_B", "FNC4", "CODE_B", "10111101110");
             entry("FNC4", "CODE_A", "CODE_A", "11101011110");
-            entry("FNC1", "FNC1", "FNC1", "11110101110");
+            entry($"{FNC1}", $"{FNC1}", $"{FNC1}", "11110101110");
             entry("START_A", "START_A", "START_A", "11010000100");
             entry("START_B", "START_B", "START_B", "11010010000");
             entry("START_C", "START_C", "START_C", "11010011100");
@@ -267,11 +267,11 @@ namespace BarcodeStandard.Symbologies
             {
                 case TYPES.A:
                 case TYPES.B:
-                    {
-                        foreach (var c in RawData)
-                            _FormattedData.Add(c.ToString());
-                        return;
-                    }
+                {
+                    foreach (var c in RawData)
+                        _FormattedData.Add(c.ToString());
+                    return;
+                }
 
                 case TYPES.C:
                     {
@@ -315,15 +315,6 @@ namespace BarcodeStandard.Symbologies
                         _FormattedData.Add(temp);
                         temp = "";
                     }
-                }
-                else if(c == FNC1)
-                {
-                    if (temp != "")
-                    {
-                        _FormattedData.Add(temp);
-                        temp = "";
-                    }
-                    _FormattedData.Add(nameof(FNC1).ToString());
                 }
                 else
                 {
