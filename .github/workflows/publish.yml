@@ -19,9 +19,7 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
       - run: dotnet build --configuration Release BarcodeStandard/BarcodeStandard.csproj
-      - name: Create the package
-        run: dotnet pack --configuration Release BarcodeStandard/BarcodeStandard.csproj
       - name: Publish the package to NuGet
         run: dotnet nuget push BarcodeStandard/bin/Release/*.nupkg
       - name: Publish the symbols to NuGet
-        run: dotnet nuget push BarcodeStandard/bin/Release/*.nupkg
+        run: dotnet nuget push BarcodeStandard/bin/Release/*.snupkg
