@@ -21,5 +21,3 @@ jobs:
       - run: dotnet build --configuration Release BarcodeStandard/BarcodeStandard.csproj
       - name: Publish the package to NuGet
         run: dotnet nuget push BarcodeStandard/bin/Release/*.nupkg -k ${{ secrets.PUBLISH_TOKEN }} -s https://api.nuget.org/v3/index.json
-      - name: Publish the symbols to NuGet
-        run: dotnet nuget push BarcodeStandard/bin/Release/*.snupkg -k ${{ secrets.PUBLISH_TOKEN }} -s https://api.nuget.org/v3/index.json
