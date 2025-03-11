@@ -16,6 +16,8 @@ jobs:
         with:
           dotnet-version: '8.0.x' # SDK Version to use.
           source-url: https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
       - run: dotnet build --configuration Release BarcodeStandard/BarcodeStandard.csproj
       - name: Publish the package to NuGet
         run: dotnet nuget push BarcodeStandard/bin/Release/*.nupkg -k ${{ secrets.PUBLISH_TOKEN }} -s https://api.nuget.org/v3/index.json
