@@ -8,7 +8,7 @@
     <Product>BarcodeLib</Product>
     <Authors>Brad Barnhill</Authors>
     <Description>This library was designed to give an easy class for developers to use when they need to generate barcode images from a string of data.</Description>
-    <Copyright>Copyright 2007-2024 Brad Barnhill</Copyright>
+    <Copyright>Copyright 2007-2025 Brad Barnhill</Copyright>
     <PackageProjectUrl>https://github.com/barnhill/barcodelib</PackageProjectUrl>
     <RepositoryUrl>https://github.com/barnhill/barcodelib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -35,7 +35,7 @@
     <PackageReference Include="SkiaSharp" Version="2.88.8" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.8" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 
   <ItemGroup>

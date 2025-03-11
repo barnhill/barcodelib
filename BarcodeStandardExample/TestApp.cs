@@ -292,39 +292,40 @@ namespace BarcodeStandardExample
             btnBackColor.BackColor = ColorTranslator.FromHtml(saveData.Backcolor);
             txtWidth.Text = saveData.ImageWidth.ToString();
             txtHeight.Text = saveData.ImageHeight.ToString();
-
+            //, 
+            // , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 
             switch (saveData.Type)
             {
-                case "UCC12":
-                case "UPCA":
+                case "Ucc12":
+                case "UpcA":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC-A");
                     break;
-                case "UCC13":
-                case "EAN13":
+                case "Ucc13":
+                case "Ean13":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("EAN-13");
                     break;
-                case "Interleaved2of5_Mod10":
-                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
-                    break;
-                case "Interleaved2of5":
-                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5");
-                    break;
-                case "Standard2of5_Mod10":
+                case "Standard2Of5Mod10":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Standard 2 of 5 Mod 10");
                     break;
-                case "Standard2of5":
+                case "Interleaved2Of5":
+                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5");
+                    break;
+                case "Interleaved2Of5Mod10":
+                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
+                    break;
+                case "Standard2Of5":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Standard 2 of 5");
                     break;
-                case "LOGMARS":
+                case "Logmars":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("LOGMARS");
                     break;
-                case "CODE39":
+                case "Code39":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 39");
                     break;
-                case "CODE39Extended":
+                case "Code39Extended":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 39 Extended");
                     break;
-                case "CODE39_Mod43":
+                case "Code39Mod43":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 39 Mod 43");
                     break;
                 case "Codabar":
@@ -333,55 +334,55 @@ namespace BarcodeStandardExample
                 case "PostNet":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("PostNet");
                     break;
-                case "ISBN":
-                case "BOOKLAND":
+                case "Isbn":
+                case "Bookland":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Bookland/ISBN");
                     break;
-                case "JAN13":
+                case "Jan13":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("JAN-13");
                     break;
-                case "UPC_SUPPLEMENTAL_2DIGIT":
+                case "UpcSupplemental2Digit":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC 2 Digit Ext.");
                     break;
-                case "MSI_Mod10":
-                case "MSI_2Mod10":
-                case "MSI_Mod11":
-                case "MSI_Mod11_Mod10":
-                case "Modified_Plessey":
+                case "MsiMod10":
+                case "Msi2Mod10":
+                case "MsiMod11":
+                case "MsiMod11Mod10":
+                case "ModifiedPlessey":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("MSI");
                     break;
-                case "UPC_SUPPLEMENTAL_5DIGIT":
+                case "UpcSupplemental5Digit":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC 5 Digit Ext.");
                     break;
-                case "UPCE":
+                case "UpcE":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("UPC-E");
                     break;
-                case "EAN8":
+                case "Ean8":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("EAN-8");
                     break;
-                case "USD8":
-                case "CODE11":
+                case "Usd8":
+                case "Code11":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 11");
                     break;
-                case "CODE128":
+                case "Code128":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128");
                     break;
-                case "CODE128A":
+                case "Code128A":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128-A");
                     break;
-                case "CODE128B":
+                case "Code128B":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128-B");
                     break;
-                case "CODE128C":
+                case "Code128C":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 128-C");
                     break;
-                case "ITF14":
+                case "Itf14":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("ITF-14");
                     break;
-                case "CODE93":
+                case "Code93":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Code 93");
                     break;
-                case "FIM":
+                case "Fim":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("FIM");
                     break;
                 case "Pharmacode":
@@ -389,6 +390,9 @@ namespace BarcodeStandardExample
                     break;
                 case "IATA2of5":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("IATA2of5");
+                    break;
+                case "Telepen":
+                    cbEncodeType.SelectedIndex = cbEncodeType.FindString("Telepen");
                     break;
 
                 default: throw new Exception("ELOADXML-1: Unsupported encoding type in XML.");
