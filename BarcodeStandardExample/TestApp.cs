@@ -307,10 +307,10 @@ namespace BarcodeStandardExample
                 case "Standard2Of5Mod10":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Standard 2 of 5 Mod 10");
                     break;
-                case "Industrial2Of5":
+                case "Interleaved2Of5":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5");
                     break;
-                case "Industrial2Of5Mod10":
+                case "Interleaved2Of5Mod10":
                     cbEncodeType.SelectedIndex = cbEncodeType.FindString("Interleaved 2 of 5 Mod 10");
                     break;
                 case "Standard2Of5":
